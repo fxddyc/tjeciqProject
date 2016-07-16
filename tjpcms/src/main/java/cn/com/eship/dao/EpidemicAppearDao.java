@@ -13,4 +13,9 @@ public interface EpidemicAppearDao {
      * @throws Exception
      */
     public List<Object> findEpidemicTopten(Map<String,String> mapPram) throws Exception;
+
+    public List<Object> findEpidemicAppearCount(Map<String,String> mapPram) throws Exception;
+
+
+    public List<Object> findEpidemicAppearRegionCount(Map<String,String> mapPram) throws Exception;
 }

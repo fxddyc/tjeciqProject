@@ -6,11 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <!-- left side start-->
 <div class="left-side sticky-left-side">
 
@@ -54,7 +49,10 @@
 
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a href="/worldMap">疫情地域分布</a></li>
+                    <li><a href="${pageContext.request.contextPath}/wordRegion/wordRegionPage.do">疫情地域分布</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/epidemicBaike/epidemicBaikePage.do">疫情百科</a></li>
                 </ul>
             </li>
         </ul>
@@ -63,7 +61,3 @@
     </div>
 </div>
 <!-- left side end-->
-
-
-</body>
-</html>

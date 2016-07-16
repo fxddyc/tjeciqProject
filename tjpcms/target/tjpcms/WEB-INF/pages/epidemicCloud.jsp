@@ -60,28 +60,24 @@
                                 <tr>
                                     <td><label>地域:&nbsp;&nbsp;&nbsp;</label></td>
                                     <td>
-
                                         <div class="input-group">
                                               <span class="input-group-btn">
-                                                <button type="button" class="form-control btn btn-default" data-toggle="modal" href="#myModal2"><i class="fa fa-search"></i></button>
+                                                <button type="button" class="form-control btn btn-default"
+                                                        data-toggle="modal" href="#myModal2"><i
+                                                        class="fa fa-search"></i></button>
                                               </span>
-                                            <input type="text" class="form-control">
+                                            <%--<input type="text" class="form-control">--%>
+                                            <select id="region" class="form-control" style="width: 150px">
+                                                <option value="">全部</option>
+                                            </select>
                                         </div>
-                                        </td>
-
-
-                                        <%--<select id="region" class="form-control">--%>
-                                        <%--<option value="">全部</option>--%>
-                                        <%--{% for region in regions %}--%>
-                                        <%--<option value="{{ region.key }}">{{ region.value }}</option>--%>
-                                        <%--{% endfor %}--%>
-                                    <%--</select></td>--%>
+                                    </td>
                                     <td><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间段:&nbsp;&nbsp;&nbsp;</label></td>
                                     <td>
                                         <div data-date-minviewmode="months" data-date-viewmode="years"
                                              class="input-group input-large custom-date-range" data-date="102/2012"
                                              data-date-format="yyyy-mm-dd">
-                                            <input type="text" id="fromDate" class="form-control dpd1" name="from">
+                                            <input type="text" id="startDate" class="form-control dpd1" name="from">
                                             <span class="input-group-addon">到</span>
                                             <input type="text" id="endDate" class="form-control dpd2" name="to">
                                         </div>
@@ -123,119 +119,6 @@
         <!--body wrapper end-->
     </div>
     <!-- main content end-->
-
-
-
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title">Datepicker in Modal</h4>
-                </div>
-                <div class="modal-body">
-                    <form action="#" class="form-horizontal ">
-                        <div class="form-group">
-                            <label class="control-label col-md-4"> Date time picker</label>
-                            <div class="col-md-6">
-                                <input size="16" type="text" value="2012-06-15 14:45" readonly=""
-                                       class="form_datetime form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Default Datepicker</label>
-                            <div class="col-md-6 col-xs-11">
-                                <input class="form-control form-control-inline input-medium default-date-picker"
-                                       size="16" type="text" value="">
-                                <span class="help-block">Select date</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Start with years viewMode</label>
-                            <div class="col-md-6 col-xs-11">
-
-                                <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="12-02-2012"
-                                     class="input-append date dpYears">
-                                    <input type="text" readonly="" value="12-02-2012" size="16" class="form-control">
-                                                                      <span class="input-group-btn add-on">
-                                                                        <button class="btn btn-primary" type="button"><i
-                                                                                class="fa fa-calendar"></i></button>
-                                                                      </span>
-                                </div>
-                                <span class="help-block">Select date</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Months Only</label>
-                            <div class="col-md-6 col-xs-11">
-                                <div data-date-minviewmode="months" data-date-viewmode="years"
-                                     data-date-format="mm/yyyy" data-date="102/2012" class="input-append date dpMonths">
-                                    <input type="text" readonly="" value="02/2012" size="16" class="form-control">
-                                                                      <span class="input-group-btn add-on">
-                                                                        <button class="btn btn-primary" type="button"><i
-                                                                                class="fa fa-calendar"></i></button>
-                                                                      </span>
-                                </div>
-
-
-                                <span class="help-block">Select month only</span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-4">Date Range</label>
-                            <div class="col-md-6">
-                                <div class="input-group input-large custom-date-range" data-date="13/07/2013"
-                                     data-date-format="mm/dd/yyyy">
-                                    <input type="text" class="form-control dpd1" name="from">
-                                    <span class="input-group-addon">To</span>
-                                    <input type="text" class="form-control dpd2" name="to">
-                                </div>
-                                <span class="help-block">Select date range</span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-
-                <form class="form-horizontal  " action="#">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Default Timepicker</label>
-                        <div class="col-md-6">
-                            <div class="input-group bootstrap-timepicker">
-                                <input type="text" class="form-control timepicker-default">
-                                                            <span class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"><i
-                                                                    class="fa fa-clock-o"></i></button>
-                                                            </span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4">24hr Timepicker</label>
-                        <div class="col-md-6">
-                            <div class="input-group bootstrap-timepicker">
-                                <input type="text" class="form-control timepicker-24">
-                                                            <span class="input-group-btn">
-                                                            <button class="btn btn-default" type="button"><i
-                                                                    class="fa fa-clock-o"></i></button>
-                                                            </span>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-
-                <div class="modal-footer">
-                    <button data-dismiss="modal" class="btn btn-primary" type="button">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- modal -->
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-1.10.2.min.js"></script>
@@ -272,8 +155,15 @@
 
 <script>
     
-    function chosseRegion() {
-        alert('aaaa');
+    function boundRegionList() {
+        $.post("${pageContext.request.contextPath}/epidemicCloud/regionList.do", {},
+                function (data) {
+                    var json = data;
+                    for (var i = 0;i < json.length;i++){
+                        $("#region").append("<option value='"+json[i].id+"'>" + json[i].regionCn + "</option>");
+                    }
+                },
+                "json");
         
     }
 
@@ -316,9 +206,9 @@
                 data: []
             }]
         };
-        $.post("/yqChartsCloud/yqChartsCloudList", {
+        $.post("/epidemicCloud/epidemicCloud.do", {
                     'region': $('#region option:selected').val(),
-                    'fromDate': $('#fromDate').val(),
+                    'startDate': $('#startDate').val(),
                     'endDate': $('#endDate').val()
                 },
                 function (data) {
@@ -336,10 +226,12 @@
 
 
     $(document).ready(function () {
-        findYQChartsCloud()
+        boundRegionList();
+        findYQChartsCloud();
     });
 
 
 </script>
+
 </body>
 </html>

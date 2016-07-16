@@ -1,9 +1,11 @@
 package cn.com.eship.model;
 
+import java.io.Serializable;
+
 /**
  * Created by simon on 16/7/14.
  */
-public class Epidemic {
+public class Epidemic implements Serializable {
     private String id;
     private String epidemicName;
 

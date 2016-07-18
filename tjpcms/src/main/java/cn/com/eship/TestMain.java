@@ -1,5 +1,8 @@
 package cn.com.eship;
 
+import cn.com.eship.dao.EpidemicAppearDao;
+import cn.com.eship.dao.impl.EpidemicAppearDaoImpl;
+import cn.com.eship.model.EpidemicAppear;
 import cn.com.eship.service.EpidemicService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -10,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class TestMain {
     public static void main(String[] args) throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-        EpidemicService epidemicService = applicationContext.getBean(EpidemicService.class);
-        //System.out.println(epidemicService.makeEpidemicAppearListJson());
+        EpidemicAppearDao epidemicAppearDao = applicationContext.getBean(EpidemicAppearDaoImpl.class);
+        System.out.println(epidemicAppearDao.findEpidemicAppearCount());
     }
 }

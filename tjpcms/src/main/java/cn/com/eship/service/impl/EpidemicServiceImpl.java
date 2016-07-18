@@ -24,14 +24,14 @@ public class EpidemicServiceImpl implements EpidemicService {
 
     @Override
     public String makeEpidemicAppearListJson(String pageNo) throws Exception {
-        Map<String,Object> jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
         List<EpidemicAppear> epidemicAppearList = epidemicAppearDao.findEpidemicAppearList(PageUtils.getFirstPosition(StringUtils.isNotBlank(pageNo) ? Integer.parseInt(pageNo) : 0));
         if (epidemicAppearList != null && epidemicAppearList.size() > 0) {
-            jsonMap.put("epidemicAppearList",epidemicAppearList);
+            jsonMap.put("epidemicAppearList", epidemicAppearList);
+            jsonMap.put("epidemicAppearListCount", epidemicAppearDao.findEpidemicAppearCount());
         }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-        //objectMapper.registerModule(new Hibernate3Module());
         return objectMapper.writeValueAsString(jsonMap);
     }
 }

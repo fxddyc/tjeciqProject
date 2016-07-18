@@ -1,5 +1,7 @@
 package cn.com.eship.dao;
 
+import cn.com.eship.model.EpidemicAppear;
+
 import java.util.List;
 import java.util.Map;
 
@@ -13,4 +15,12 @@ public interface EpidemicAppearDao {
      * @throws Exception
      */
     public List<Object> findEpidemicTopten(Map<String,String> mapPram) throws Exception;
+
+    public List<Object> findEpidemicAppearList(Map<String,String> mapPram) throws Exception;
+
+
+    public List<Object> findEpidemicAppearRegionCount(Map<String,String> mapPram) throws Exception;
+
+    public List<EpidemicAppear> findEpidemicAppearList(Integer startPosition) throws Exception;
+
 }

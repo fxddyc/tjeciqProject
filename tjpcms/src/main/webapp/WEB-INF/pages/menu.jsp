@@ -6,11 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <!-- left side start-->
 <div class="left-side sticky-left-side">
 
@@ -29,7 +24,8 @@
         <!-- visible to small devices only -->
         <div class="visible-xs hidden-sm hidden-md hidden-lg">
             <div class="media logged-user">
-                <img alt="" src="${pageContext.request.contextPath}/adminex/images/photos/user-avatar.png" class="media-object">
+                <img alt="" src="${pageContext.request.contextPath}/adminex/images/photos/user-avatar.png"
+                     class="media-object">
                 <div class="media-body">
                     <h4><a href="#">John Doe</a></h4>
                     <span>"Hello There..."</span>
@@ -51,10 +47,15 @@
                     <li><a href="${pageContext.request.contextPath}/index/indexPage.do">仪表盘</a></li>
                     <li><a href="${pageContext.request.contextPath}/epidemicCloud/epidemicCloudPage.do">疫情字符云</a></li>
                     <li><a href="/yqChartsCloud/yqHistory">疫情历史</a></li>
-
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a href="/worldMap">疫情地域分布</a></li>
+                    <li><a href="${pageContext.request.contextPath}/wordRegion/wordRegionPage.do">疫情地域分布</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/epidemicBaike/epidemicBaikePage.do">疫情百科</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">疫情综合查询</a></li>
                 </ul>
             </li>
         </ul>
@@ -63,7 +64,3 @@
     </div>
 </div>
 <!-- left side end-->
-
-
-</body>
-</html>

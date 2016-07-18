@@ -1,17 +1,17 @@
 package cn.com.eship.service.impl;
 
 import cn.com.eship.dao.EpidemicAppearDao;
+import cn.com.eship.dao.EpidemicDao;
 import cn.com.eship.model.EpidemicAppear;
+import cn.com.eship.model.Region;
 import cn.com.eship.service.IndexService;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by simon on 16/7/14.
@@ -20,6 +20,8 @@ import java.util.Map;
 public class IndexServiceImpl implements IndexService {
     @Autowired
     private EpidemicAppearDao epidemicAppearDao;
+    @Autowired
+    private EpidemicDao epidemicDao;
 
     /**
      * 全球疫情TOP10
@@ -28,7 +30,7 @@ public class IndexServiceImpl implements IndexService {
      */
     @Override
     public String makeEpidemicTopTenJson(EpidemicAppear epidemicAppear) throws Exception {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new TreeMap<String, Object>();
         jsonMap.put("epidemicNames", new ArrayList<Object>());
         jsonMap.put("epidemicTop", new ArrayList<Object>());
         List<Object> epidemicToptenList = epidemicAppearDao.findEpidemicTopten(setEpidemicAppearDaoParamer(epidemicAppear));
@@ -51,7 +53,7 @@ public class IndexServiceImpl implements IndexService {
 
     @Override
     public String makeEpidemicLocalTopTenJson(EpidemicAppear epidemicAppear) throws Exception {
-        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new TreeMap<String, Object>();
         jsonMap.put("epidemicLocalTopTenNames", new ArrayList<String>());
         jsonMap.put("epidemicLocalTopTenValues", new ArrayList<Long>());
         List<Object> epidemicLocalTopTenList = epidemicAppearDao.findEpidemicTopten(setEpidemicAppearDaoParamer(epidemicAppear));
@@ -62,14 +64,57 @@ public class IndexServiceImpl implements IndexService {
                 epidemicLocalTopTenNames.add((String) ((Object[]) epidemicLocalTopTen)[0]);
                 epidemicLocalTopTenValues.add((Long) ((Object[]) epidemicLocalTopTen)[1]);
             }
-            jsonMap.put("epidemicLocalTopTenNames",epidemicLocalTopTenNames);
-            jsonMap.put("epidemicLocalTopTenValues",epidemicLocalTopTenValues);
+            jsonMap.put("epidemicLocalTopTenNames", epidemicLocalTopTenNames);
+            jsonMap.put("epidemicLocalTopTenValues", epidemicLocalTopTenValues);
         }
         return new ObjectMapper().writeValueAsString(jsonMap);
     }
 
+    /**
+     * 全球新增疫情数量
+     *
+     * @param epidemicAppear
+     * @return
+     */
+    @Override
+    public Integer findNewEpidemicCount(EpidemicAppear epidemicAppear) throws Exception {
+        Map<String, String> mapParam = setEpidemicAppearDaoParamer(epidemicAppear);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+        mapParam.put("startData", new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+        List<Object> epidemicAppearListByOrder = epidemicAppearDao.findEpidemicAppearList(mapParam);
+        return epidemicAppearListByOrder != null ? epidemicAppearListByOrder.size() : 0;
+    }
 
-    private Map<String, String> setEpidemicAppearDaoParamer(EpidemicAppear epidemicAppear) {
+    /**
+     * 我国新增疫情
+     *
+     * @param epidemicAppear
+     * @return
+     */
+    @Override
+    public Integer findLocalEpidemicLocalCount(EpidemicAppear epidemicAppear) throws Exception {
+        Map<String, String> mapParam = setEpidemicAppearDaoParamer(epidemicAppear);
+        mapParam.put("region", "31");
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
+        mapParam.put("startData", new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
+        List<Object> epidemicAppearListByOrder = epidemicAppearDao.findEpidemicAppearList(mapParam);
+        return epidemicAppearListByOrder != null ? epidemicAppearListByOrder.size() : 0;
+    }
+
+    /**
+     * 已知疫情
+     *
+     * @return
+     */
+    @Override
+    public Integer findEpidemicCount() throws Exception {
+        return epidemicDao.findEpidemicCount().intValue();
+    }
+
+
+    private Map<String, String> setEpidemicAppearDaoParamer(EpidemicAppear epidemicAppear) throws Exception {
         Map<String, String> map = new HashMap<String, String>();
         if (epidemicAppear != null) {
             //设置地域名称

@@ -18,22 +18,12 @@
 
     <title>AdminX</title>
 
-    <!--dashboard calendar-->
-    <link href="${pageContext.request.contextPath}/adminex/css/clndr.css" rel="stylesheet">
+
+    <link href="${pageContext.request.contextPath}/adminex/css/bootstrap.min.css" rel="stylesheet">
 
     <!--pickers css-->
     <link rel="stylesheet" type="text/css"
           href="${pageContext.request.contextPath}/adminex/js/bootstrap-datepicker/css/datepicker-custom.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/adminex/js/bootstrap-timepicker/css/timepicker.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/adminex/js/bootstrap-colorpicker/css/colorpicker.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/adminex/js/bootstrap-daterangepicker/daterangepicker-bs3.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/adminex/js/bootstrap-datetimepicker/css/datetimepicker-custom.css"/>
-
-
     <!--common-->
     <link href="${pageContext.request.contextPath}/adminex/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/adminex/css/style-responsive.css" rel="stylesheet">
@@ -75,12 +65,41 @@
                                     <td><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间段:&nbsp;&nbsp;&nbsp;</label></td>
                                     <td>
                                         <div data-date-minviewmode="months" data-date-viewmode="years"
-                                             class="input-group input-large custom-date-range" data-date="102/2012"
+                                             class="input-group input-large custom-date-range " data-date="102/2012"
                                              data-date-format="yyyy-mm-dd">
                                             <input type="text" id="startDate" class="form-control dpd1" name="from">
                                             <span class="input-group-addon">到</span>
                                             <input type="text" id="endDate" class="form-control dpd2" name="to">
                                         </div>
+                                        <%--<div class="input-group">--%>
+                                        <%--<div class="input-group">--%>
+
+                                        <%--<div class="input-append date form_datetime"--%>
+                                        <%--data-date="2013-02-21T15:25:00Z">--%>
+                                        <%--<input class="form-control" size="16" type="text" value="" readonly>--%>
+                                        <%--<span class="add-on"><i class="icon-remove"></i></span>--%>
+                                        <%--<span class="add-on"><i class="fa fa-calendar"></i></span>--%>
+                                        <%--</div>--%>
+
+
+                                        <%--</div>--%>
+
+                                        <%--<span class="input-group-addon" id="basic-addon1">到</span>--%>
+
+                                        <%--<div class="input-group">--%>
+
+                                        <%--<div class="input-append date form_datetime"--%>
+                                        <%--data-date="2013-02-21T15:25:00Z">--%>
+                                        <%--<input class="form-control" size="16" type="text" value="" readonly>--%>
+                                        <%--<span class="add-on"><i class="icon-remove"></i></span>--%>
+                                        <%--<span class="add-on"><i class="icon-calendar"></i></span>--%>
+                                        <%--</div>--%>
+
+
+                                        <%--</div>--%>
+                                        <%--</div>--%>
+
+
                                     </td>
                                     <td>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -126,45 +145,35 @@
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/modernizr.min.js"></script>
-<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
 
 <!--common scripts for all pages-->
-<script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>
+<%--<script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>--%>
 
 
-<!--pickers plugins-->
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/adminex/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/adminex/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/adminex/js/bootstrap-daterangepicker/moment.min.js"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/adminex/js/bootstrap-daterangepicker/daterangepicker.js"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/adminex/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/adminex/js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+<%--<!--pickers plugins-->--%>
+<%--<script type="text/javascript"--%>
+<script src="${pageContext.request.contextPath}/adminex/js/bootstrap-datepicker/js/bootstrap-datepicker.js?v=1"></script>
 
-<!--pickers initialization-->
+<%--<!--pickers initialization-->--%>
 <script src="${pageContext.request.contextPath}/adminex/js/pickers-init.js"></script>
 
+<script src="${pageContext.request.contextPath}/bootstrap/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
 <script src="${pageContext.request.contextPath}/echarts/build/dist/echarts-all.js"></script>
 
 
 <script>
-    
+
     function boundRegionList() {
         $.post("${pageContext.request.contextPath}/epidemicCloud/regionList.do", {},
                 function (data) {
                     var json = data;
-                    for (var i = 0;i < json.length;i++){
-                        $("#region").append("<option value='"+json[i].id+"'>" + json[i].regionCn + "</option>");
+                    for (var i = 0; i < json.length; i++) {
+                        $("#region").append("<option value='" + json[i].id + "'>" + json[i].regionCn + "</option>");
                     }
                 },
                 "json");
-        
+
     }
 
     function createRandomItemStyle() {
@@ -234,4 +243,4 @@
 </script>
 
 </body>
-</html>
+< / html >

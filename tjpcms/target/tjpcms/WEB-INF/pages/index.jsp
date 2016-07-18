@@ -47,8 +47,8 @@
                                     <i class="fa fa-gavel"></i>
                                 </div>
                                 <div class="state-value">
-                                    <div class="value">230</div>
-                                    <div class="title">新增疫情总数</div>
+                                    <div class="value">${newEpidemicCount}</div>
+                                    <div class="title">全球新增疫情总数</div>
                                 </div>
                             </div>
                         </div>
@@ -58,8 +58,8 @@
                                     <i class="fa fa-tags"></i>
                                 </div>
                                 <div class="state-value">
-                                    <div class="value">3490</div>
-                                    <div class="title">我国发现疫情总数</div>
+                                    <div class="value">${newLocalEpidemicCount}</div>
+                                    <div class="title">我国新增疫情总数</div>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                     <i class="fa fa-eye"></i>
                                 </div>
                                 <div class="state-value">
-                                    <div class="value">390</div>
+                                    <div class="value">${epidemicCount}</div>
                                     <div class="title">已知疫情总数</div>
                                 </div>
                             </div>
@@ -81,20 +81,29 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            疫情TOP概览
+                        </div>
                         <div class="panel-body">
                             <div class="row revenue-states">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        <button id="yqpie" class="btn btn-sm btn-primary" onclick="yqTop10()">
+                                            全球疫情TOP10
+                                        </button>
+                                        <button class="btn btn-sm btn-primary" onclick="yqLocalTop10()">我国疫情TOP10
+                                        </button>
+                                    </div>
+
+                                </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div id="top10" style="height:400px"></div>
+                                    <div id="top10Pie" style="height:400px"></div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div id="top10Bar" style="height:400px"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <div id="localTop10" style="height:400px"></div>
                         </div>
                     </div>
                 </div>
@@ -122,11 +131,8 @@
 <script>
 
 
-    function localTop10() {
+    function yqTop10Bar(id, regionName, title) {
         var option = {
-            title: {
-                text: '我国疫情TOP10',
-            },
             tooltip: {
                 trigger: 'axis'
             },
@@ -144,6 +150,9 @@
             xAxis: [
                 {
                     type: 'category',
+                    splitLine: {
+                        show: false
+                    },
                     data: []
                 }
             ],
@@ -172,22 +181,22 @@
             ]
         };
 
-        $.post("${pageContext.request.contextPath}/index/epidemicLocalTopTen.do", {regionName: '中国'},
+        $.post("${pageContext.request.contextPath}/index/epidemicTopTenBar.do", {regionName: regionName},
                 function (data) {
                     var json = data;
                     option.xAxis[0].data = json['epidemicLocalTopTenNames'];
                     option.series[0].data = json['epidemicLocalTopTenValues'];
-                    var myChart = echarts.init(document.getElementById('localTop10'));
+                    var myChart = echarts.init(document.getElementById(id));
                     myChart.setOption(option);
                 },
                 "json");
     }
 
 
-    function yqTop10() {
+    function yqTop10Pie(id, regionName, title) {
         var option = {
             title: {
-                text: '全球疫情TOP10',
+                text: title,
                 x: 'center'
             },
             tooltip: {
@@ -222,18 +231,18 @@
                 {
                     name: '全球疫情',
                     type: 'pie',
-                    radius: '55%',
+                    radius: '40%',
                     center: ['50%', '60%'],
                     data: []
                 }
             ]
         };
-        $.get("${pageContext.request.contextPath}/index/epidemicTopTen.do", {},
+        $.post("${pageContext.request.contextPath}/index/epidemicTopTenPie.do", {regionName: regionName},
                 function (data) {
                     var json = data;
                     option.legend.data = json['epidemicNames'];
                     option.series[0].data = json['epidemicTop'];
-                    var myChart = echarts.init(document.getElementById('top10'));
+                    var myChart = echarts.init(document.getElementById(id));
                     myChart.setOption(option);
                 },
                 "json");
@@ -241,9 +250,18 @@
     }
 
 
+    function yqTop10() {
+        yqTop10Pie('top10Pie', '', '全球疫情TOP10');
+        yqTop10Bar('top10Bar', '');
+    }
+
+    function yqLocalTop10() {
+        yqTop10Pie('top10Pie', '中国', '我国疫情TOP10');
+        yqTop10Bar('top10Bar', '中国');
+    }
+
     $(document).ready(function () {
-        yqTop10()
-        localTop10()
+        $("#yqpie").click();
     });
 
 

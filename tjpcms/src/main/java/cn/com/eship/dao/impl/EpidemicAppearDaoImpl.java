@@ -1,6 +1,7 @@
 package cn.com.eship.dao.impl;
 
 import cn.com.eship.dao.EpidemicAppearDao;
+import cn.com.eship.model.EpidemicAppear;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -56,7 +57,7 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
     }
 
     @Override
-    public List<Object> findEpidemicAppearCount(Map<String, String> mapPram) throws Exception {
+    public List<Object> findEpidemicAppearList(Map<String, String> mapPram) throws Exception {
         List<Object> valueList = new ArrayList<Object>();
         StringBuffer selectPart = new StringBuffer("select epidemicAppear.epidemic.epidemicName,sum(epidemicAppear.appearTimes) as appearTimesSum from EpidemicAppear epidemicAppear");
         StringBuffer wherePart = new StringBuffer(" where 1 = 1");
@@ -127,5 +128,24 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
                 });
 
         return list != null ? list : null;
+    }
+
+    @Override
+    public List<EpidemicAppear> findEpidemicAppearList(Integer startPosition) throws Exception {
+        //return hibernateTemplate.loadAll(EpidemicAppear.class);
+        String hql = "from EpidemicAppear epidemicAppear join fetch epidemicAppear.epidemic join fetch epidemicAppear.region";
+        List<EpidemicAppear> list = (List<EpidemicAppear>) hibernateTemplate.execute(
+                new HibernateCallback() {
+                    public Object doInHibernate(Session session)
+                            throws HibernateException, SQLException {
+                        Query query = session.createQuery(hql);
+                        query.setFirstResult(startPosition);
+                        query.setMaxResults(10);
+                        List list = query.list();
+                        return list;
+                    }
+                });
+
+        return list;
     }
 }

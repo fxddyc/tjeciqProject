@@ -1,214 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <meta name="keywords"
-          content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
-    <meta name="description" content="">
-    <meta name="author" content="ThemeBucket">
-    <link rel="shortcut icon" href="#" type="image/png">
+<html>
+<head><title>Apache Tomcat/8.0.33 - Error report</title>
+    <style type="text/css">H1 {
+        font-family: Tahoma, Arial, sans-serif;
+        color: white;
+        background-color: #525D76;
+        font-size: 22px;
+    }
 
-    <title>AdminX</title>
+    H2 {
+        font-family: Tahoma, Arial, sans-serif;
+        color: white;
+        background-color: #525D76;
+        font-size: 16px;
+    }
 
-    {% load staticfiles %}
-    <!--dashboard calendar-->
-    <link href="{% static 'adminex/css/clndr.css' %}" rel="stylesheet">
+    H3 {
+        font-family: Tahoma, Arial, sans-serif;
+        color: white;
+        background-color: #525D76;
+        font-size: 14px;
+    }
 
-    <!--pickers css-->
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'adminex/js/bootstrap-datepicker/css/datepicker-custom.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'adminex/js/bootstrap-timepicker/css/timepicker.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'adminex/js/bootstrap-colorpicker/css/colorpicker.css' %}"/>
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'adminex/js/bootstrap-daterangepicker/daterangepicker-bs3.css' %}"/>
-    <link rel="stylesheet" type="text/css"
-          href="{% static 'adminex/js/bootstrap-datetimepicker/css/datetimepicker-custom.css' %}"/>
+    BODY {
+        font-family: Tahoma, Arial, sans-serif;
+        color: black;
+        background-color: white;
+    }
 
+    B {
+        font-family: Tahoma, Arial, sans-serif;
+        color: white;
+        background-color: #525D76;
+    }
 
-    <!--common-->
-    <link href="{% static 'adminex/css/style.css' %}" rel="stylesheet">
-    <link href="{% static 'adminex/css/style-responsive.css' %}" rel="stylesheet">
-    <link href="{% static 'adminex/fonts/css/font-awesome.min.css' %}" rel="stylesheet">
+    P {
+        font-family: Tahoma, Arial, sans-serif;
+        background: white;
+        color: black;
+        font-size: 12px;
+    }
 
+    A {
+        color: black;
+    }
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-  <script src="js/html5shiv.js"></script>
-  <script src="js/respond.min.js"></script>
-  <![endif]-->
+    A.name {
+        color: black;
+    }
+
+    .line {
+        height: 1px;
+        background-color: #525D76;
+        border: none;
+    }</style>
 </head>
-
-<body class="sticky-header">
-<section>
-
-    {% include 'menu.html' %}
-    <!-- main content start-->
-    <div class="main-content">
-        {% include 'header.html' %}
-        <!--body wrapper start-->
-        <div class="wrapper">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel">
-                        <header class="panel-heading">
-                            查询
-                        </header>
-                        <div class="panel-body" style="display: block;">
-                            <table style="text-align: center;">
-                                <tr>
-                                    <td><label>地域:&nbsp;&nbsp;&nbsp;</label></td>
-                                    <td><select id="region" class="form-control">
-                                        <option value="">全部</option>
-                                        {% for region in regions %}
-                                            <option value="{{ region.key }}">{{ region.value }}</option>
-                                        {% endfor %}
-                                    </select></td>
-                                    <td><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间段:&nbsp;&nbsp;&nbsp;</label></td>
-                                    <td>
-                                        <div data-date-minviewmode="months" data-date-viewmode="years"
-                                             class="input-group input-large custom-date-range" data-date="102/2012"
-                                             data-date-format="yyyy-mm-dd">
-                                            <input type="text" id="fromDate" class="form-control dpd1" name="from">
-                                            <span class="input-group-addon">到</span>
-                                            <input type="text" id="endDate" class="form-control dpd2" name="to">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-primary" onclick="clearAll()">重置条件</button>
-                                    </td>
-                                    <td>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-info" onclick="findYQChartsCloud()">查询</button>
-                                    </td>
-                                </tr>
-
-                            </table>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="panel">
-                        <header class="panel-heading">
-                            疫情字符云
-                                    <span class="tools pull-right">
-                                        <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                     </span>
-                        </header>
-                        <div class="panel-body" style="display: block;">
-                            <div id="main" style="height:400px"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!--body wrapper end-->
-    </div>
-    <!-- main content end-->
-</section>
-
-<!-- Placed js at the end of the document so the pages load faster -->
-<script src="{% static 'adminex/js/jquery-1.10.2.min.js' %}"></script>
-<script src="{% static 'adminex/js/jquery-ui-1.9.2.custom.min.js' %}"></script>
-<script src="{% static 'adminex/js/jquery-migrate-1.2.1.min.js' %}"></script>
-<script src="{% static 'adminex/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'adminex/js/modernizr.min.js' %}"></script>
-<script src="{% static 'adminex/js/jquery.nicescroll.js' %}"></script>
-
-<!--common scripts for all pages-->
-<script src="{% static 'adminex/js/scripts.js' %}"></script>
-
-
-<!--pickers plugins-->
-<script type="text/javascript" src="{% static 'adminex/js/bootstrap-datepicker/js/bootstrap-datepicker.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'adminex/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js' %}"></script>
-<script type="text/javascript" src="{% static 'adminex/js/bootstrap-daterangepicker/moment.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'adminex/js/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
-<script type="text/javascript"
-        src="{% static 'adminex/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js' %}"></script>
-<script type="text/javascript" src="{% static 'adminex/js/bootstrap-timepicker/js/bootstrap-timepicker.js' %}"></script>
-
-<!--pickers initialization-->
-<script src="{% static 'adminex/js/pickers-init.js' %}"></script>
-
-
-<script src="{% static 'echarts/build/dist/echarts-all.js' %}"></script>
-
-
-<script>
-
-    function createRandomItemStyle() {
-        return {
-            normal: {
-                color: 'rgb(' + [
-                    Math.round(Math.random() * 160),
-                    Math.round(Math.random() * 160),
-                    Math.round(Math.random() * 160)
-                ].join(',') + ')'
-            }
-        };
-    }
-
-    function clearAll() {
-        $("input").attr("value", "");
-        $("#region").attr("value", "");
-        findYQChartsCloud()
-
-    }
-
-
-    function findYQChartsCloud() {
-        //设置数据
-        var option = {
-            tooltip: {
-                show: true
-            },
-            series: [{
-                name: '疫情字符云',
-                type: 'wordCloud',
-                size: ['80%', '80%'],
-                textRotation: [0, 45, 90, -45],
-                textPadding: 0,
-                autoSize: {
-                    enable: true,
-                    minSize: 14
-                },
-                data: []
-            }]
-        };
-        $.post("/yqChartsCloud/yqChartsCloudList", {
-                    'region': $('#region option:selected').val(),
-                    'fromDate': $('#fromDate').val(),
-                    'endDate': $('#endDate').val()
-                },
-                function (data) {
-                    var json = data;
-                    option.series[0].data = []
-                    for (var i = 0; i < json.length; i++) {
-                        json[i]['itemStyle'] = createRandomItemStyle()
-                        option.series[0].data.push(json[i])
-                    }
-                    var myChart = echarts.init(document.getElementById('main'));
-                    myChart.setOption(option);
-                },
-                "json");
-    }
-
-
-    $(document).ready(function () {
-        findYQChartsCloud()
-    });
-
-
-</script>
-
-
-</body>
+<body><h1>HTTP Status 500 - No serializer found for class org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer
+    and no properties discovered to create BeanSerializer (to avoid exception, disable
+    SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS) ) (through reference chain: java.util.ArrayList[0]-&gt;cn.com.eship.model.EpidemicAppear[&quot;epidemic&quot;]-&gt;cn.com.eship.model.Epidemic_$$_javassist_2[&quot;handler&quot;])</h1>
+<div class="line"></div>
+<p><b>type</b> Exception report</p>
+<p><b>message</b> <u>No serializer found for class org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer and no
+    properties discovered to create BeanSerializer (to avoid exception, disable
+    SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS) ) (through reference chain: java.util.ArrayList[0]-&gt;cn.com.eship.model.EpidemicAppear[&quot;epidemic&quot;]-&gt;cn.com.eship.model.Epidemic_$$_javassist_2[&quot;handler&quot;])</u>
+</p>
+<p><b>description</b> <u>The server encountered an internal error that prevented it from fulfilling this request.</u>
+</p>
+<p><b>exception</b></p><pre>org.codehaus.jackson.map.JsonMappingException: No serializer found for class org.hibernate.proxy.pojo.javassist.JavassistLazyInitializer and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS) ) (through reference chain: java.util.ArrayList[0]-&gt;cn.com.eship.model.EpidemicAppear[&quot;epidemic&quot;]-&gt;cn.com.eship.model.Epidemic_$$_javassist_2[&quot;handler&quot;])
+	org.codehaus.jackson.map.ser.impl.UnknownSerializer.failForEmpty(UnknownSerializer.java:52)
+	org.codehaus.jackson.map.ser.impl.UnknownSerializer.serialize(UnknownSerializer.java:25)
+	org.codehaus.jackson.map.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:446)
+	org.codehaus.jackson.map.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:150)
+	org.codehaus.jackson.map.ser.BeanSerializer.serialize(BeanSerializer.java:112)
+	org.codehaus.jackson.map.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:446)
+	org.codehaus.jackson.map.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:150)
+	org.codehaus.jackson.map.ser.BeanSerializer.serialize(BeanSerializer.java:112)
+	org.codehaus.jackson.map.ser.std.StdContainerSerializers$IndexedListSerializer.serializeContents(StdContainerSerializers.java:122)
+	org.codehaus.jackson.map.ser.std.StdContainerSerializers$IndexedListSerializer.serializeContents(StdContainerSerializers.java:71)
+	org.codehaus.jackson.map.ser.std.AsArraySerializerBase.serialize(AsArraySerializerBase.java:86)
+	org.codehaus.jackson.map.ser.StdSerializerProvider._serializeValue(StdSerializerProvider.java:610)
+	org.codehaus.jackson.map.ser.StdSerializerProvider.serializeValue(StdSerializerProvider.java:256)
+	org.codehaus.jackson.map.ObjectMapper._configAndWriteValue(ObjectMapper.java:2568)
+	org.codehaus.jackson.map.ObjectMapper.writeValueAsString(ObjectMapper.java:2090)
+	cn.com.eship.service.impl.EpidemicServiceImpl.makeEpidemicAppearListJson(EpidemicServiceImpl.java:32)
+	sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	java.lang.reflect.Method.invoke(Method.java:498)
+	org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:317)
+	org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:190)
+	org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:157)
+	org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:99)
+	org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:281)
+	org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:96)
+	org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:92)
+	org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:179)
+	org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:207)
+	com.sun.proxy.$Proxy19.makeEpidemicAppearListJson(Unknown Source)
+	cn.com.eship.controller.EpidemicController.epidemicList(EpidemicController.java:27)
+	sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	java.lang.reflect.Method.invoke(Method.java:498)
+	org.springframework.web.bind.annotation.support.HandlerMethodInvoker.invokeHandlerMethod(HandlerMethodInvoker.java:177)
+	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.invokeHandlerMethod(AnnotationMethodHandlerAdapter.java:446)
+	org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.handle(AnnotationMethodHandlerAdapter.java:434)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:959)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:893)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:966)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:868)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:648)
+	org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:842)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:729)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:231)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:85)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:107)
+</pre>
+<p><b>note</b> <u>The full stack trace of the root cause is available in the Apache Tomcat/8.0.33 logs.</u></p>
+<hr class="line">
+<h3>Apache Tomcat/8.0.33</h3></body>
 </html>

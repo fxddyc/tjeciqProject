@@ -148,4 +148,17 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
 
         return list;
     }
+
+    /**
+     * 根据条件查询疫情发生表总条数
+     *
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public Long findEpidemicAppearCount() throws Exception {
+        String hql = "select count(*) from EpidemicAppear epidemicAppear";
+        Object object = hibernateTemplate.find(hql);
+        return object!=null?((List<Long>)object).get(0):new Long(0);
+    }
 }

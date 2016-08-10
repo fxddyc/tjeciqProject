@@ -67,15 +67,15 @@
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label class="control-label">时间段</label>
-                                    <td>
-                                        <div data-date-minviewmode="months" data-date-viewmode="years"
-                                             class="input-group input-large custom-date-range " data-date="102/2012"
-                                             data-date-format="yyyy-mm-dd">
-                                            <input type="text" id="startDate" class="form-control dpd1" name="from">
-                                            <span class="input-group-addon">到</span>
-                                            <input type="text" id="endDate" class="form-control dpd2" name="to">
-                                        </div>
-                                    </td>
+                                    <%--<td>--%>
+                                        <%--<div data-date-minviewmode="months" data-date-viewmode="years"--%>
+                                             <%--class="input-group input-large custom-date-range " data-date="102/2012"--%>
+                                             <%--data-date-format="yyyy-mm-dd">--%>
+                                            <%--<input type="text" id="startDate" class="form-control dpd1" name="from">--%>
+                                            <%--<span class="input-group-addon">到</span>--%>
+                                            <%--<input type="text" id="endDate" class="form-control dpd2" name="to">--%>
+                                        <%--</div>--%>
+                                    <%--</td>--%>
                                     <%--<input type="text" class="form-control" placeholder="" id="timeInput">--%>
                                 </div>
                             </div>
@@ -172,8 +172,8 @@
 
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap-datepicker/js/bootstrap-datepicker.js?v=1"></script>
 <%--<!--pickers initialization-->--%>
-<script src="${pageContext.request.contextPath}/adminex/js/pickers-init.js"></script>
-<script src="${pageContext.request.contextPath}/bootstrap/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<%--<script src="${pageContext.request.contextPath}/adminex/js/pickers-init.js"></script>--%>
+<%--<script src="${pageContext.request.contextPath}/bootstrap/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>--%>
 
 <script type="text/javascript">
     var app = angular.module('myApp', []);
@@ -231,10 +231,11 @@
                     $scope.epidemicAppearList = response.epidemicAppearList;
                 });
         $scope.pageUtils = function (event) {
+
             $http.get("${pageContext.request.contextPath}/epidemic/epidemicList.do?pageNo=" +1).success(function (response) {
                 var aaa = event.target;
-                var bbb = event.target;
-                alert(aaa)
+                var bbb = event;
+                alert(aaa);
                 $scope.epidemicAppearList = response.epidemicAppearList;
             });
         }

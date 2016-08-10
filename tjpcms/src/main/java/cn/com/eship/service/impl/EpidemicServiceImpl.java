@@ -1,6 +1,7 @@
 package cn.com.eship.service.impl;
 
 import cn.com.eship.dao.EpidemicAppearDao;
+import cn.com.eship.dao.EpidemicDao;
 import cn.com.eship.model.EpidemicAppear;
 import cn.com.eship.service.EpidemicService;
 import cn.com.eship.utils.PageUtils;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class EpidemicServiceImpl implements EpidemicService {
     @Autowired
     private EpidemicAppearDao epidemicAppearDao;
+    @Autowired
+    private EpidemicDao epidemicDao;
 
     @Override
     public String makeEpidemicAppearListJson(String pageNo) throws Exception {
@@ -34,4 +37,18 @@ public class EpidemicServiceImpl implements EpidemicService {
         objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         return objectMapper.writeValueAsString(jsonMap);
     }
+
+    @Override
+    public List<Object> getEpidemicNameList(String keyword) throws Exception {
+        List<Object> epidemicNameList = epidemicDao.findEpidemicNameList(keyword);
+        return epidemicNameList;
+    }
+
+    @Override
+    public List<Object> getEpidemicRegionList(String keyword) throws Exception {
+        List<Object> epidemicNameList = epidemicDao.findEpidemicRegionList(keyword);
+        return epidemicNameList;
+    }
+
+
 }

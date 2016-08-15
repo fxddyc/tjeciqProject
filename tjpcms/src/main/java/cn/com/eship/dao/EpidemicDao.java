@@ -13,6 +13,7 @@ public interface EpidemicDao {
      * @return
      */
     public Long findEpidemicCount() throws Exception;
-
     public List<Epidemic> findEpidemicList() throws Exception;
+    public List<Object> findEpidemicNameList(String keyword) throws Exception;
+    public List<Object> findEpidemicRegionList(String keyword) throws Exception;
 }

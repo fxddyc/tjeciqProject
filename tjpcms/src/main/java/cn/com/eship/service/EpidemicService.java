@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface EpidemicService {
     public String makeEpidemicAppearListJson(String pageNo) throws Exception;
+    public List<Object> getEpidemicNameList(String keyword) throws Exception;
+    public List<Object> getEpidemicRegionList(String keyword) throws Exception;
 }

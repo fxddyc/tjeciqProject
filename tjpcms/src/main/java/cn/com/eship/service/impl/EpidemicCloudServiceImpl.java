@@ -5,6 +5,7 @@ import cn.com.eship.dao.RegionDao;
 import cn.com.eship.model.EpidemicAppear;
 import cn.com.eship.service.EpidemicCloudService;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.collections.map.LinkedMap;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class EpidemicCloudServiceImpl implements EpidemicCloudService {
         List<Map<String, Object>> jsonList = new ArrayList<Map<String, Object>>();
         if (epidemicAppearCountList != null && epidemicAppearCountList.size() > 0) {
             for (Object epidemicAppearCount : epidemicAppearCountList) {
-                Map<String, Object> map = new HashMap<String, Object>();
+                Map<String, Object> map = new TreeMap<String, Object>();
                 map.put("name", ((Object[]) epidemicAppearCount)[0]);
                 map.put("value", ((Object[]) epidemicAppearCount)[1]);
                 jsonList.add(map);

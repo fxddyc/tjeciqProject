@@ -22,6 +22,12 @@ public class EpidemicController {
 
     }
 
+    /**
+     * 疫情列表
+     * @param pageNo
+     * @param response
+     * @throws Exception
+     */
     @RequestMapping("epidemicList")
     public void epidemicList(String pageNo,HttpServletResponse response) throws Exception {
         response.getOutputStream().write(epidemicService.makeEpidemicAppearListJson(pageNo).getBytes("utf-8"));

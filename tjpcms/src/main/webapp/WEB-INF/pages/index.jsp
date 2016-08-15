@@ -98,6 +98,9 @@
 
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div id="timeLine" style="height:400px;"></div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div id="top10Pie" style="height:400px"></div>
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -127,6 +130,10 @@
 <script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>
 
 <script src="${pageContext.request.contextPath}/echarts/build/dist/echarts-all.js"></script>
+
+<script src="${pageContext.request.contextPath}/angularjs/angular.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/echarts/timeline.js"></script>
 
 <script>
 
@@ -250,6 +257,158 @@
     }
 
 
+    function timeLine() {
+        var option = {
+            timeline: {
+                data: [
+                    '2002-01-01', '2003-01-01', '2004-01-01', '2005-01-01', '2006-01-01',
+                    '2007-01-01', '2008-01-01', '2009-01-01', '2010-01-01', '2011-01-01'
+                ],
+                label: {
+                    formatter: function (s) {
+                        return s.slice(0, 4);
+                    }
+                },
+                autoPlay: true,
+                playInterval: 1000
+            },
+            options: [
+                {
+                    title: {
+                        'text': '2002疫情变化图示',
+                        'subtext': '数据来自全球卫生组织'
+                    },
+                    tooltip: {'trigger': 'axis'},
+                    legend: {
+                        x: 'right',
+                        'data': ['我国', '全球']
+                    },
+                    toolbox: {
+                        'show': true,
+                        orient: 'vertical',
+                        x: 'right',
+                        y: 'center',
+                        'feature': {
+                            'mark': {'show': true},
+                            'dataView': {'show': true, 'readOnly': false},
+                            'magicType': {'show': true, 'type': ['line', 'bar', 'stack', 'tiled']},
+                            'restore': {'show': true},
+                            'saveAsImage': {'show': true}
+                        }
+                    },
+                    calculable: true,
+                    grid: {'y': 80, 'y2': 100},
+                    xAxis: [{
+                        'type': 'category',
+                        'axisLabel': {'interval': 0},
+                        'data': [
+                            '中东呼吸综合征冠状病毒',
+                            '脊髓灰质炎',
+                            '流感',
+                            '传染性非典型肺炎',
+                            '肺炭疽',
+                            '新型冠状病毒病',
+                            '埃博拉病毒',
+                            '拉沙热',
+                            '马尔堡热',
+                            '西尼罗热'
+                        ]
+                    }],
+                    yAxis: [
+                        {
+                            'type': 'value',
+                            'name': '疫情总次数',
+                            'max': 53500
+                        },
+                        {
+                            'type': 'value',
+                            'name': '平均次数'
+                        }
+                    ],
+                    series: [
+                        {
+                            'name': '全球',
+                            'type': 'bar',
+                            'data': dataMap.dataGDP['2002']
+                        },
+                        {
+                            'name': '我国', 'yAxisIndex': 1, 'type': 'bar',
+                            'data': dataMap.dataFinancial['2002']
+                        }
+                    ]
+                },
+                {
+                    title: {'text': '2003疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2003']},
+                        {'data': dataMap.dataFinancial['2003']}
+                    ]
+                },
+                {
+                    title: {'text': '2004疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2004']},
+                        {'data': dataMap.dataFinancial['2004']}
+                    ]
+                },
+                {
+                    title: {'text': '2005疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2005']},
+                        {'data': dataMap.dataFinancial['2005']}
+                    ]
+                },
+                {
+                    title: {'text': '2006疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2006']},
+                        {'data': dataMap.dataFinancial['2006']}]
+                },
+                {
+                    title: {'text': '2007疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2007']},
+                        {'data': dataMap.dataFinancial['2007']}
+                    ]
+                },
+                {
+                    title: {'text': '2008疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2008']},
+                        {'data': dataMap.dataFinancial['2008']}
+                    ]
+                },
+                {
+                    title: {'text': '2009疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2009']},
+                        {'data': dataMap.dataFinancial['2009']}
+                    ]
+                },
+                {
+                    title: {'text': '2010疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2010']},
+                        {'data': dataMap.dataFinancial['2010']}
+                    ]
+                },
+                {
+                    title: {'text': '2011疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2011']},
+                        {'data': dataMap.dataFinancial['2011']}
+                    ]
+                }
+            ]
+        };
+
+        var myChart = echarts.init(document.getElementById('timeLine'));
+        myChart.setOption(option);
+
+
+    }
+
+
     function yqTop10() {
         yqTop10Pie('top10Pie', '', '全球疫情TOP10');
         yqTop10Bar('top10Bar', '');
@@ -262,6 +421,7 @@
 
     $(document).ready(function () {
         $("#yqpie").click();
+        timeLine();
     });
 
 

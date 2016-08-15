@@ -157,7 +157,7 @@
 <%--<!--pickers initialization-->--%>
 <script src="${pageContext.request.contextPath}/adminex/js/pickers-init.js"></script>
 
-<script src="${pageContext.request.contextPath}/bootstrap/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<%--<script src="${pageContext.request.contextPath}/bootstrap/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>--%>
 
 <script src="${pageContext.request.contextPath}/echarts/build/dist/echarts-all.js"></script>
 

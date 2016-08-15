@@ -97,6 +97,11 @@
                                         <div class="th-inner ">爆发时间</div>
                                         <div class="fht-cell"></div>
                                     </th>
+                                    <th style="">
+                                        <div class="th-inner ">操作</div>
+                                        <div class="fht-cell"></div>
+
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -106,19 +111,18 @@
                                     <td style="">{{epidemicAppear.region.regionCn}}</td>
                                     <td style="">{{epidemicAppear.appearTimes}}</td>
                                     <td style="">{{epidemicAppear.appearDate}}</td>
+                                    <td style=""><button class="btn btn-primary" type="button">查看详情</button></td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
                                 <tr>
                                     <div class="dataTables_paginate paging_bootstrap pagination">
                                         <ul>
+                                            <li><a data="1" ng-click="pageUtils($event)">首页</a></li>
                                             <li class="prev disabled"><a href="#">← 上一页</a></li>
-                                            <li><a ng-click="pageUtils(1)">1</a></li>
-                                            <li><a ng-click="pageUtils(2)">2</a></li>
-                                            <li><a ng-click="pageUtils(3)">3</a></li>
-                                            <li><a ng-click="pageUtils(4)">4</a></li>
-                                            <li><a ng-click="pageUtils(5)">5</a></li>
+                                            <li class="active"><a data="1" ng-click="pageUtils($event)">1</a></li>
                                             <li class="next"><a href="#">下一页 → </a></li>
+                                            <li class="next"><a href="#">尾页</a></li>
                                         </ul>
                                     </div>
                                 </tr>
@@ -159,8 +163,11 @@
                 .success(function (response) {
                     $scope.epidemicAppearList = response.epidemicAppearList;
                 });
-        $scope.pageUtils = function (pageNo) {
-            $http.get("${pageContext.request.contextPath}/epidemic/epidemicList.do?pageNo=" + pageNo).success(function (response) {
+        $scope.pageUtils = function (event) {
+            //var aaa = event.target.getAttribute('data');
+            var bbb = event.target.parentNode;
+            $http.get("${pageContext.request.contextPath}/epidemic/epidemicList.do?pageNo=" + 1).success(function (response) {
+                var epidemicAppearListCount = response.epidemicAppearListCount;
                 $scope.epidemicAppearList = response.epidemicAppearList;
             });
         }

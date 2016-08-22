@@ -27,8 +27,6 @@
 <body class="sticky-header" ng-app="myApp">
 
 
-
-
 <section>
     <%@include file="menu.jsp" %>
     <!-- main content start-->
@@ -38,7 +36,7 @@
         <div class="wrapper">
 
 
-            <div class="row" >
+            <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -49,32 +47,40 @@
                             <div class="row">
                                 <div class="col-lg-4 form-group" ng-controller="epidemicName">
                                     <label class="control-label">疫情名称</label>
-                                    <input type="text" class="form-control" placeholder="疫情名称" ng-model="eName" ng-keyup="getNameList()">
+                                    <input type="text" class="form-control" placeholder="疫情名称" ng-model="eName"
+                                           ng-keyup="getNameList()">
                                     <div class="row" style="height:0;">
                                         <ui id='enlu' class="col-md-12" style="float:left;background: white;height:0;">
-                                            <li class="col-md-12 scl" ng-click="b()" ng-style="myStyle" ng-mouseover="c()" ng-mouseout="d()" ng-repeat="en in epidemicNameList">{{en}}</li>
+                                            <li class="col-md-12 scl" ng-click="b()" ng-style="myStyle"
+                                                ng-mouseover="c()" ng-mouseout="d()" ng-repeat="en in epidemicNameList">
+                                                {{en}}
+                                            </li>
                                         </ui>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 form-group" ng-controller="epidemicRegion">
                                     <label class="control-label">地域名称</label>
-                                    <input type="text" class="form-control" placeholder="地域名称" ng-model="eRegion" ng-keyup="getRegionList()">
+                                    <input type="text" class="form-control" placeholder="地域名称" ng-model="eRegion"
+                                           ng-keyup="getRegionList()">
                                     <div class="row" style="height:0;">
                                         <ui id='erlu' class="col-md-12" style="float:left;background: white;height:0;">
-                                            <li class="col-md-12 scl" ng-click="b()" ng-style="myStyle" ng-mouseover="c()" ng-mouseout="d()" ng-repeat="er in epidemicRegionList">{{er}}</li>
+                                            <li class="col-md-12 scl" ng-click="b()" ng-style="myStyle"
+                                                ng-mouseover="c()" ng-mouseout="d()"
+                                                ng-repeat="er in epidemicRegionList">{{er}}
+                                            </li>
                                         </ui>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 form-group">
                                     <label class="control-label">时间段</label>
                                     <%--<td>--%>
-                                        <%--<div data-date-minviewmode="months" data-date-viewmode="years"--%>
-                                             <%--class="input-group input-large custom-date-range " data-date="102/2012"--%>
-                                             <%--data-date-format="yyyy-mm-dd">--%>
-                                            <%--<input type="text" id="startDate" class="form-control dpd1" name="from">--%>
-                                            <%--<span class="input-group-addon">到</span>--%>
-                                            <%--<input type="text" id="endDate" class="form-control dpd2" name="to">--%>
-                                        <%--</div>--%>
+                                    <%--<div data-date-minviewmode="months" data-date-viewmode="years"--%>
+                                    <%--class="input-group input-large custom-date-range " data-date="102/2012"--%>
+                                    <%--data-date-format="yyyy-mm-dd">--%>
+                                    <%--<input type="text" id="startDate" class="form-control dpd1" name="from">--%>
+                                    <%--<span class="input-group-addon">到</span>--%>
+                                    <%--<input type="text" id="endDate" class="form-control dpd2" name="to">--%>
+                                    <%--</div>--%>
                                     <%--</td>--%>
                                     <%--<input type="text" class="form-control" placeholder="" id="timeInput">--%>
                                 </div>
@@ -117,6 +123,10 @@
                                         <div class="th-inner ">爆发时间</div>
                                         <div class="fht-cell"></div>
                                     </th>
+                                    <th style="">
+                                        <div class="th-inner ">操作</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -126,22 +136,28 @@
                                     <td style="">{{epidemicAppear.region.regionCn}}</td>
                                     <td style="">{{epidemicAppear.appearTimes}}</td>
                                     <td style="">{{epidemicAppear.appearDate}}</td>
+                                    <td style="">
+                                        <a href="${pageContext.request.contextPath}/epidemic/epidemicDetail.do?epidemicAppearId={{epidemicAppear.id}}">
+                                            <button class="btn btn-default">查看详情</button>
+                                        </a>
+                                    </td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
-                                    <tr>
-                                        <div class="dataTables_paginate paging_bootstrap pagination">
-                                            <ul>
-                                                <li class="prev disabled"><a href="#" ng-click="pageUtils($event)">← 上一页</a></li>
-                                                <li><a ng-click="pageUtils($event)">1</a></li>
-                                                <li><a ng-click="pageUtils($event)">2</a></li>
-                                                <li><a ng-click="pageUtils($event)">3</a></li>
-                                                <li><a ng-click="pageUtils(4)">4</a></li>
-                                                <li><a ng-click="pageUtils(5)">5</a></li>
-                                                <li class="next"><a href="#">下一页 → </a></li>
-                                            </ul>
-                                        </div>
-                                    </tr>
+                                <tr>
+                                    <div class="dataTables_paginate paging_bootstrap pagination">
+                                        <ul>
+                                            <li class="prev disabled"><a href="#" ng-click="pageUtils($event)">← 上一页</a>
+                                            </li>
+                                            <li><a ng-click="pageUtils($event)">1</a></li>
+                                            <li><a ng-click="pageUtils($event)">2</a></li>
+                                            <li><a ng-click="pageUtils($event)">3</a></li>
+                                            <li><a ng-click="pageUtils(4)">4</a></li>
+                                            <li><a ng-click="pageUtils(5)">5</a></li>
+                                            <li class="next"><a href="#">下一页 → </a></li>
+                                        </ul>
+                                    </div>
+                                </tr>
                                 </tfoot>
                             </table>
 
@@ -156,7 +172,12 @@
     <!-- main content end-->
 </section>
 <style type="text/css">
-    .scl {float:left;clear:both;background:white;list-style-type:none;}
+    .scl {
+        float: left;
+        clear: both;
+        background: white;
+        list-style-type: none;
+    }
 </style>
 
 <!-- Placed js at the end of the document so the pages load faster -->
@@ -179,17 +200,22 @@
     var app = angular.module('myApp', []);
     var ene = document.getElementById("enlu");
     var ere = document.getElementById("erlu");
-    var initStyle = {"float":"left","clear":"both","background":"white","list-style-type":"none"};
-    var focusStyle = {"float":"left","clear":"both","background":"#00FFFF","list-style-type":"none"};
-    app.controller('epidemicName',function ($scope, $http){
+    var initStyle = {"float": "left", "clear": "both", "background": "white", "list-style-type": "none"};
+    var focusStyle = {"float": "left", "clear": "both", "background": "#00FFFF", "list-style-type": "none"};
+    app.controller('epidemicName', function ($scope, $http) {
         $scope.getNameList = function () {
-            $http({ method:'post',url:"${pageContext.request.contextPath}/epidemic/epidemicNameList.do", params:{keyword:$scope.eName}
-            }).success(function (response) {$scope.epidemicNameList = response[0];});
-            ene.style.display='';
+            $http({
+                method: 'post',
+                url: "${pageContext.request.contextPath}/epidemic/epidemicNameList.do",
+                params: {keyword: $scope.eName}
+            }).success(function (response) {
+                $scope.epidemicNameList = response[0];
+            });
+            ene.style.display = '';
         };
         $scope.b = function () {
             $scope.eName = this.en;
-            ene.style.display='none';
+            ene.style.display = 'none';
         };
         $scope.c = function () {
             this.myStyle = focusStyle;
@@ -198,15 +224,20 @@
             this.myStyle = initStyle;
         }
     });
-    app.controller('epidemicRegion',function ($scope, $http){
+    app.controller('epidemicRegion', function ($scope, $http) {
         $scope.getRegionList = function () {
-            $http({ method:'post',url:"${pageContext.request.contextPath}/epidemic/epidemicRegionList.do", params:{keyword:$scope.eRegion}
-            }).success(function (response) {$scope.epidemicRegionList = response[0];});
-            ere.style.display='';
+            $http({
+                method: 'post',
+                url: "${pageContext.request.contextPath}/epidemic/epidemicRegionList.do",
+                params: {keyword: $scope.eRegion}
+            }).success(function (response) {
+                $scope.epidemicRegionList = response[0];
+            });
+            ere.style.display = '';
         };
         $scope.b = function () {
             $scope.eRegion = this.er;
-            ere.style.display='none';
+            ere.style.display = 'none';
         };
         $scope.c = function () {
             this.myStyle = focusStyle;
@@ -215,13 +246,13 @@
             this.myStyle = initStyle;
         }
     });
-    document.onmousedown=function(ev){
+    document.onmousedown = function (ev) {
         var oen = $(".scl");
-        var oEvent=ev;
-        var target=oEvent.target||oEvent.srcElement;
-        if(oen.length >0 && $.inArray(target, oen)<0){
-            ene.style.display='none';
-            ere.style.display='none';
+        var oEvent = ev;
+        var target = oEvent.target || oEvent.srcElement;
+        if (oen.length > 0 && $.inArray(target, oen) < 0) {
+            ene.style.display = 'none';
+            ere.style.display = 'none';
         }
     };
 
@@ -231,11 +262,7 @@
                     $scope.epidemicAppearList = response.epidemicAppearList;
                 });
         $scope.pageUtils = function (event) {
-
-            $http.get("${pageContext.request.contextPath}/epidemic/epidemicList.do?pageNo=" +1).success(function (response) {
-                var aaa = event.target;
-                var bbb = event;
-                alert(aaa);
+            $http.get("${pageContext.request.contextPath}/epidemic/epidemicList.do?pageNo=" + 1).success(function (response) {
                 $scope.epidemicAppearList = response.epidemicAppearList;
             });
         }

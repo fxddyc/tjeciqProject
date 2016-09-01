@@ -50,5 +50,10 @@ public class EpidemicServiceImpl implements EpidemicService {
         return epidemicNameList;
     }
 
+    @Override
+    public EpidemicAppear getEpidemicAppearById(String id) throws Exception {
+        return epidemicAppearDao.findEpidemicAppearById(id);
+    }
+
 
 }

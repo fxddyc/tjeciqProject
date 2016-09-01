@@ -12,7 +12,15 @@ public class EpidemicAppear implements Serializable {
     private Integer appearTimes;
     private Epidemic epidemic;
     public Region region;
+    private String rowKey;
 
+    public String getRowKey() {
+        return rowKey;
+    }
+
+    public void setRowKey(String rowKey) {
+        this.rowKey = rowKey;
+    }
 
     public Region getRegion() {
         return region;

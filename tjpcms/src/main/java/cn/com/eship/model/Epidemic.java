@@ -8,6 +8,15 @@ import java.io.Serializable;
 public class Epidemic implements Serializable {
     private String id;
     private String epidemicName;
+    private String rowKey;
+
+    public String getRowKey() {
+        return rowKey;
+    }
+
+    public void setRowKey(String rowKey) {
+        this.rowKey = rowKey;
+    }
 
     public String getId() {
         return id;

@@ -159,6 +159,11 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
     public Long findEpidemicAppearCount() throws Exception {
         String hql = "select count(*) from EpidemicAppear epidemicAppear";
         Object object = hibernateTemplate.find(hql);
-        return object!=null?((List<Long>)object).get(0):new Long(0);
+        return object != null ? ((List<Long>) object).get(0) : new Long(0);
+    }
+
+    @Override
+    public EpidemicAppear findEpidemicAppearById(String id) throws Exception {
+        return hibernateTemplate.get(EpidemicAppear.class, id);
     }
 }

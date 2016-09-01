@@ -23,116 +23,102 @@
         <!--body wrapper start-->
         <div class="wrapper">
             <div class="row blog">
-                <div class="col-md-12">
-                    <div class="blog">
-                        <div class="single-blog">
-                            <div class="panel">
-                                <div class="panel-body">
-                                    <h1 class="text-center mtop35"><a href="#">Neque porro quisquam est qui dolo rem
-                                        ipsum
-                                        quio</a></h1>
-                                    <p class="text-center auth-row">
-                                        By <a href="#">Anthony Jones</a> | 27 December 2014 | <a href="#">5 Comments</a>
-                                    </p>
-                                    <div class="blog-img-wide">
-                                        <img src="${pageContext.request.contextPath}/adminex/images/blog/blog-wide-img.jpg" alt="">
+                <div class="col-md-4">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <ul class="p-info">
+                                <li>
+                                    <div class="title">疫情名称</div>
+                                    <div class="desk">${epidemicAppear.epidemic.epidemicName}</div>
+                                </li>
+                                <li>
+                                    <div class="title">地域</div>
+                                    <div class="desk">${epidemicAppear.region.regionCn}</div>
+                                </li>
+                                <li>
+                                    <div class="title">发生次数</div>
+                                    <div class="desk">${epidemicAppear.appearTimes}</div>
+                                </li>
+                                <li>
+                                    <div class="title">爆发时间</div>
+                                    <div class="desk">${epidemicAppear.appearDate}</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>疫情百科</h4>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="blog-img-sm">
+                                        <img id="epidemicBaiKeImg" src="#"
+                                             alt="">
                                     </div>
-                                    <p>
-                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                        doloremque
-                                        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et
-                                        quasi
-                                        architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia
-                                        voluptas
-                                        sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui
-                                        ratione
-                                        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia
-                                        dolor
-                                        sit
-                                        amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora
-                                        incidunt
-                                        ut
-                                        labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
-                                        quis
-                                        nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
-                                        commodi
-                                        consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit
-                                        esse
-                                        quam
-                                        nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla
-                                        pariatur?
-                                    </p>
-                                    <p>
-                                        Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed
-                                        quia
-                                        consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque
-                                        porro
-                                        quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-                                        velit,
-                                        sed
-                                        quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam
-                                        quaerat
-                                        voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-                                        suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel
-                                        eum
-                                        iure
-                                        reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
-                                        vel
-                                        illum
-                                        qui dolorem eum fugiat quo voluptas nulla pariatur?
-                                    </p>
-
-                                    <blockquote>
-                                        <p>
-                                            Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est
-                                            at
-                                            lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis
-                                            vestibulum. Duis mollis, est non commodo luctus, nisi erat port titor
-                                            ligula,
-                                            eget
-                                            lacinia odio sem nec elit.
-                                        </p>
-                                    </blockquote>
-
-                                    <p>
-                                        consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut
-                                        labore
-                                        et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
-                                        nostrum
-                                        exercitationem ullam corporis suscipit laboriosam.
+                                </div>
+                                <div class="col-md-12">
+                                    <p id="baikeSummary">
 
                                     </p>
-
-                                    <div class="blog-tags">
-                                        TAGS <a href="#">photoshop</a> <a href="#">illustrator</a> <a href="#">adobe</a>
-                                        <a
-                                                href="#">theme</a>
-                                        <div class="pull-right tag-social">
-                                            <a href="#" class="btn btn-share pull-right">Share</a>
-
-                                            <ul class="pull-right">
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa fa-facebook"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa fa-twitter"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        <i class="fa fa-google-plus"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <a id="baikeContentUrl" href="#" class="more">查看原文</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
+                </div>
+
+                <div class="col-md-8">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>信息来源</h4>
+                                </div>
+                                <div class="col-md-12">
+                                    <h1 class=""><a id="epidemicSourceTitle" href="#"></a></h1>
+                                    <p id="epidemicSourceTime" class=" auth-row">
+                                    </p>
+
+                                    <p id="epidemicSourceContent">
+                                    </p>
+                                    <a id="epidemicSourceUrl" href="${epidemicAppear.rowKey}" class="more">查看来源</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="panel">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>信息分词</h4>
+                                </div>
+                                <div class="col-md-12">
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">Default</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
@@ -148,9 +134,25 @@
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/modernizr.min.js"></script>
 
+<script>
+    $(document).ready(function () {
+        $.post('${pageContext.request.contextPath}/hbaseController/epidemicBaike.do', {'rowKey': '${epidemicAppear.epidemic.id}'}, function (data) {
+            var json = data;
+            $("#epidemicBaiKeImg").attr("src", json.imgUrl);
+            $("#baikeSummary").text(json.summary);
+            $("#baikeContentUrl").attr("href", json.contentUrl);
+        }, 'json');
 
-<!--common scripts for all pages-->
-<script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>
+
+        $.post('${pageContext.request.contextPath}/hbaseController/epidemicSource.do', {'rowKey': '${epidemicAppear.rowKey}'}, function (data) {
+            var json = data;
+            $("#epidemicSourceTitle").text(json.epidemicName);
+            $("#epidemicSourceTime").text(json.time);
+            $("#epidemicSourceContent").append(json.content);
+        }, 'json');
+    });
+</script>
+
 
 </body>
 </html>

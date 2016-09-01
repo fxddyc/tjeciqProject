@@ -15,12 +15,7 @@
 
     <bean id="configuration" class="org.apache.hadoop.conf.Configuration" factory-bean="hbaseConfigrationFactory"
           factory-method="getConfigration"></bean>
-    <bean id="hBaseAdmin" class="org.apache.hadoop.hbase.client.HBaseAdmin">
+    <bean id="connection" class="org.apache.hadoop.hbase.client.ConnectionFactory" factory-method="createConnection">
         <constructor-arg ref="configuration"></constructor-arg>
-    </bean>
-
-    <bean id="hTablePool" class="org.apache.hadoop.hbase.client.HTablePool">
-        <constructor-arg ref="configuration"></constructor-arg>
-        <constructor-arg value="1000"></constructor-arg>
     </bean>
 </beans> 

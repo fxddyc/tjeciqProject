@@ -31,4 +31,6 @@ public interface EpidemicAppearDao {
      */
     public Long findEpidemicAppearCount() throws Exception;
 
+    public EpidemicAppear findEpidemicAppearById(String id) throws Exception;
+
 }

@@ -94,7 +94,7 @@ public class IndexServiceImpl implements IndexService {
 		Map<String, String> mapParam = setEpidemicAppearDaoParamer(epidemicAppear);
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -1);
-		mapParam.put("startData",
+		mapParam.put("startDate",
 				new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
 		List<Object> epidemicAppearListByOrder = epidemicAppearDao
 				.findEpidemicAppearList(mapParam);
@@ -115,7 +115,7 @@ public class IndexServiceImpl implements IndexService {
 		mapParam.put("region", "31");
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DATE, -1);
-		mapParam.put("startData",
+		mapParam.put("startDate",
 				new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime()));
 		List<Object> epidemicAppearListByOrder = epidemicAppearDao
 				.findEpidemicAppearList(mapParam);

@@ -71,35 +71,6 @@
                                             <span class="input-group-addon">到</span>
                                             <input type="text" id="endDate" class="form-control dpd2" name="to">
                                         </div>
-                                        <%--<div class="input-group">--%>
-                                        <%--<div class="input-group">--%>
-
-                                        <%--<div class="input-append date form_datetime"--%>
-                                        <%--data-date="2013-02-21T15:25:00Z">--%>
-                                        <%--<input class="form-control" size="16" type="text" value="" readonly>--%>
-                                        <%--<span class="add-on"><i class="icon-remove"></i></span>--%>
-                                        <%--<span class="add-on"><i class="fa fa-calendar"></i></span>--%>
-                                        <%--</div>--%>
-
-
-                                        <%--</div>--%>
-
-                                        <%--<span class="input-group-addon" id="basic-addon1">到</span>--%>
-
-                                        <%--<div class="input-group">--%>
-
-                                        <%--<div class="input-append date form_datetime"--%>
-                                        <%--data-date="2013-02-21T15:25:00Z">--%>
-                                        <%--<input class="form-control" size="16" type="text" value="" readonly>--%>
-                                        <%--<span class="add-on"><i class="icon-remove"></i></span>--%>
-                                        <%--<span class="add-on"><i class="icon-calendar"></i></span>--%>
-                                        <%--</div>--%>
-
-
-                                        <%--</div>--%>
-                                        <%--</div>--%>
-
-
                                     </td>
                                     <td>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

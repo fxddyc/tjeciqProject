@@ -38,7 +38,7 @@ public class EpidemicController {
      * @throws Exception
      */
     @RequestMapping("epidemicList")
-    public void epidemicList(String pageNo, HttpServletResponse response) throws Exception {
+    public void epidemicList(String pageNo,String epidemicName,String regionCn,String startDate,String endDate,HttpServletResponse response) throws Exception {
         response.getOutputStream().write(epidemicService.makeEpidemicAppearListJson(pageNo).getBytes("utf-8"));
     }
 

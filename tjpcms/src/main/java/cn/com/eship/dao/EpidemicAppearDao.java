@@ -24,6 +24,8 @@ public interface EpidemicAppearDao {
 
     public List<EpidemicAppear> findEpidemicAppearList(Integer startPosition) throws Exception;
 
+    public List<EpidemicAppear> findEpidemicAppearListByCondition(Integer startPosition,Map<String,String> mapPram) throws Exception;
+
     /**
      * 根据条件查询疫情发生表总条数
      * @return

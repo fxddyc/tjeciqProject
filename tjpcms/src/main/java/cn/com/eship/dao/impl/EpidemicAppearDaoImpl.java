@@ -149,6 +149,24 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
         return list;
     }
 
+    @Override
+    public List<EpidemicAppear> findEpidemicAppearListByCondition(Integer startPosition, Map<String, String> mapPram) throws Exception {
+        String hql = "from EpidemicAppear epidemicAppear join fetch epidemicAppear.epidemic join fetch epidemicAppear.region";
+        List<EpidemicAppear> list = (List<EpidemicAppear>) hibernateTemplate.execute(
+                new HibernateCallback() {
+                    public Object doInHibernate(Session session)
+                            throws HibernateException, SQLException {
+                        Query query = session.createQuery(hql);
+                        query.setFirstResult(startPosition);
+                        query.setMaxResults(10);
+                        List list = query.list();
+                        return list;
+                    }
+                });
+
+        return list;
+    }
+
     /**
      * 根据条件查询疫情发生表总条数
      *

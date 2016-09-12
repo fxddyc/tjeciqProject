@@ -218,7 +218,37 @@
     }
 
     $(document).ready(function () {
-        pageUtils();
+        var flag = '${flag}';
+        if (flag != null && flag != '') {
+            $.post('${pageContext.request.contextPath}/epidemic/epidemicListOverRide.do', {'flag':flag}, function (data) {
+                $("#demo1").jqPaginator({
+                    totalPages: Math.ceil(data.epidemicAppearListCount / 10),
+                    visiblePages: 10,
+                    currentPage: 1,
+                    first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
+                    prev: '<li class="prev"><a href="javascript:void(0);">上一页<\/a><\/li>',
+                    next: '<li class="next"><a href="javascript:void(0);">下一页<\/a><\/li>',
+                    last: '<li class="last"><a href="javascript:void(0);">尾页<\/a><\/li>',
+                    page: '<li class="page"><a href="javascript:void(0);">{{page}}<\/a><\/li>',
+                    onPageChange: function (n) {
+                        $("#epidmicData").empty();
+                        $.post('${pageContext.request.contextPath}/epidemic/epidemicList.do', {
+                            'pageNo': n - 1,
+                            'flag':flag
+                        }, function (data) {
+                            var epidemicAppearList = data.epidemicAppearList;
+                            for (var i = 0; i < epidemicAppearList.length; i++) {
+                                $("#epidmicData").append("<tr><td style=''>" + (i + 1) + "</td>" + "<td style=''>" + epidemicAppearList[i].epidemic.epidemicName + "</td>" + "<td style=''>" + epidemicAppearList[i].region.regionCn + "</td>" + "<td style=''>" + epidemicAppearList[i].appearTimes + "</td>" + "<td style=''>" + epidemicAppearList[i].appearDate + "</td>" + "<td style=''>" + "<a href='${pageContext.request.contextPath}/epidemic/epidemicDetail.do?epidemicAppearId=" + epidemicAppearList[i].id + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>");
+                            }
+                        }, 'json');
+                    }
+                });
+            }, 'json');
+        } else {
+            pageUtils();
+        }
+
+
     });
 </script>
 </body>

@@ -4,6 +4,7 @@ import cn.com.eship.dao.EpidemicAppearDao;
 import cn.com.eship.model.EpidemicAppear;
 import cn.com.eship.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.math.LongRange;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -175,5 +176,67 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
                     }
                 });
         return list;
+    }
+
+    @Override
+    public List<EpidemicAppear> findEpidemicAppearListOverride(Map<String, Object> mapPram) throws Exception {
+        List<Object> valuesPart = new ArrayList<Object>();
+        StringBuffer hqlBuffer = new StringBuffer("from EpidemicAppear epidemicAppear join fetch epidemicAppear.epidemic t1 join fetch epidemicAppear.region t2 where 1 = 1");
+        StringBuffer wherePart = new StringBuffer();
+        if (mapPram.get("regionCn") != null) {
+            wherePart.append(" and t2.regionCn like ?");
+            valuesPart.add("%" + mapPram.get("regionCn") + "%");
+        }
+        if (mapPram.get("startDate") != null) {
+            wherePart.append(" and epidemicAppear.appearDate = date_format(?,'%Y-%m-%d')");
+            valuesPart.add(mapPram.get("startDate"));
+        }
+        String hql = hqlBuffer.append(wherePart).toString();
+        List<EpidemicAppear> list = (List<EpidemicAppear>) hibernateTemplate.execute(
+                new HibernateCallback() {
+                    public Object doInHibernate(Session session)
+                            throws HibernateException, SQLException {
+                        Query query = session.createQuery(hql);
+                        query.setFirstResult((int) mapPram.get("pageNo"));
+                        query.setMaxResults(10);
+                        for (int i = 0; i < valuesPart.size(); i++) {
+                            query.setParameter(i, valuesPart.get(i));
+                        }
+                        List list = query.list();
+                        return list;
+                    }
+                });
+
+        return list;
+    }
+
+    @Override
+    public int findEpidemicAppearListOverrideCount(Map<String, Object> mapPram) throws Exception {
+        List<Object> valuesPart = new ArrayList<Object>();
+        StringBuffer hqlBuffer = new StringBuffer("from EpidemicAppear epidemicAppear join fetch epidemicAppear.epidemic t1 join fetch epidemicAppear.region t2 where 1 = 1");
+        StringBuffer wherePart = new StringBuffer();
+        if (mapPram.get("regionCn") != null) {
+            wherePart.append(" and t2.regionCn like ?");
+            valuesPart.add("%" + mapPram.get("regionCn") + "%");
+        }
+        if (mapPram.get("startDate") != null) {
+            wherePart.append(" and epidemicAppear.appearDate = date_format(?,'%Y-%m-%d')");
+            valuesPart.add(mapPram.get("startDate"));
+        }
+        String hql = hqlBuffer.append(wherePart).toString();
+        List<EpidemicAppear> list = (List<EpidemicAppear>) hibernateTemplate.execute(
+                new HibernateCallback() {
+                    public Object doInHibernate(Session session)
+                            throws HibernateException, SQLException {
+                        Query query = session.createQuery(hql);
+                        for (int i = 0; i < valuesPart.size(); i++) {
+                            query.setParameter(i, valuesPart.get(i));
+                        }
+                        List list = query.list();
+                        return list;
+                    }
+                });
+
+        return list.size();
     }
 }

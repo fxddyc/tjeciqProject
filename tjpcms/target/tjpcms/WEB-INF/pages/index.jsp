@@ -46,10 +46,14 @@
                                 <div class="symbol">
                                     <i class="fa fa-gavel"></i>
                                 </div>
-                                <div class="state-value">
-                                    <div class="value">${newEpidemicCount}</div>
-                                    <div class="title">全球新增疫情总数</div>
-                                </div>
+                                <a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do?flag=0"
+                                   style="color: white">
+                                    <div class="state-value">
+                                        <div class="value">${newEpidemicCount}</div>
+                                        <div class="title">全球新增疫情总数
+                                        </div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-12 col-sm-4">
@@ -57,10 +61,13 @@
                                 <div class="symbol">
                                     <i class="fa fa-tags"></i>
                                 </div>
-                                <div class="state-value">
-                                    <div class="value">${newLocalEpidemicCount}</div>
-                                    <div class="title">我国新增疫情总数</div>
-                                </div>
+                                <a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do?flag=0"
+                                   style="color:white;">
+                                    <div class="state-value">
+                                        <div class="value">${newLocalEpidemicCount}</div>
+                                        <div class="title">我国新增疫情总数</div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-md-4 col-xs-12 col-sm-4">
@@ -68,10 +75,13 @@
                                 <div class="symbol">
                                     <i class="fa fa-eye"></i>
                                 </div>
-                                <div class="state-value">
-                                    <div class="value">${epidemicCount}</div>
-                                    <div class="title">已知疫情总数</div>
-                                </div>
+                                <a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do"
+                                   style="color: white">
+                                    <div class="state-value">
+                                        <div class="value">${epidemicCount}</div>
+                                        <div class="title">已知疫情总数</div>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>

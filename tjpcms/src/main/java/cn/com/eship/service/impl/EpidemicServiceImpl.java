@@ -13,9 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by simon on 16/7/17.
@@ -56,12 +54,34 @@ public class EpidemicServiceImpl implements EpidemicService {
         if (StringUtils.isNotBlank(endDate)) {
             parameMap.put("endDate", TimeUtils.convertToDateString(endDate));
         }
-        //TODO 坑2 parameMap
         List<EpidemicAppear> epidemicAppearList = epidemicAppearDao.findEpidemicAppearListByCondition(parameMap);
         if (epidemicAppearList != null && epidemicAppearList.size() > 0) {
             jsonMap.put("epidemicAppearList", epidemicAppearList);
-            //TODO 坑1
             jsonMap.put("epidemicAppearListCount", epidemicAppearDao.findEpidemicAppearList(parameMap).size());
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
+        return objectMapper.writeValueAsString(jsonMap);
+    }
+
+    @Override
+    public String makeEpidemicAppearListOverideJson(String pageNo, String flag) throws Exception {
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
+        Map<String, Object> parameMap = new HashMap<String, Object>();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        String yesterday = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(cal.getTime());
+        parameMap.put("startDate", yesterday);
+        parameMap.put("pageNo", PageUtils.getFirstPosition(StringUtils.isNotBlank(pageNo) ? Integer.parseInt(pageNo) : 0));
+        if ("1".equals(flag)) {
+            parameMap.put("regionCn", "中国");
+        }
+        //TODO 坑2 parameMap
+        List<EpidemicAppear> epidemicAppearList = epidemicAppearDao.findEpidemicAppearListOverride(parameMap);
+        if (epidemicAppearList != null && epidemicAppearList.size() > 0) {
+            jsonMap.put("epidemicAppearList", epidemicAppearList);
+            //TODO 坑1
+            jsonMap.put("epidemicAppearListCount", epidemicAppearDao.findEpidemicAppearListOverrideCount(parameMap));
         }
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));

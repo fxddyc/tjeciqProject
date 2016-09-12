@@ -39,7 +39,7 @@ public class EpidemicController {
      */
     @RequestMapping("epidemicList")
     public void epidemicList(String pageNo,String epidemicName,String regionCn,String startDate,String endDate,HttpServletResponse response) throws Exception {
-        response.getOutputStream().write(epidemicService.makeEpidemicAppearListJson(pageNo).getBytes("utf-8"));
+        response.getOutputStream().write(epidemicService.makeEpidemicAppearListJson(pageNo,epidemicName,regionCn,startDate,endDate).getBytes("utf-8"));
     }
 
     @ResponseBody

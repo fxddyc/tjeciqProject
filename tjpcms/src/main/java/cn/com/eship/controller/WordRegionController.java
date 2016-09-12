@@ -1,6 +1,7 @@
 package cn.com.eship.controller;
 
 import cn.com.eship.service.WordRegionService;
+import cn.com.eship.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class WordRegionController {
 
     @RequestMapping("wordRegion")
     public void wordRegion(String startDate, String endDate, String epidemicName, HttpServletResponse response) throws Exception {
-            String json = wordRegionService.makeWordRegionJson(StringUtils.isNotBlank(startDate) ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("dd/MM/yyyy").parse(startDate)) : "", StringUtils.isNotBlank(startDate) ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("dd/MM/yyyy").parse(endDate)) : "",StringUtils.isNotBlank(epidemicName)?epidemicName:"霍乱");
+            String json = wordRegionService.makeWordRegionJson(TimeUtils.convertToDateString(startDate), TimeUtils.convertToDateString(endDate),StringUtils.isNotBlank(epidemicName)?epidemicName:"霍乱");
             response.getOutputStream().write(json.getBytes("utf-8"));
     }
 

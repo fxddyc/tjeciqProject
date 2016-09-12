@@ -15,24 +15,20 @@ public interface EpidemicAppearDao {
      * @return
      * @throws Exception
      */
-    public List<Object> findEpidemicTopten(Map<String, String> mapPram) throws Exception;
-
-    public List<Object> findEpidemicAppearList(Map<String, String> mapPram) throws Exception;
-
+    public List<Object> findEpidemicTopten(Map<String, Object> mapPram) throws Exception;
 
     public List<Object> findEpidemicAppearRegionCount(Map<String, String> mapPram) throws Exception;
 
-    public List<EpidemicAppear> findEpidemicAppearList(Integer startPosition) throws Exception;
-
-    public List<EpidemicAppear> findEpidemicAppearListByCondition(Integer startPosition,Map<String,String> mapPram) throws Exception;
-
     /**
-     * 根据条件查询疫情发生表总条数
+     * 综合查询
+     * @param mapPram
      * @return
      * @throws Exception
      */
-    public Long findEpidemicAppearCount() throws Exception;
+    public List<EpidemicAppear> findEpidemicAppearListByCondition(Map<String,Object> mapPram) throws Exception;
 
     public EpidemicAppear findEpidemicAppearById(String id) throws Exception;
+
+    public List<EpidemicAppear> findEpidemicAppearList(Map<String, Object> mapPram) throws Exception;
 
 }

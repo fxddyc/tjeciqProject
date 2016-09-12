@@ -29,11 +29,11 @@ public class EpidemicCloudServiceImpl implements EpidemicCloudService {
     }
 
     public String makeEpidemicCloudJson(String startDate, String endDate,String region) throws Exception {
-        Map<String, String> mapParam = new HashedMap();
+        Map<String, Object> mapParam = new HashMap<String, Object>();
         mapParam.put("startDate", startDate);
         mapParam.put("endDate", endDate);
         mapParam.put("region",region);
-        List<Object> epidemicAppearCountList = epidemicAppearDao.findEpidemicAppearList(mapParam);
+        List<EpidemicAppear> epidemicAppearCountList = epidemicAppearDao.findEpidemicAppearList(mapParam);
         List<Map<String, Object>> jsonList = new ArrayList<Map<String, Object>>();
         if (epidemicAppearCountList != null && epidemicAppearCountList.size() > 0) {
             for (Object epidemicAppearCount : epidemicAppearCountList) {

@@ -11,6 +11,6 @@ public class PageUtils {
         } else {
             result = (pageNo - 1) * 10;
         }
-        return result;
+        return result < 0?0:result;
     }
 }

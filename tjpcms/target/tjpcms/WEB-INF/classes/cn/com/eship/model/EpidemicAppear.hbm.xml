@@ -8,8 +8,10 @@
         <id name="id" column="id"/>
         <property name="appearDate" column="appear_date"/>
         <property name="appearTimes" column="appear_times"/>
+        <property name="rowKey" column="row_key"/>
         <!--疫情实体-->
-        <many-to-one name="epidemic" column="epidemic_id" class="cn.com.eship.model.Epidemic" not-null="true" fetch="join"/>
+        <many-to-one name="epidemic" column="epidemic_id" class="cn.com.eship.model.Epidemic" not-null="true"
+                     fetch="join"/>
         <!--位置-->
         <many-to-one name="region" column="region_id" class="cn.com.eship.model.Region" not-null="true" fetch="join"/>
     </class>

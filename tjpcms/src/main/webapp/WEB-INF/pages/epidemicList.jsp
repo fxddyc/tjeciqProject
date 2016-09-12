@@ -121,22 +121,19 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <div class="dataTables_paginate paging_bootstrap pagination">
-                                        <ul>
-                                            <li class="prev"><a onclick="pageJianUtils();">←上一页</a></li>
-                                            <li class="next"><a onclick="pageJiaUtils();">下一页 → </a></li>
-                                        </ul>
-                                    </div>
-                                </tr>
-                                </tfoot>
-                            </table>
+                                    <div class="dataTables_paginate paging_bootstrap pagination"
+                                    <ul id="demo1"></ul>
                         </div>
+                        </tr>
+                        </tfoot>
+                        </table>
                     </div>
                 </div>
             </div>
-
-            <!--body wrapper end-->
         </div>
+
+        <!--body wrapper end-->
+    </div>
     </div>
     <!-- main content end-->
 </section>
@@ -159,58 +156,69 @@
 <%--<!--pickers initialization-->--%>
 <script src="${pageContext.request.contextPath}/adminex/js/pickers-init.js"></script>
 
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/jqPaginator/dist/1.2.0/jqPaginator.min.js"></script>
+
 
 <script type="text/javascript">
-
-
-    //+ '&' + 'epidemicName=' + $("#epidemicName") + '&' + 'regionCn=' + $("#regionCn") + '&' + 'startDate=' + $("#startDate") + '&' + 'endDate=' + $("#endDate")
-
-    var pageNo = 1;
     var conditionEpidemicName = '';
     var conditionRegionCn = '';
     var conditionStartDate = '';
     var conditionEndDate = '';
 
-    function pageJiaUtils() {
+    function pageUtils() {
         $.post('${pageContext.request.contextPath}/epidemic/epidemicList.do', {
-            'pageNo': ++pageNo,
-            'epidemicName': $('#epidemicName').val(),
-            'regionCn': $('#regionCn').val(),
-            'startDate': $('#startDate').val(),
-            'endDate': $('#endDate').val()
+            'epidemicName': conditionEpidemicName,
+            'regionCn': conditionRegionCn,
+            'startDate': conditionStartDate,
+            'endDate': conditionEndDate
         }, function (data) {
-            var epidemicAppearList = data.epidemicAppearList;
-            $("#epidmicData").empty();
-            for (var i = 0; i < epidemicAppearList.length; i++) {
-                $("#epidmicData").append("<tr><td style=''>" + (i + 1) + "</td>" + "<td style=''>" + epidemicAppearList[i].epidemic.epidemicName + "</td>" + "<td style=''>" + epidemicAppearList[i].region.regionCn + "</td>" + "<td style=''>" + epidemicAppearList[i].appearTimes + "</td>" + "<td style=''>" + epidemicAppearList[i].appearDate + "</td>" + "<td style=''>" + "<a href='${pageContext.request.contextPath}/epidemic/epidemicDetail.do?epidemicAppearId=" + epidemicAppearList[i].id + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>");
-            }
-        }, 'json');
-    }
-    function pageJianUtils() {
-        $.post('${pageContext.request.contextPath}/epidemic/epidemicList.do', {
-            'pageNo': --pageNo,
-            'epidemicName': $('#epidemicName').val(),
-            'regionCn': $('#regionCn').val(),
-            'startDate': $('#startDate').val(),
-            'endDate': $('#endDate').val()
-        }, function (data) {
-            var epidemicAppearList = data.epidemicAppearList;
-            $("#epidmicData").empty();
-            for (var i = 0; i < epidemicAppearList.length; i++) {
-                $("#epidmicData").append("<tr><td style=''>" + (i + 1) + "</td>" + "<td style=''>" + epidemicAppearList[i].epidemic.epidemicName + "</td>" + "<td style=''>" + epidemicAppearList[i].region.regionCn + "</td>" + "<td style=''>" + epidemicAppearList[i].appearTimes + "</td>" + "<td style=''>" + epidemicAppearList[i].appearDate + "</td>" + "<td style=''>" + "<a href='${pageContext.request.contextPath}/epidemic/epidemicDetail.do?epidemicAppearId=" + epidemicAppearList[i].id + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>");
-            }
+            $("#demo1").jqPaginator({
+                totalPages: Math.ceil(data.epidemicAppearListCount / 10),
+                visiblePages: 10,
+                currentPage: 1,
+                first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
+                prev: '<li class="prev"><a href="javascript:void(0);">上一页<\/a><\/li>',
+                next: '<li class="next"><a href="javascript:void(0);">下一页<\/a><\/li>',
+                last: '<li class="last"><a href="javascript:void(0);">尾页<\/a><\/li>',
+                page: '<li class="page"><a href="javascript:void(0);">{{page}}<\/a><\/li>',
+                onPageChange: function (n) {
+                    $("#epidmicData").empty();
+                    $.post('${pageContext.request.contextPath}/epidemic/epidemicList.do', {
+                        'pageNo': n - 1,
+                        'epidemicName': conditionEpidemicName,
+                        'regionCn': conditionRegionCn,
+                        'startDate': conditionStartDate,
+                        'endDate': conditionEndDate
+                    }, function (data) {
+                        var epidemicAppearList = data.epidemicAppearList;
+                        for (var i = 0; i < epidemicAppearList.length; i++) {
+                            $("#epidmicData").append("<tr><td style=''>" + (i + 1) + "</td>" + "<td style=''>" + epidemicAppearList[i].epidemic.epidemicName + "</td>" + "<td style=''>" + epidemicAppearList[i].region.regionCn + "</td>" + "<td style=''>" + epidemicAppearList[i].appearTimes + "</td>" + "<td style=''>" + epidemicAppearList[i].appearDate + "</td>" + "<td style=''>" + "<a href='${pageContext.request.contextPath}/epidemic/epidemicDetail.do?epidemicAppearId=" + epidemicAppearList[i].id + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>");
+                        }
+                    }, 'json');
+                }
+            });
         }, 'json');
     }
 
+    function initConditions() {
+        conditionEpidemicName = '';
+        conditionRegionCn = '';
+        conditionStartDate = '';
+        conditionEndDate = '';
+    }
+
+    function search() {
+        initConditions();
+        conditionEndDate = $('#endDate').val();
+        conditionEpidemicName = $('#epidemicName').val();
+        conditionRegionCn = $('#regionCn').val();
+        conditionStartDate = $('#startDate').val();
+        pageUtils();
+    }
 
     $(document).ready(function () {
-        $.post('${pageContext.request.contextPath}/epidemic/epidemicList.do', null, function (data) {
-            var epidemicAppearList = data.epidemicAppearList;
-            for (var i = 0; i < epidemicAppearList.length; i++) {
-                $("#epidmicData").append("<tr><td style=''>" + (i + 1) + "</td>" + "<td style=''>" + epidemicAppearList[i].epidemic.epidemicName + "</td>" + "<td style=''>" + epidemicAppearList[i].region.regionCn + "</td>" + "<td style=''>" + epidemicAppearList[i].appearTimes + "</td>" + "<td style=''>" + epidemicAppearList[i].appearDate + "</td>" + "<td style=''>" + "<a href='${pageContext.request.contextPath}/epidemic/epidemicDetail.do?epidemicAppearId=" + epidemicAppearList[i].id + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>");
-            }
-
-        }, 'json');
+        pageUtils();
     });
 </script>
 </body>

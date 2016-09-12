@@ -23,17 +23,13 @@ public class IndexController {
     private IndexService indexService;
 
     @RequestMapping("indexPage")
-    public String indexPage(Model model) {
-        try {
+    public String indexPage(Model model) throws Exception {
             //全球昨日新增疫情
             model.addAttribute("newEpidemicCount", indexService.findNewEpidemicCount(new EpidemicAppear()));
             //我国昨日新增疫情
             model.addAttribute("newLocalEpidemicCount", indexService.findLocalEpidemicLocalCount(new EpidemicAppear()));
             //疫情总数
             model.addAttribute("epidemicCount", indexService.findEpidemicCount());
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
         return "index";
     }
 

@@ -135,37 +135,6 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
         return list;
     }
 
-    /**
-     * 根据条件查询疫情发生表总条数
-     *
-     * @return
-     * @throws Exception
-     */
-//    @Override
-//    public Long findEpidemicAppearCount(Map<String, Object> parameMap) throws Exception {
-//        List<Object> valuesPart = new ArrayList<Object>();
-//        StringBuffer wherePart = new StringBuffer();
-//        if (parameMap.get("epidemicName") != null) {
-//            wherePart.append(" and t1.epidemicName like %?%");
-//            valuesPart.add(parameMap.get("epidemicName"));
-//        }
-//        if (parameMap.get("regionCn") != null) {
-//            wherePart.append(" and t2.regionCn like %?%");
-//            valuesPart.add(parameMap.get("regionCn"));
-//        }
-//        if (parameMap.get("startDate") != null) {
-//            wherePart.append(" and epidemicAppear.appearDate >= date_format(?,'%Y-%m-%d')");
-//            valuesPart.add(parameMap.get("startDate"));
-//        }
-//        if (parameMap.get("endDate") != null) {
-//            wherePart.append(" and epidemicAppear.appearDate <= date_format(?,'%Y-%m-%d')");
-//            valuesPart.add(parameMap.get("endDate"));
-//        }
-//        String hql = "select count(*) from EpidemicAppear epidemicAppear join fetch epidemicAppear.epidemic t1 join fetch epidemicAppear.region t2 where 1 = 1";
-//        Object object = hibernateTemplate.find(hql);
-//        return object != null ? ((List<Long>) object).get(0) : new Long(0);
-//    }
-
     @Override
     public EpidemicAppear findEpidemicAppearById(String id) throws Exception {
         return hibernateTemplate.get(EpidemicAppear.class, id);

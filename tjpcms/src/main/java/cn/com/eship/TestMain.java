@@ -139,8 +139,9 @@ public class TestMain {
         Connection connection = applicationContext.getBean(Connection.class);
         Table table = connection.getTable(TableName.valueOf("epidemicBaike"));
         Scan scan = new Scan();
+        //scan.addColumn("c1".getBytes(),"epidemicName".getBytes()).addColumn("c1".getBytes(),"imgUrl".getBytes());
         ResultScanner resultScanner = table.getScanner(scan);
-        System.out.println(new String(resultScanner.next().getRow(),"utf-8"));
+        System.out.println(new String(resultScanner.next().getValue("c1".getBytes(),"epidemicName".getBytes())));
 
     }
 }

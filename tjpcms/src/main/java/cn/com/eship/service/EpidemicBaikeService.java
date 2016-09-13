@@ -1,14 +1,13 @@
 package cn.com.eship.service;
 
-import cn.com.eship.model.Baidubaike;
-
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by simon on 16/7/15.
  */
 public interface EpidemicBaikeService {
-    public List<Baidubaike> findAllepidemicBaike() throws Exception;
+    public List<Map<String, String>> findAllepidemicBaikeList() throws Exception;
 
-    public String makeBaikeInfoJson(String id) throws Exception;
+    public String findBaikeByRowkey(String rowKey) throws Exception;
 }

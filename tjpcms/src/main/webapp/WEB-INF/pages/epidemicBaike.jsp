@@ -38,13 +38,13 @@
                         <div class="panel-body">
 
                             <div id="gallery" class="media-gal">
-                                <c:forEach items="${baikeList}" var="baike">
+                                <c:forEach items="${epidemicBaikeList}" var="baike">
                                     <div class="images item ">
-                                        <a onclick="dj('${baike.id}','${baike.epidemic.epidemicName}');">
+                                        <a onclick="dj('${baike.rowKey}','${baike.epidemicName}');">
                                             <img src="${baike.imgUrl}"
                                                  alt=""/>
                                         </a>
-                                        <p>${baike.epidemic.epidemicName}</p>
+                                        <p>${baike.epidemicName}</p>
                                     </div>
                                 </c:forEach>
                             </div>
@@ -104,38 +104,16 @@
 <script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>
 
 <script type="text/javascript">
-    function dj(id,name) {
-
-        $.get("${pageContext.request.contextPath}/epidemicBaike/fetchBaikeInfo.do", {id: id},
+    function dj(id, name) {
+        $.post("${pageContext.request.contextPath}/epidemicBaike/fetchBaikeInfo.do", {'rowKey': id},
                 function (data) {
                     var json = data;
                     $("#title").html(name);
-                    $("#jj").html(json['content']);
+                    $("#jj").html(json);
                     $('#myModal').modal('show');
                 },
-                "json");
-
-
+                "text");
     }
-
-    $(function () {
-//        var $container = $('#gallery');
-//        $container.isotope({
-//            itemSelector: '.item',
-//            animationOptions: {
-//                duration: 750,
-//                easing: 'linear',
-//                queue: false
-//            }
-//        });
-//
-//        // filter items when filter link is clicked
-//        $('#filters a').click(function () {
-//            var selector = $(this).attr('data-filter');
-//            $container.isotope({filter: selector});
-//            return false;
-//        });
-    });
 </script>
 </body>
 

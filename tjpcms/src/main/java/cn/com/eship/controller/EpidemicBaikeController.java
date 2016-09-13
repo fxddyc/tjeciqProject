@@ -21,12 +21,12 @@ public class EpidemicBaikeController {
 
     @RequestMapping("epidemicBaikePage")
     public String epidemicBaikePage(Model model) throws Exception {
-        model.addAttribute("baikeList", epidemicBaikeService.findAllepidemicBaike());
+        model.addAttribute("epidemicBaikeList", epidemicBaikeService.findAllepidemicBaikeList());
         return "epidemicBaike";
     }
 
     @RequestMapping("fetchBaikeInfo")
-    public void fetchBaikeInfo(String id, HttpServletResponse response) throws Exception {
-        response.getOutputStream().write(epidemicBaikeService.makeBaikeInfoJson(id).getBytes());
+    public void fetchBaikeInfo(String rowKey, HttpServletResponse response) throws Exception {
+        response.getOutputStream().write(epidemicBaikeService.findBaikeByRowkey(rowKey).getBytes());
     }
 }

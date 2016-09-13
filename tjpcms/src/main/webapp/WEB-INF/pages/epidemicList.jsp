@@ -121,19 +121,19 @@
                                 </tbody>
                                 <tfoot>
                                 <tr>
-                                    <div class="dataTables_paginate paging_bootstrap pagination"
-                                    <ul id="demo1"></ul>
+                                    <div class="dataTables_paginate paging_bootstrap pagination">
+                                        <ul id="demo1"></ul>
+                                    </div>
+                                </tr>
+                                </tfoot>
+                            </table>
                         </div>
-                        </tr>
-                        </tfoot>
-                        </table>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!--body wrapper end-->
-    </div>
+            <!--body wrapper end-->
+        </div>
     </div>
     <!-- main content end-->
 </section>
@@ -220,7 +220,7 @@
     $(document).ready(function () {
         var flag = '${flag}';
         if (flag != null && flag != '') {
-            $.post('${pageContext.request.contextPath}/epidemic/epidemicListOverRide.do', {'flag':flag}, function (data) {
+            $.post('${pageContext.request.contextPath}/epidemic/epidemicListOverRide.do', {'flag': flag}, function (data) {
                 $("#demo1").jqPaginator({
                     totalPages: Math.ceil(data.epidemicAppearListCount / 10),
                     visiblePages: 10,
@@ -234,7 +234,7 @@
                         $("#epidmicData").empty();
                         $.post('${pageContext.request.contextPath}/epidemic/epidemicList.do', {
                             'pageNo': n - 1,
-                            'flag':flag
+                            'flag': flag
                         }, function (data) {
                             var epidemicAppearList = data.epidemicAppearList;
                             for (var i = 0; i < epidemicAppearList.length; i++) {

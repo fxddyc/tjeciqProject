@@ -100,20 +100,7 @@
                                     <h4>信息分词</h4>
                                 </div>
                                 <div class="col-md-12">
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
-                                    <button class="btn btn-default" type="button">Default</button>
+                                    <button class="btn btn-default" type="button">默认*0</button>
                                 </div>
                             </div>
                         </div>

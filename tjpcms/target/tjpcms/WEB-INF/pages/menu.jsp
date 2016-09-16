@@ -46,7 +46,7 @@
                 <ul class="sub-menu-list">
                     <li><a href="${pageContext.request.contextPath}/index/indexPage.do">仪表盘</a></li>
                     <li><a href="${pageContext.request.contextPath}/epidemicCloud/epidemicCloudPage.do">疫情字符云</a></li>
-                    <li><a href="/yqChartsCloud/yqHistory">疫情历史</a></li>
+                    <%--<li><a href="/yqChartsCloud/yqHistory">疫情历史</a></li>--%>
                 </ul>
                 <ul class="sub-menu-list">
                     <li><a href="${pageContext.request.contextPath}/wordRegion/wordRegionPage.do">疫情地域分布</a></li>
@@ -56,6 +56,14 @@
                 </ul>
                 <ul class="sub-menu-list">
                     <li><a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">疫情综合查询</a></li>
+                </ul>
+
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">数据中心</a></li>
+                </ul>
+
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/words/toWordsPage.do">分词器</a></li>
                 </ul>
             </li>
         </ul>

@@ -47,8 +47,8 @@ public class EpidemicController {
     }
 
     @RequestMapping("epidemicListOverRide")
-    public void epidemicListOverRide(String pageNo,String flag, HttpServletResponse response) throws Exception {
-        response.getOutputStream().write(epidemicService.makeEpidemicAppearListOverideJson(pageNo,flag).getBytes("utf-8"));
+    public void epidemicListOverRide(String pageNo, String flag, HttpServletResponse response) throws Exception {
+        response.getOutputStream().write(epidemicService.makeEpidemicAppearListOverideJson(pageNo, flag).getBytes("utf-8"));
     }
 
     @ResponseBody
@@ -77,5 +77,11 @@ public class EpidemicController {
     public String epidemicDetail(String epidemicAppearId, Model model) throws Exception {
         model.addAttribute("epidemicAppear", epidemicService.getEpidemicAppearById(epidemicAppearId));
         return "epidemicDetail";
+    }
+
+
+    @RequestMapping("epidemicWords")
+    public void epidemicWords(String rowKey, HttpServletResponse response) throws Exception {
+        response.getOutputStream().write(epidemicService.makeEpidemicWordListJson(rowKey).getBytes("utf-8"));
     }
 }

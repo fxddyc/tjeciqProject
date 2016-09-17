@@ -20,4 +20,7 @@ public interface EpidemicService {
     public List<Object> getEpidemicNameList(String keyword) throws Exception;
     public List<Object> getEpidemicRegionList(String keyword) throws Exception;
     public EpidemicAppear getEpidemicAppearById(String id) throws Exception;
+
+
+    public String makeEpidemicWordListJson(String rowKey) throws Exception;
 }

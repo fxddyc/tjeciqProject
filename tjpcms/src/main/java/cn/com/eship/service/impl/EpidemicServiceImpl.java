@@ -4,9 +4,12 @@ import cn.com.eship.dao.EpidemicAppearDao;
 import cn.com.eship.dao.EpidemicDao;
 import cn.com.eship.model.EpidemicAppear;
 import cn.com.eship.service.EpidemicService;
+import cn.com.eship.utils.ConfigUtils;
 import cn.com.eship.utils.PageUtils;
 import cn.com.eship.utils.TimeUtils;
 import com.sun.deploy.net.proxy.pac.PACFunctions;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +106,41 @@ public class EpidemicServiceImpl implements EpidemicService {
     @Override
     public EpidemicAppear getEpidemicAppearById(String id) throws Exception {
         return epidemicAppearDao.findEpidemicAppearById(id);
+    }
+
+    @Override
+    public String makeEpidemicWordListJson(String rowKey) throws Exception {
+        // 请求发布在本地 Tomcat上服务
+        Map<String, Object> resultMapJson = new HashMap<String, Object>();
+        PostMethod method = new PostMethod(ConfigUtils.readValue("esconfig.properties", "eshost") + "/words/wordline/_search");
+        try {
+            HttpClient client = new HttpClient();
+
+            method.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+            method.setRequestHeader("Accept", "application/json; charset=UTF-8");
+            Map<String, Object> jsonMap = new HashMap<String, Object>();
+            Map<String, Object> queryMap = new HashMap<String, Object>();
+            Map<String, Object> matchMap = new HashMap<String, Object>();
+            matchMap.put("rowKey", rowKey);
+            queryMap.put("match", matchMap);
+            jsonMap.put("query", queryMap);
+            method.setRequestBody(new org.apache.htrace.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(jsonMap));
+            client.executeMethod(method);
+            String receive = method.getResponseBodyAsString();
+            Map<String, Object> map = new org.apache.htrace.fasterxml.jackson.databind.ObjectMapper().readValue(receive, Map.class);
+            List<Object> array = new ArrayList<Object>();
+            array = (List<Object>) ((Map<String, Object>) map.get("hits")).get("hits");
+            for (Object mapTemp : array) {
+                Map<String, Object> map1 = (Map<String, Object>) mapTemp;
+                Map<String, Object> map2 = (Map<String, Object>) map1.get("_source");
+                resultMapJson = (Map<String, Object>) map2.get("wordsMap");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            method.releaseConnection();
+        }
+        return resultMapJson != null ? new org.apache.htrace.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(resultMapJson) : "{}";
     }
 
 

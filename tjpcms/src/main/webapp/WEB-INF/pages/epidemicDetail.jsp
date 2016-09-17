@@ -99,7 +99,7 @@
                                 <div class="col-md-12">
                                     <h4>信息分词</h4>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="wordsBtn">
                                     <button class="btn btn-default" type="button">默认*0</button>
                                 </div>
                             </div>
@@ -136,6 +136,14 @@
             $("#epidemicSourceTitle").text(json.epidemicName);
             $("#epidemicSourceTime").text(json.time);
             $("#epidemicSourceContent").append(json.content);
+        }, 'json');
+
+
+        $.post('${pageContext.request.contextPath}/epidemic/epidemicWords.do', {'rowKey': '${epidemicAppear.rowKey}'}, function (data) {
+            var json = data;
+            for (var key in json) {
+                $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
+            }
         }, 'json');
     });
 </script>

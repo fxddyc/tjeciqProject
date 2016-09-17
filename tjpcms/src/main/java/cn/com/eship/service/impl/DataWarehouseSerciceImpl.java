@@ -2,6 +2,7 @@ package cn.com.eship.service.impl;
 
 
 import cn.com.eship.service.DataWarehouseSercice;
+import cn.com.eship.utils.ConfigUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
@@ -26,7 +27,7 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
         List<Map<String, Object>> jsonList = new ArrayList<Map<String, Object>>();
 
         // 请求发布在本地 Tomcat上服务
-        PostMethod method = new PostMethod("http://localhost:9200/words/wordline/_search");
+        PostMethod method = new PostMethod(ConfigUtils.readValue("esconfig.properties", "eshost") + "/words/wordline/_search");
         try {
             HttpClient client = new HttpClient();
             method.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -66,7 +67,7 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
     public String makeDataWareHouseWordListJson(String rowKey) throws Exception {
         // 请求发布在本地 Tomcat上服务
         Map<String, Object> resultMapJson = new HashMap<String, Object>();
-        PostMethod method = new PostMethod("http://localhost:9200/words/wordline/_search");
+        PostMethod method = new PostMethod(ConfigUtils.readValue("esconfig.properties", "eshost") + "/words/wordline/_search");
         try {
             HttpClient client = new HttpClient();
 

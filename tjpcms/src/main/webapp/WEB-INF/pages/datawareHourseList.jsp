@@ -29,7 +29,7 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            分词查询
+                            查询条件
                             <span class="tools pull-right">
                                 <a href="javascript:;" class="fa fa-chevron-down"></a>
                                 <a href="javascript:;" class="fa fa-times"></a>
@@ -41,22 +41,16 @@
                                     <td><label>分词:&nbsp;&nbsp;&nbsp;</label></td>
                                     <td>
                                         <div class="input-group">
-                                            <input id="kindName" class="form-control" style="width: 200px"/>
-                                        </div>
-                                    </td>
-                                    <td><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间段:&nbsp;&nbsp;&nbsp;</label></td>
-                                    <td>
-                                        <div class="input-group">
-                                            <input id="wordName" class="form-control" style="width: 250px"/>
+                                            <input id="words" class="form-control" style="width: 200px"/>
                                         </div>
                                     </td>
                                     <td>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-primary">重置条件</button>
+                                        <button class="btn btn-primary" onclick="initInput();">重置条件</button>
                                     </td>
                                     <td>
                                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button class="btn btn-info">查询</button>
+                                        <button class="btn btn-info" onclick="btnClick();">查询</button>
                                     </td>
                                 </tr>
 
@@ -68,49 +62,7 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            分词查询
-                            <span class="tools pull-right">
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                <a href="javascript:;" class="fa fa-times"></a>
-                             </span>
-                        </header>
-                        <div class="panel-body">
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th style="">
-                                        <div class="th-inner ">序号</div>
-                                        <div class="fht-cell"></div>
-                                    </th>
-                                    <th style="">
-                                        <div class="th-inner ">分词类别</div>
-                                        <div class="fht-cell"></div>
-                                    </th>
-                                    <th style="">
-                                        <div class="th-inner ">分词内容</div>
-                                        <div class="fht-cell"></div>
-                                    </th>
-                                    <th style="">
-                                        <div class="th-inner ">操作</div>
-                                        <div class="fht-cell"></div>
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody id="wordsData">
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <div class="dataTables_paginate paging_bootstrap pagination">
-                                        <ul id="demo1"></ul>
-                                    </div>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    </section>
+                <div class="col-md-12" id="content">
                 </div>
             </div>
         </div>
@@ -136,8 +88,31 @@
 <script type="text/javascript">
 
     $(document).ready(function () {
+        $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseList.do', {'word': ''}, function (data) {
+            var json = data;
+            for (var i = 0; i < json.length; i++) {
+                var htmlTag = "<div class='panel'> <div class='panel-body text-center'> <i class='fa fa-quote-left'></i> <h3 class=''><a href='${pageContext.request.contextPath}/dataWarehouse/datawarehouseDetailPage.do?rowKey=" + json[i].rowKey + "'>" + json[i].title + "</a></h3> </div> </div>";
+                $("#content").append(htmlTag);
+            }
 
+        }, 'json');
     });
+
+    function btnClick() {
+        $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseList.do', {'word': $('#words').val()}, function (data) {
+            $("#content").empty();
+            var json = data;
+            for (var i = 0; i < json.length; i++) {
+                var htmlTag = "<div class='panel'> <div class='panel-body text-center'> <i class='fa fa-quote-left'></i> <h3 class=''><a href='${pageContext.request.contextPath}/dataWarehouse/datawarehouseDetailPage.do?rowKey=" + json[i].rowKey + "'>" + json[i].title + "</a></h3> </div> </div>";
+                $("#content").append(htmlTag);
+            }
+
+        }, 'json');
+    }
+    
+    function initInput() {
+        $("input").val("");
+    }
 
 </script>
 </body>

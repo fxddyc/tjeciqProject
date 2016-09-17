@@ -59,7 +59,7 @@
                 </ul>
 
                 <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">数据中心</a></li>
+                    <li><a href="${pageContext.request.contextPath}/dataWarehouse/toDatawarehousePage.do">数据中心</a></li>
                 </ul>
 
                 <ul class="sub-menu-list">

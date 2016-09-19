@@ -19,6 +19,8 @@ public interface EpidemicAppearDao {
 
     public List<Object> findEpidemicAppearRegionCount(Map<String, String> mapPram) throws Exception;
 
+    public List<Object> findEpidemicAppearCount(Map<String,String> mapPram) throws Exception;
+
     /**
      * 综合查询
      * @param mapPram

@@ -327,8 +327,7 @@
                     yAxis: [
                         {
                             'type': 'value',
-                            'name': '疫情总次数',
-                            'max': 53500
+                            'name': '疫情总次数'
                         },
                         {
                             'type': 'value',

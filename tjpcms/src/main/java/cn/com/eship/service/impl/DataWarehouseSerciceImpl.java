@@ -51,7 +51,7 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
                 Map<String, Object> map1 = (Map<String, Object>) mapTemp;
                 Map<String, Object> map2 = (Map<String, Object>) map1.get("_source");
                 Map<String, Object> resultJsonMap = new HashMap<String, Object>();
-                resultJsonMap.put("rowKey", map2.get("rowKey").toString());
+                resultJsonMap.put("rowKey", (StringUtils.isNotBlank((String) map2.get("rowKey")) ? map2.get("rowKey").toString() : ""));
                 resultJsonMap.put("title", (StringUtils.isNotBlank((String) map2.get("title")) ? map2.get("title").toString() : ""));
                 jsonList.add(resultJsonMap);
             }

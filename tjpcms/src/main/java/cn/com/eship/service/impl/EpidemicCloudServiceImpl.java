@@ -28,16 +28,16 @@ public class EpidemicCloudServiceImpl implements EpidemicCloudService {
         return new ObjectMapper().writeValueAsString(regionDao.findAllRegion());
     }
 
-    public String makeEpidemicCloudJson(String startDate, String endDate,String region) throws Exception {
-        Map<String, Object> mapParam = new HashMap<String, Object>();
+    public String makeEpidemicCloudJson(String startDate, String endDate, String region) throws Exception {
+        Map<String, String> mapParam = new HashedMap();
         mapParam.put("startDate", startDate);
         mapParam.put("endDate", endDate);
-        mapParam.put("region",region);
-        List<EpidemicAppear> epidemicAppearCountList = epidemicAppearDao.findEpidemicAppearList(mapParam);
+        mapParam.put("region", region);
+        List<Object> epidemicAppearCountList = epidemicAppearDao.findEpidemicAppearCount(mapParam);
         List<Map<String, Object>> jsonList = new ArrayList<Map<String, Object>>();
         if (epidemicAppearCountList != null && epidemicAppearCountList.size() > 0) {
             for (Object epidemicAppearCount : epidemicAppearCountList) {
-                Map<String, Object> map = new TreeMap<String, Object>();
+                Map<String, Object> map = new HashMap<String, Object>();
                 map.put("name", ((Object[]) epidemicAppearCount)[0]);
                 map.put("value", ((Object[]) epidemicAppearCount)[1]);
                 jsonList.add(map);

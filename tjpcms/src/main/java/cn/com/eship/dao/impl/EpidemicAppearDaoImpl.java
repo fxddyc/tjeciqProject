@@ -95,6 +95,43 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
         return list != null ? list : null;
     }
 
+    @Override
+    public List<Object> findEpidemicAppearCount(Map<String, String> mapPram) throws Exception {
+        List<Object> valueList = new ArrayList<Object>();
+        StringBuffer selectPart = new StringBuffer("select epidemicAppear.epidemic.epidemicName,sum(epidemicAppear.appearTimes) as appearTimesSum from EpidemicAppear epidemicAppear");
+        StringBuffer wherePart = new StringBuffer(" where 1 = 1");
+        StringBuffer lastPart = new StringBuffer(" group by epidemicAppear.epidemic.id order by appearTimesSum DESC");
+        if (!mapPram.isEmpty()) {
+            if (StringUtils.isNotBlank(mapPram.get("startDate"))) {
+                wherePart.append(" and epidemicAppear.appearDate >= date_format(?,'%Y-%m-%d')");
+                valueList.add(mapPram.get("startDate"));
+            }
+            if (StringUtils.isNotBlank(mapPram.get("endDate"))) {
+                wherePart.append(" and epidemicAppear.appearDate <= date_format(?,'%Y-%m-%d')");
+                valueList.add(mapPram.get("endDate"));
+            }
+            if (StringUtils.isNotBlank(mapPram.get("region"))) {
+                wherePart.append(" and epidemicAppear.region.regionCn = ?");
+                valueList.add(mapPram.get("region"));
+            }
+        }
+        String hql = selectPart.append(wherePart).append(lastPart).toString();
+
+        List<Object> list = (List<Object>) hibernateTemplate.execute(
+                new HibernateCallback() {
+                    public Object doInHibernate(Session session)
+                            throws HibernateException, SQLException {
+                        Query query = session.createQuery(hql);
+                        for (int i = 0; i < valueList.size(); i++) {
+                            query.setParameter(i, valueList.get(i));
+                        }
+                        List list = query.list();
+                        return list;
+                    }
+                });
+        return list != null ? list : null;
+    }
+
 
     @Override
     public List<EpidemicAppear> findEpidemicAppearListByCondition(Map<String, Object> mapPram) throws Exception {
@@ -146,19 +183,19 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
         List<Object> valuesPart = new ArrayList<Object>();
         StringBuffer hqlBuffer = new StringBuffer("from EpidemicAppear epidemicAppear join fetch epidemicAppear.epidemic t1 join fetch epidemicAppear.region t2 where 1 = 1");
         StringBuffer wherePart = new StringBuffer();
-        if (mapPram.get("epidemicName") != null) {
+        if (mapPram.get("epidemicName") != null && StringUtils.isNotBlank((String) mapPram.get("epidemicName"))) {
             wherePart.append(" and t1.epidemicName like ?");
             valuesPart.add("%" + mapPram.get("epidemicName") + "%");
         }
-        if (mapPram.get("regionCn") != null) {
+        if (mapPram.get("regionCn") != null && StringUtils.isNotBlank((String) mapPram.get("regionCn"))) {
             wherePart.append(" and t2.regionCn like ?");
             valuesPart.add("%" + mapPram.get("regionCn") + "%");
         }
-        if (mapPram.get("startDate") != null) {
+        if (mapPram.get("startDate") != null && StringUtils.isNotBlank((String) mapPram.get("startDate"))) {
             wherePart.append(" and epidemicAppear.appearDate >= date_format(?,'%Y-%m-%d')");
             valuesPart.add(mapPram.get("startDate"));
         }
-        if (mapPram.get("endDate") != null) {
+        if (mapPram.get("endDate") != null && StringUtils.isNotBlank((String) mapPram.get("endDate"))) {
             wherePart.append(" and epidemicAppear.appearDate <= date_format(?,'%Y-%m-%d')");
             valuesPart.add(mapPram.get("endDate"));
         }

@@ -39,13 +39,13 @@ public class EpidemicDaoImpl implements EpidemicDao {
     }
 
     @Override
-    public List<Object> findEpidemicNameList(String keyword) throws Exception{
+    public List<Object> findEpidemicNameList(String keyword) throws Exception {
         String hql = "select epidemicName from Epidemic where epidemicName like ?";
         List<Object> commonList = (List<Object>) hibernateTemplate.execute(new HibernateCallback() {
             public Object doInHibernate(Session session)
-                    throws HibernateException, SQLException{
+                    throws HibernateException, SQLException {
                 Query query = session.createQuery(hql);
-                query.setParameter(0,"%"+keyword+"%");
+                query.setParameter(0, "%" + keyword + "%");
                 query.setMaxResults(5);
                 return query.list();
             }
@@ -58,10 +58,36 @@ public class EpidemicDaoImpl implements EpidemicDao {
         String hql = "select regionCn from Region where regionCn like ?";
         List<Object> commonList = (List<Object>) hibernateTemplate.execute(new HibernateCallback() {
             public Object doInHibernate(Session session)
-                    throws HibernateException, SQLException{
+                    throws HibernateException, SQLException {
                 Query query = session.createQuery(hql);
-                query.setParameter(0,"%"+keyword+"%");
+                query.setParameter(0, "%" + keyword + "%");
                 query.setMaxResults(5);
+                return query.list();
+            }
+        });
+        return commonList;
+    }
+
+    @Override
+    public List<String> findEpidemicNameList1() throws Exception {
+        String hql = "select epidemicName from Epidemic";
+        List<String> commonList = (List<String>) hibernateTemplate.execute(new HibernateCallback() {
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                Query query = session.createQuery(hql);
+                return query.list();
+            }
+        });
+        return commonList;
+    }
+
+    @Override
+    public List<String> findEpidemicRegionList1() throws Exception {
+        String hql = "select regionCn from Region";
+        List<String> commonList = (List<String>) hibernateTemplate.execute(new HibernateCallback() {
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                Query query = session.createQuery(hql);
                 return query.list();
             }
         });

@@ -4,6 +4,7 @@ package cn.com.eship;
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.PutMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.lang.StringUtils;
 import org.apache.htrace.fasterxml.jackson.databind.ObjectMapper;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 public class ESMain {
     public static void main(String[] args) throws Exception {
-        test2();
+        test3();
 
     }
 
@@ -85,6 +86,36 @@ public class ESMain {
                 Map<String, Object> map2 = (Map<String, Object>) map1.get("_source");
                 System.out.println(map2.get("wordsMap"));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            method.releaseConnection();
+        }
+    }
+
+    public static void test3() throws Exception {
+        // 请求发布在本地 Tomcat上服务
+
+        PutMethod method = new PutMethod("http://localhost:9200/words/wordline/5");
+        try {
+            HttpClient client = new HttpClient();
+
+            method.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+            method.setRequestHeader("Accept", "application/json; charset=UTF-8");
+            Map<String, Object> jsonMap = new HashMap<String, Object>();
+            Map<String, Object> wordsMap = new HashMap<String, Object>();
+
+            jsonMap.put("rowKey", "5");
+            jsonMap.put("title", new String("鸡哥这牛逼".getBytes(), "utf-8"));
+            wordsMap.put("张三", 1);
+
+            jsonMap.put("wordsMap", wordsMap);
+
+            //System.out.println(new ObjectMapper().writeValueAsString(jsonMap));
+            method.setRequestBody(new ObjectMapper().writeValueAsString(jsonMap));
+            client.executeMethod(method);
+            String receive = method.getResponseBodyAsString();
+            System.out.println(receive);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

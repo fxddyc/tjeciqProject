@@ -51,15 +51,7 @@
                                     <td><label>地域:&nbsp;&nbsp;&nbsp;</label></td>
                                     <td>
                                         <div class="input-group">
-                                              <span class="input-group-btn">
-                                                <button type="button" class="form-control btn btn-default"
-                                                        data-toggle="modal" href="#myModal2"><i
-                                                        class="fa fa-search"></i></button>
-                                              </span>
-                                            <%--<input type="text" class="form-control">--%>
-                                            <select id="region" class="form-control" style="width: 150px">
-                                                <option value="">全部</option>
-                                            </select>
+                                            <input id="region" class="form-control" style="width: 150px"/>
                                         </div>
                                     </td>
                                     <td><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;时间段:&nbsp;&nbsp;&nbsp;</label></td>
@@ -112,6 +104,7 @@
 </section>
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/typeahead/bootstrap3-typeahead.min.js"/>
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
@@ -136,14 +129,9 @@
 <script>
 
     function boundRegionList() {
-        $.post("${pageContext.request.contextPath}/epidemicCloud/regionList.do", {},
-                function (data) {
-                    var json = data;
-                    for (var i = 0; i < json.length; i++) {
-                        $("#region").append("<option value='" + json[i].id + "'>" + json[i].regionCn + "</option>");
-                    }
-                },
-                "json");
+        $.post('${pageContext.request.contextPath}/common/regionList.do', null, function (data) {
+            $('#region').typeahead({source: data})
+        }, 'json');
 
     }
 
@@ -187,7 +175,7 @@
             }]
         };
         $.post("/epidemicCloud/epidemicCloud.do", {
-                    'region': $('#region option:selected').val(),
+                    'region': $('#region').val(),
                     'startDate': $('#startDate').val(),
                     'endDate': $('#endDate').val()
                 },

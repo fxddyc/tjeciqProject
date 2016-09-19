@@ -113,6 +113,7 @@
 
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/typeahead/bootstrap3-typeahead.min.js"/>
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
@@ -405,7 +406,11 @@
 
 
     $(document).ready(function () {
-        findWorldMap()
+        findWorldMap();
+        $.post('${pageContext.request.contextPath}/common/epidemicNameList.do', null, function (data) {
+            $('#epidemic').typeahead({source: data})
+        }, 'json');
+
     });
 
 

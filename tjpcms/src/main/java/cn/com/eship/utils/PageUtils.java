@@ -9,7 +9,7 @@ public class PageUtils {
         if (pageNo == null) {
             return 0;
         } else {
-            result = (pageNo - 1) * 10;
+            result = (pageNo) * 10;
         }
         return result < 0?0:result;
     }

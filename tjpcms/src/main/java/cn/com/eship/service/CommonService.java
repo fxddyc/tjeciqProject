@@ -7,4 +7,6 @@ public interface CommonService {
     public String makeEpidemicNameListJson() throws Exception;
 
     public String makeRegionListJson() throws Exception;
+
+    public String makekindWordsListJson() throws Exception;
 }

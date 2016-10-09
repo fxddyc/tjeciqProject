@@ -1,6 +1,7 @@
 package cn.com.eship.dao.impl;
 
 import cn.com.eship.dao.WordsDao;
+import cn.com.eship.model.KindDic;
 import cn.com.eship.model.Words;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
@@ -9,6 +10,7 @@ import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import java.util.Map;
 /**
  * Created by simon on 16/9/13.
  */
+@Repository
 public class WordsDaoImpl implements WordsDao {
     @Autowired
     private HibernateTemplate hibernateTemplate;
@@ -51,7 +54,7 @@ public class WordsDaoImpl implements WordsDao {
                         for (int i = 0; i < valuesParts.size(); i++) {
                             query.setParameter(i, valuesParts.get(i));
                         }
-                        query.setFirstResult((int) conditionMap.get("pageNo"));
+                        query.setFirstResult(conditionMap.get("pageNo") != null ? (int) conditionMap.get("pageNo") : 0);
                         query.setMaxResults(10);
                         List list = query.list();
                         return list;
@@ -94,5 +97,43 @@ public class WordsDaoImpl implements WordsDao {
                     }
                 });
         return list.size();
+    }
+
+    /**
+     * 查询所有分词分类
+     *
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<KindDic> findAllKindDicList() throws Exception {
+        return null;
+    }
+
+    @Override
+    public void deleteWords(String id) throws Exception {
+        hibernateTemplate.delete(hibernateTemplate.get(Words.class, id));
+    }
+
+    @Override
+    public Words findWordsById(String id) throws Exception {
+        return hibernateTemplate.get(Words.class, id);
+    }
+
+    @Override
+    public void editWordsById(Words words) throws Exception {
+        hibernateTemplate.update(words);
+    }
+
+    @Override
+    public void addWords(Words words) throws Exception {
+        hibernateTemplate.save(words);
+    }
+
+    @Override
+    public List<String> findAllWordsList() throws Exception {
+        String hql = "select words.word from Words words";
+        List<String> list = (List<String>) hibernateTemplate.find(hql);
+        return list;
     }
 }

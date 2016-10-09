@@ -119,8 +119,8 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
                 jsonMap.put("time", "");
             }
 
-            if (result.getValue("c1".getBytes(), "titel".getBytes()) != null && result.getValue("c1".getBytes(), "titel".getBytes()).length > 0) {
-                jsonMap.put("titel", new String(result.getValue("c1".getBytes(), "titel".getBytes()), "utf-8"));
+            if (result.getValue("c1".getBytes(), "articleTitle".getBytes()) != null && result.getValue("c1".getBytes(), "articleTitle".getBytes()).length > 0) {
+                jsonMap.put("titel", new String(result.getValue("c1".getBytes(), "articleTitle".getBytes()), "utf-8"));
             } else {
                 jsonMap.put("titel", "");
             }
@@ -130,8 +130,8 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
             } else {
                 jsonMap.put("epidemicName", "");
             }
-            if (result.getValue("c1".getBytes(), "content".getBytes()) != null && result.getValue("c1".getBytes(), "content".getBytes()).length > 0) {
-                jsonMap.put("content", new String(result.getValue("c1".getBytes(), "content".getBytes()), "utf-8"));
+            if (result.getValue("c1".getBytes(), "html".getBytes()) != null && result.getValue("c1".getBytes(), "html".getBytes()).length > 0) {
+                jsonMap.put("content", new String(result.getValue("c1".getBytes(), "html".getBytes()), "utf-8"));
             } else {
                 jsonMap.put("content", "");
             }

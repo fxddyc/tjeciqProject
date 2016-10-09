@@ -63,9 +63,9 @@ public class HbaseServiceImpl implements HbaseService {
         Result result = table.get(get);
         if (result != null) {
 
-            byte[] contentByte = result.getValue("c1".getBytes("utf-8"), "content".getBytes("utf-8"));
+            byte[] contentByte = result.getValue("c1".getBytes("utf-8"), "html".getBytes("utf-8"));
             byte[] timeByte = result.getValue("c1".getBytes("utf-8"), "time".getBytes("utf-8"));
-            byte[] titleByte = result.getValue("c1".getBytes("utf-8"), "title".getBytes("utf-8"));
+            byte[] titleByte = result.getValue("c1".getBytes("utf-8"), "articleTitle".getBytes("utf-8"));
             byte[] epidemicNameByte = result.getValue("c1".getBytes("utf-8"), "epidemicName".getBytes("utf-8"));
 
 

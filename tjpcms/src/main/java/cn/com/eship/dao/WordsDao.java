@@ -1,5 +1,6 @@
 package cn.com.eship.dao;
 
+import cn.com.eship.model.KindDic;
 import cn.com.eship.model.Words;
 
 import java.util.List;
@@ -26,4 +27,24 @@ public interface WordsDao {
      * @throws Exception
      */
     public int findWordsCountByCondition(Map<String, Object> conditionMap) throws Exception;
+
+    /**
+     * 查询所有分词分类
+     *
+     * @return
+     * @throws Exception
+     */
+    public List<KindDic> findAllKindDicList() throws Exception;
+
+    public void deleteWords(String id) throws Exception;
+
+    public Words findWordsById(String id) throws Exception;
+
+    public void editWordsById(Words words) throws Exception;
+
+    public void addWords(Words words) throws Exception;
+
+    public List<String> findAllWordsList() throws Exception;
+
+
 }

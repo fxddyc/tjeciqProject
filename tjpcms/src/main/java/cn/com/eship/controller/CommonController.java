@@ -25,4 +25,9 @@ public class CommonController {
     public void epidemicNameList(HttpServletResponse response) throws Exception {
         response.getOutputStream().write(commonService.makeEpidemicNameListJson().getBytes("utf-8"));
     }
+
+    @RequestMapping("/kindNameList")
+    public void kindNameList(HttpServletResponse response) throws Exception {
+        response.getOutputStream().write(commonService.makekindWordsListJson().getBytes("utf-8"));
+    }
 }

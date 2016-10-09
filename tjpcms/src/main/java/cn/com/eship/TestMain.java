@@ -1,7 +1,9 @@
 package cn.com.eship;
 
 
+import cn.com.eship.model.Words;
 import cn.com.eship.service.CommonService;
+import cn.com.eship.service.WordsService;
 import cn.com.eship.service.impl.CommonServiceImpl;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HColumnDescriptor;
@@ -20,7 +22,7 @@ import java.util.List;
 public class TestMain {
     public static void main(String[] args) throws Exception {
         //test3();
-        test6();
+        test8();
     }
 
     /**
@@ -127,6 +129,24 @@ public class TestMain {
         System.out.println(commonService.makeRegionListJson());
 
     }
+
+    public static void test7() throws Exception {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        CommonService commonService = applicationContext.getBean(CommonService.class);
+        System.out.println(commonService.makeEpidemicNameListJson());
+        System.out.println(commonService.makeRegionListJson());
+
+    }
+
+    public static void test8() throws Exception {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
+        WordsService wordsService = applicationContext.getBean(WordsService.class);
+        System.out.println(wordsService.makeWordsDicListByCondition(null,null,"2"));
+
+    }
+
+
+
 }
 
 

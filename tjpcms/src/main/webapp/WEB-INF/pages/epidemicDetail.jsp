@@ -63,7 +63,8 @@
                                     <p id="baikeSummary">
 
                                     </p>
-                                    <a id="baikeContentUrl" href="#" class="more">查看原文</a>
+                                    <a id="baikeContentUrl" data-toggle="modal" data-target="#myModal" href="#"
+                                       class="more">查看原文</a>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +87,7 @@
 
                                     <p id="epidemicSourceContent">
                                     </p>
-                                    <a id="epidemicSourceUrl" href="${epidemicAppear.rowKey}" class="more">查看来源</a>
+                                    <a data-toggle="modal" data-target="#myModal1" class="more">查看来源</a>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +101,6 @@
                                     <h4>信息分词</h4>
                                 </div>
                                 <div class="col-md-12" id="wordsBtn">
-                                    <button class="btn btn-default" type="button">默认*0</button>
                                 </div>
                             </div>
                         </div>
@@ -112,6 +112,49 @@
         </div>
     </div>
     <!--body wrapper end-->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        疫情百科原文链接二维码
+                    </h4>
+                </div>
+                <div id="baikeUrlDiv" class="modal-body" style="text-align: center;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel1">
+                        疫情抓取原文链接二维码
+                    </h4>
+                </div>
+                <div id="epidemicSourceUrlDiv" class="modal-body" style="text-align: center;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 </section>
 
 <!-- Placed js at the end of the document so the pages load faster -->
@@ -120,14 +163,29 @@
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-migrate-1.2.1.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/modernizr.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/jqqrcode/jquery-qrcode-0.14.0.min.js"></script>
 <script>
+
+    var itemStyles = ['label-default', 'label-primary', 'label-success', 'label-info', 'label-warning', 'label-danger']
+
     $(document).ready(function () {
+        $("#epidemicSourceUrlDiv").qrcode({
+            render: "table", //table方式
+            width: 200, //宽度
+            height: 200, //高度
+            text: '${epidemicAppear.rowKey}' //任意内容
+        });
         $.post('${pageContext.request.contextPath}/hbaseController/epidemicBaike.do', {'rowKey': '${epidemicAppear.epidemic.id}'}, function (data) {
             var json = data;
             $("#epidemicBaiKeImg").attr("src", json.imgUrl);
             $("#baikeSummary").text(json.summary);
-            $("#baikeContentUrl").attr("href", json.contentUrl);
+            //$("#baikeContentUrl").attr("href", json.contentUrl);
+            $("#baikeUrlDiv").qrcode({
+                render: "table", //table方式
+                width: 200, //宽度
+                height: 200, //高度
+                text: json.contentUrl //任意内容
+            });
         }, 'json');
 
 
@@ -141,8 +199,11 @@
 
         $.post('${pageContext.request.contextPath}/epidemic/epidemicWords.do', {'rowKey': '${epidemicAppear.rowKey}'}, function (data) {
             var json = data;
+            if (json == null || json.length <= 0) {
+                $("#wordsBtn").append("<span class='label " + itemStyles[parseInt(itemStyles.length * Math.random())] + "'>" + "无分词" + "</span>&nbsp;&nbsp;");
+            }
             for (var key in json) {
-                $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
+                $("#wordsBtn").append("<span class='label " + itemStyles[parseInt(itemStyles.length * Math.random())] + "'>" + key + "*" + json[key] + "</span>&nbsp;&nbsp;");
             }
         }, 'json');
     });

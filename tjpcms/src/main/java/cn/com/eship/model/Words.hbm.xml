@@ -5,7 +5,9 @@
 <hibernate-mapping>
 
     <class name="cn.com.eship.model.Words" table="t_words" schema="tjrsms">
-        <id name="id" column="id"></id>
+        <id name="id" column="id">
+            <generator class="uuid"/>
+        </id>
         <property name="word">
             <column name="word" sql-type="varchar(300)" length="300" not-null="true"/>
         </property>

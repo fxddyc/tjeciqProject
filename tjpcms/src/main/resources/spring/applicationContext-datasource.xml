@@ -12,9 +12,6 @@
           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
 
-
-
-
     <!-- ****************************** 数据库定义 ****************************** -->
     <bean id="mainDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">
@@ -117,6 +114,7 @@
             <tx:method name="modify*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="batch*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
             <tx:method name="find*" propagation="REQUIRED" read-only="true"/>
             <tx:method name="make*" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>

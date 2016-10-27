@@ -42,11 +42,10 @@
 
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
-            <li class="menu-list nav-active"><a href="index.html"><i class="fa fa-home"></i> <span>控制面板</span></a>
+            <li class="menu-list nav-active"><a href="#"><i class="fa fa-home"></i> <span>控制面板</span></a>
                 <ul class="sub-menu-list">
                     <li><a href="${pageContext.request.contextPath}/index/indexPage.do">仪表盘</a></li>
                     <li><a href="${pageContext.request.contextPath}/epidemicCloud/epidemicCloudPage.do">疫情字符云</a></li>
-                    <%--<li><a href="/yqChartsCloud/yqHistory">疫情历史</a></li>--%>
                 </ul>
                 <ul class="sub-menu-list">
                     <li><a href="${pageContext.request.contextPath}/wordRegion/wordRegionPage.do">疫情地域分布</a></li>
@@ -64,6 +63,12 @@
 
                 <ul class="sub-menu-list">
                     <li><a href="${pageContext.request.contextPath}/words/toWordsPage.do">分词器</a></li>
+                </ul>
+
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/spider/toSpiderListPage.do">爬虫列表</a></li>
+                    <li><a href="${pageContext.request.contextPath}/spider/toCreateSpiderPage.do">增加爬虫实例</a></li>
+
                 </ul>
             </li>
         </ul>

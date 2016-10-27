@@ -8,7 +8,6 @@ import cn.com.eship.service.WordsService;
 import cn.com.eship.utils.ConfigUtils;
 import cn.com.eship.utils.PageUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

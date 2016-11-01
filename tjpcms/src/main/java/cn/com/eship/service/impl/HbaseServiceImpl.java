@@ -63,22 +63,19 @@ public class HbaseServiceImpl implements HbaseService {
         Result result = table.get(get);
         if (result != null) {
 
-            byte[] contentByte = result.getValue("c1".getBytes("utf-8"), "html".getBytes("utf-8"));
+            byte[] contentByte = result.getValue("c1".getBytes("utf-8"), "content".getBytes("utf-8"));
             byte[] timeByte = result.getValue("c1".getBytes("utf-8"), "time".getBytes("utf-8"));
             byte[] titleByte = result.getValue("c1".getBytes("utf-8"), "articleTitle".getBytes("utf-8"));
-            byte[] epidemicNameByte = result.getValue("c1".getBytes("utf-8"), "epidemicName".getBytes("utf-8"));
 
 
             String content = (contentByte != null && contentByte.length > 1) ? new String(contentByte, "utf-8") : "";
             String time = (timeByte != null && timeByte.length > 1) ? new String(timeByte, "utf-8") : "";
             String title = (titleByte != null && titleByte.length > 1) ? new String(titleByte, "utf-8") : "";
-            String epidemicName = (epidemicNameByte != null && epidemicNameByte.length > 1) ? new String(epidemicNameByte, "utf-8") : "";
 
             jsonMap.put("rowKey", rowKey);
             jsonMap.put("content", content);
             jsonMap.put("time", time);
             jsonMap.put("title", title);
-            jsonMap.put("epidemicName", epidemicName);
         }
         return new ObjectMapper().writeValueAsString(jsonMap);
     }

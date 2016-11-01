@@ -271,8 +271,8 @@
         var option = {
             timeline: {
                 data: [
-                    '2002-01-01', '2003-01-01', '2004-01-01', '2005-01-01', '2006-01-01',
-                    '2007-01-01', '2008-01-01', '2009-01-01', '2010-01-01', '2011-01-01'
+                    '2006-01-01', '2007-01-01', '2008-01-01', '2009-01-01', '2010-01-01',
+                    '2011-01-01', '2012-01-01', '2013-01-01', '2014-01-01', '2015-01-01'
                 ],
                 label: {
                     formatter: function (s) {
@@ -312,23 +312,22 @@
                         'type': 'category',
                         'axisLabel': {'interval': 0},
                         'data': [
+                            '霍乱',
                             '中东呼吸综合征冠状病毒',
-                            '脊髓灰质炎',
                             '流感',
-                            '传染性非典型肺炎',
-                            '肺炭疽',
-                            '新型冠状病毒病',
+                            '脑膜炎球菌',
+                            '麻疹',
                             '埃博拉病毒',
-                            '拉沙热',
-                            '马尔堡热',
-                            '西尼罗热'
+                            '登革热',
+                            '脊髓灰质炎',
+                            '黄热病',
+                            '小头症'
                         ]
                     }],
                     yAxis: [
                         {
                             'type': 'value',
-                            'name': '疫情总次数',
-                            'max': 53500
+                            'name': '疫情总次数'
                         },
                         {
                             'type': 'value',
@@ -339,60 +338,46 @@
                         {
                             'name': '全球',
                             'type': 'bar',
-                            'data': dataMap.dataGDP['2002']
+                            'data': dataMap.dataGDP['2015']
                         },
                         {
                             'name': '我国', 'yAxisIndex': 1, 'type': 'bar',
-                            'data': dataMap.dataFinancial['2002']
+                            'data': dataMap.dataFinancial['2015']
                         }
                     ]
                 },
                 {
-                    title: {'text': '2003疫情变化图示'},
+                    title: {'text': '2015疫情变化图示'},
                     series: [
-                        {'data': dataMap.dataGDP['2003']},
-                        {'data': dataMap.dataFinancial['2003']}
+                        {'data': dataMap.dataGDP['2015']},
+                        {'data': dataMap.dataFinancial['2015']}
                     ]
                 },
                 {
-                    title: {'text': '2004疫情变化图示'},
+                    title: {'text': '2014疫情变化图示'},
                     series: [
-                        {'data': dataMap.dataGDP['2004']},
-                        {'data': dataMap.dataFinancial['2004']}
+                        {'data': dataMap.dataGDP['2014']},
+                        {'data': dataMap.dataFinancial['2014']}
                     ]
                 },
                 {
-                    title: {'text': '2005疫情变化图示'},
+                    title: {'text': '2013疫情变化图示'},
                     series: [
-                        {'data': dataMap.dataGDP['2005']},
-                        {'data': dataMap.dataFinancial['2005']}
+                        {'data': dataMap.dataGDP['2013']},
+                        {'data': dataMap.dataFinancial['2013']}
                     ]
                 },
                 {
-                    title: {'text': '2006疫情变化图示'},
+                    title: {'text': '2012疫情变化图示'},
                     series: [
-                        {'data': dataMap.dataGDP['2006']},
-                        {'data': dataMap.dataFinancial['2006']}]
+                        {'data': dataMap.dataGDP['2012']},
+                        {'data': dataMap.dataFinancial['2012']}]
                 },
                 {
-                    title: {'text': '2007疫情变化图示'},
+                    title: {'text': '2011疫情变化图示'},
                     series: [
-                        {'data': dataMap.dataGDP['2007']},
-                        {'data': dataMap.dataFinancial['2007']}
-                    ]
-                },
-                {
-                    title: {'text': '2008疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2008']},
-                        {'data': dataMap.dataFinancial['2008']}
-                    ]
-                },
-                {
-                    title: {'text': '2009疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2009']},
-                        {'data': dataMap.dataFinancial['2009']}
+                        {'data': dataMap.dataGDP['2011']},
+                        {'data': dataMap.dataFinancial['2011']}
                     ]
                 },
                 {
@@ -403,10 +388,31 @@
                     ]
                 },
                 {
-                    title: {'text': '2011疫情变化图示'},
+                    title: {'text': '2009疫情变化图示'},
                     series: [
-                        {'data': dataMap.dataGDP['2011']},
-                        {'data': dataMap.dataFinancial['2011']}
+                        {'data': dataMap.dataGDP['2009']},
+                        {'data': dataMap.dataFinancial['2009']}
+                    ]
+                },
+                {
+                    title: {'text': '2008疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2008']},
+                        {'data': dataMap.dataFinancial['2008']}
+                    ]
+                },
+                {
+                    title: {'text': '2007疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2007']},
+                        {'data': dataMap.dataFinancial['2007']}
+                    ]
+                },
+                {
+                    title: {'text': '2006疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2006']},
+                        {'data': dataMap.dataFinancial['2006']}
                     ]
                 }
             ]

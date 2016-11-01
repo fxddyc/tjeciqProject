@@ -52,6 +52,11 @@
                                     <input type="text" class="form-control" id="exampleInputPassword3" name="titleXpath"
                                            placeholder="标题Xpath" value="${spider.titleXpath}">
                                 </div>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword6">标题Xpath</label>
+                                    <input type="text" class="form-control" id="exampleInputPassword6" name="fetchUrlXpath"
+                                           placeholder="列表链接Xpath" value="${spider.fetchUrlXpath}">
+                                </div>
 
                                 <div class="form-group">
                                     <label for="exampleInputPassword4">分页Xpath</label>

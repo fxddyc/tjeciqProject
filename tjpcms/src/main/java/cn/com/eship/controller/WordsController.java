@@ -122,10 +122,11 @@ public class WordsController {
      * @param response
      */
     @RequestMapping("/addKindDic")
-    public void addKindDic(String kindName, HttpServletResponse response) {
+    public void addKindDic(String kindName,String level, HttpServletResponse response) {
         try {
             KindDic kindDic = new KindDic();
             kindDic.setKindName(kindName);
+            kindDic.setLevel(Integer.parseInt(level));
             wordsService.addKindDic(kindDic);
             response.getOutputStream().write("1".getBytes());
         } catch (Exception e) {

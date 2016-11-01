@@ -1,15 +1,26 @@
 package cn.com.eship.model;
 
+import java.io.Serializable;
+
 /**
  * Created by simon on 2016/10/26.
  */
-public class Spiders {
+public class Spiders implements Serializable {
     private String id;
     private String name;
     private String startUrl;
     private String titleXpath;
     private String contentXpath;
     private String pageUrlXpath;
+    private String fetchUrlXpath;
+
+    public String getFetchUrlXpath() {
+        return fetchUrlXpath;
+    }
+
+    public void setFetchUrlXpath(String fetchUrlXpath) {
+        this.fetchUrlXpath = fetchUrlXpath;
+    }
 
     public String getId() {
         return id;

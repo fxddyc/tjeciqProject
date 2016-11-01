@@ -127,6 +127,11 @@
                         <input type="text" class="form-control" id="addKindDicKindName" name="kindName"
                                placeholder="字典名称">
                     </div>
+                    <div class="form-group">
+                        <label for="level">分类等级</label>
+                        <input type="text" class="form-control" id="level" name="level"
+                               placeholder="分类等级">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default"
@@ -201,15 +206,19 @@
 
     var kindNameCondition = '';
     var wordsCondition = '';
+    var level = '';
+
 
     function initVal() {
         kindNameCondition = $("#kindName").val();
         wordsCondition = $("#words").val();
+
     }
 
     function addKindDicBtn() {
         var addKindDicKindNameVal = $('#addKindDicKindName').val();
-        $.post('${pageContext.request.contextPath}/words/addKindDic.do', {'kindName': addKindDicKindNameVal}, function (data) {
+        var level = $("#level").val();
+        $.post('${pageContext.request.contextPath}/words/addKindDic.do', {'kindName': addKindDicKindNameVal,'level':level}, function (data) {
             if (data == 1) {
                 alert('添加分词分类成功')
                 window.location.reload();

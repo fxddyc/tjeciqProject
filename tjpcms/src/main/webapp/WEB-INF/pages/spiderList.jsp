@@ -79,6 +79,10 @@
                                         <div class="fht-cell"></div>
                                     </th>
                                     <th style="">
+                                        <div class="th-inner ">列表连接Xpath</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th style="">
                                         <div class="th-inner ">标题Xpath</div>
                                         <div class="fht-cell"></div>
                                     </th>
@@ -99,6 +103,7 @@
                                         <td>${spider.name}</td>
                                         <td>${spider.startUrl}</td>
                                         <td>${spider.pageUrlXpath}</td>
+                                        <td>${spider.fetchUrlXpath}</td>
                                         <td>${spider.titleXpath}</td>
                                         <td>${spider.contentXpath}</td>
                                         <td><a href="${pageContext.request.contextPath}/spider/toEditSpiderPage.do?id=${spider.id}">

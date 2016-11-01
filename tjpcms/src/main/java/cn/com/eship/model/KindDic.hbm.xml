@@ -12,5 +12,6 @@
         <property name="kindName">
             <column name="kind_name" sql-type="varchar(300)" length="300" not-null="true"/>
         </property>
+        <property name="level" column="level"/>
     </class>
 </hibernate-mapping>

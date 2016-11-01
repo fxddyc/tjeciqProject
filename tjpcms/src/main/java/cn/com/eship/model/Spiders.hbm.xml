@@ -13,5 +13,6 @@
         <property name="titleXpath" column="title_xpath"/>
         <property name="contentXpath" column="content_xpath"/>
         <property name="pageUrlXpath" column="page_url_xpath"/>
+        <property name="fetchUrlXpath" column="fetch_url_xpath"/>
     </class>
 </hibernate-mapping>

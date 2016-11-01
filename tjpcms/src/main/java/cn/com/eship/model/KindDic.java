@@ -6,6 +6,16 @@ package cn.com.eship.model;
 public class KindDic {
     private String id;
     private String kindName;
+    private Integer level;
+
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
 
     public String getId() {
         return id;

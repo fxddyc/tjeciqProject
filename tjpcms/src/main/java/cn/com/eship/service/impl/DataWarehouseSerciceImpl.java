@@ -77,7 +77,7 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
             Map<String, Object> queryMap = new HashMap<String, Object>();
             Map<String, Object> matchMap = new HashMap<String, Object>();
             matchMap.put("rowKey", rowKey);
-            queryMap.put("match", matchMap);
+            queryMap.put("match_phrase", matchMap);
             jsonMap.put("query", queryMap);
             method.setRequestBody(new ObjectMapper().writeValueAsString(jsonMap));
             client.executeMethod(method);
@@ -95,7 +95,8 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
         } finally {
             method.releaseConnection();
         }
-        return resultMapJson != null ? new ObjectMapper().writeValueAsString(resultMapJson) : "{}";
+
+        return resultMapJson != null ? new ObjectMapper().writeValueAsString(sortMap(resultMapJson)) : "{}";
     }
 
     @Override
@@ -137,6 +138,32 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
             }
         }
         return new ObjectMapper().writeValueAsString(jsonMap);
+    }
+
+    public static Map<String, Object> sortMap(Map<String, Object> map){
+        Map<String, Object> sortedMap = new LinkedHashMap<String, Object>();
+        if (map != null && !map.isEmpty()) {
+            List<Map.Entry<String, Object>> entryList = new ArrayList<Map.Entry<String, Object>>(map.entrySet());
+            Collections.sort(entryList, new TimesComparator());
+            Iterator<Map.Entry<String, Object>> iter = entryList.iterator();
+            Map.Entry<String, Object> tmpEntry = null;
+            while (iter.hasNext()) {
+                tmpEntry = iter.next();
+                sortedMap.put(tmpEntry.getKey(), tmpEntry.getValue());
+            }
+        }
+        return sortedMap;
+    }
+
+
+
+    static class TimesComparator implements Comparator<Map.Entry<String, Object>> {
+
+        public int compare(Map.Entry<String, Object> o1,
+                           Map.Entry<String, Object> o2) {
+            return Integer.parseInt(o2.getValue().toString())-Integer.parseInt(o1.getValue().toString());
+        }
+
     }
 }
 

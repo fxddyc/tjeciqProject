@@ -106,7 +106,10 @@
         $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseWords.do', {'rowKey': '${rowKey}'}, function (data) {
             var json = data;
             for (var key in json) {
-                $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
+                if(key.match(/^[0~9]*/)){
+                    $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
+                }
+
             }
         }, 'json');
     });

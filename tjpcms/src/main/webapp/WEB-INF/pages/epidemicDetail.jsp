@@ -201,10 +201,12 @@
             var json = data;
             if (json == null || json.length <= 0) {
                 $("#wordsBtn").append("<span class='label " + itemStyles[parseInt(itemStyles.length * Math.random())] + "'>" + "无分词" + "</span>&nbsp;&nbsp;");
+            } else {
+                for (var key in json) {
+                    $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
+                }
             }
-            for (var key in json) {
-                $("#wordsBtn").append("<span class='label " + itemStyles[parseInt(itemStyles.length * Math.random())] + "'>" + key + "*" + json[key] + "</span>&nbsp;&nbsp;");
-            }
+
         }, 'json');
     });
 </script>

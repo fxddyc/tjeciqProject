@@ -10,11 +10,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-    <title>字典编辑</title>
+    <title>分词上传</title>
     <link href="${pageContext.request.contextPath}/adminex/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/adminex/css/style-responsive.css" rel="stylesheet">
-    <!--dropzone css-->
-    <link href="${pageContext.request.contextPath}/adminex/js/dropzone/css/dropzone.css" rel="stylesheet"/>
 
 </head>
 <body class="sticky-header">
@@ -32,24 +30,16 @@
                 <div class="col-md-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            字典编辑
+                            分词批量上传
                         </header>
                         <div class="panel-body">
-                            <form role="form" action="${pageContext.request.contextPath}/words/editWordsAction.do"
+                            <form role="form" action="${pageContext.request.contextPath}/spider/createAndEditSpider.do"
                                   method="post">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">字典分类</label>
-                                    <select id="exampleInputEmail1" class="form-control m-bot15" name="kindId">
-                                    </select>
+                                    <label for="exampleInputEmail1">分词文件:</label>
+                                    <input type="file" name="wordsFile" class="form-control" id="exampleInputEmail1"/>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">字典名称</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1" name="word"
-                                           placeholder="字典名称" value="${word.word}">
-                                </div>
-                                <input type="hidden" name="id" value="${word.id}"/>
-                                <button type="submit" class="btn btn-primary">确认</button>
+                                <button type="submit" class="btn btn-primary">上传</button>
                             </form>
                         </div>
                     </section>
@@ -73,32 +63,6 @@
 <script src="${pageContext.request.contextPath}/adminex/js/jquery.isotope.js"></script>
 
 <script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>
-
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/jqPaginator/dist/1.2.0/jqPaginator.min.js"></script>
-
-<script type="text/javascript">
-
-    var currentId = '${word.kindDic.id}';
-
-    $(document).ready(function () {
-        $.post('${pageContext.request.contextPath}/common/kindNameList.do', null, function (data) {
-            var json = data;
-            for (var i = 0; i < json.length; i++) {
-                if (currentId == json[i].id) {
-                    $("#exampleInputEmail1").append("<option selected='selected' value='" + json[i].id + "'>" + json[i].kindName + "</option>");
-                } else {
-                    $("#exampleInputEmail1").append("<option value='" + json[i].id + "'>" + json[i].kindName + "</option>");
-                }
-
-            }
-
-        }, 'json');
-
-    });
-
-
-</script>
 </body>
 
 </html>

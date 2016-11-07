@@ -10,7 +10,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
-
+    <title>爬虫编辑</title>
     <link href="${pageContext.request.contextPath}/adminex/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/adminex/css/style-responsive.css" rel="stylesheet">
     <!--dropzone css-->

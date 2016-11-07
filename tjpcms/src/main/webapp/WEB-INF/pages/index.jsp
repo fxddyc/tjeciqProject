@@ -16,7 +16,7 @@
     <meta name="author" content="ThemeBucket">
     <link rel="shortcut icon" href="#" type="image/png">
 
-    <title>AdminX</title>
+    <title>首页</title>
 
     <!--dashboard calendar-->
     <link href="${pageContext.request.contextPath}/adminex/css/clndr.css" rel="stylesheet">

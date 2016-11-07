@@ -11,4 +11,11 @@ public class ConfigUtils {
         properties.load(ConfigUtils.class.getClassLoader().getResourceAsStream(configPath));
         return properties.getProperty(key);
     }
+
+    public static Properties readProperties(String configPath) throws Exception {
+        Properties properties = new Properties();
+        properties.load(ConfigUtils.class.getClassLoader().getResourceAsStream(configPath));
+        return properties;
+    }
+
 }

@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-
+    <title>分词列表</title>
     <link href="${pageContext.request.contextPath}/adminex/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/adminex/css/style-responsive.css" rel="stylesheet">
     <!--dropzone css-->
@@ -56,9 +56,6 @@
                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal1">
                                 新增分词
                             </button>
-                            <button class="btn btn-primary" onclick="uploadWords();">
-                                更新分词
-                            </button>
                         </div>
                     </div>
 
@@ -79,6 +76,10 @@
                                     </th>
                                     <th style="">
                                         <div class="th-inner ">字典分类</div>
+                                        <div class="fht-cell"></div>
+                                    </th>
+                                    <th style="">
+                                        <div class="th-inner ">分类等级</div>
                                         <div class="fht-cell"></div>
                                     </th>
                                     <th style="">
@@ -283,7 +284,7 @@
                     }, function (data) {
                         var wordsList = data.wordsList;
                         for (var i = 0; i < wordsList.length; i++) {
-                            $("#wordsData").append("<tr><td style=''>" + (i + 1) + "</td>" + "<td style=''>" + wordsList[i].kindDic.kindName + "</td>" + "<td style=''>" + wordsList[i].word + "</td>" + "<td style=''>" + "<a href='${pageContext.request.contextPath}/words/editWords.do?id=" + wordsList[i].id + "'><button class='btn btn-primary'>编辑</button></a>&nbsp&nbsp&nbsp<a href='${pageContext.request.contextPath}/words/deleteWords.do?id=" + wordsList[i].id + "'><button class='btn btn-primary'>删除</button></a>" + "</tr>");
+                            $("#wordsData").append("<tr><td style=''>" + (i + 1) + "</td>" + "<td style=''>" + wordsList[i].kindDic.kindName + "</td>" + "<td style=''>" + wordsList[i].kindDic.level + "</td>" + "<td style=''>" + wordsList[i].word + "</td>" + "<td style=''>" + "<a href='${pageContext.request.contextPath}/words/editWords.do?id=" + wordsList[i].id + "'><button class='btn btn-primary'>编辑</button></a>&nbsp&nbsp&nbsp<a href='${pageContext.request.contextPath}/words/deleteWords.do?id=" + wordsList[i].id + "'><button class='btn btn-primary'>删除</button></a>" + "</tr>");
                         }
                     }, 'json');
                 }

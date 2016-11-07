@@ -5,6 +5,7 @@ import cn.com.eship.dao.EpidemicDao;
 import cn.com.eship.model.EpidemicAppear;
 import cn.com.eship.service.EpidemicService;
 import cn.com.eship.utils.ConfigUtils;
+import cn.com.eship.utils.MapValueComparator;
 import cn.com.eship.utils.PageUtils;
 import cn.com.eship.utils.TimeUtils;
 import com.sun.deploy.net.proxy.pac.PACFunctions;
@@ -113,6 +114,7 @@ public class EpidemicServiceImpl implements EpidemicService {
         // 请求发布在本地 Tomcat上服务
         Map<String, Object> resultMapJson = new HashMap<String, Object>();
         PostMethod method = new PostMethod(ConfigUtils.readValue("esconfig.properties", "eshost") + "/words/wordline/_search");
+        String reslut = "";
         try {
             HttpClient client = new HttpClient();
 
@@ -134,13 +136,36 @@ public class EpidemicServiceImpl implements EpidemicService {
                 Map<String, Object> map1 = (Map<String, Object>) mapTemp;
                 Map<String, Object> map2 = (Map<String, Object>) map1.get("_source");
                 resultMapJson = (Map<String, Object>) map2.get("wordsMap");
+                reslut = sortMapByValue(new ObjectMapper().writeValueAsString(resultMapJson));
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             method.releaseConnection();
         }
-        return resultMapJson != null ? new org.apache.htrace.fasterxml.jackson.databind.ObjectMapper().writeValueAsString(resultMapJson) : "{}";
+        return reslut != null ? reslut : "{}";
+    }
+
+
+    private String sortMapByValue(String mapJson) throws Exception {
+        //mapJson
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Integer> oriMap = objectMapper.readValue(mapJson, Map.class);
+        if (oriMap == null || oriMap.isEmpty()) {
+            return null;
+        }
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        List<Map.Entry<String, Integer>> entryList = new ArrayList<Map.Entry<String, Integer>>(
+                oriMap.entrySet());
+        Collections.sort(entryList, new MapValueComparator());
+
+        Iterator<Map.Entry<String, Integer>> iter = entryList.iterator();
+        Map.Entry<String, Integer> tmpEntry = null;
+        while (iter.hasNext()) {
+            tmpEntry = iter.next();
+            sortedMap.put(tmpEntry.getKey(), tmpEntry.getValue());
+        }
+        return objectMapper.writeValueAsString(sortedMap);
     }
 
 

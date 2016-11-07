@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>疫情详情</title>
+    <title>数据详情</title>
 
     <link href="${pageContext.request.contextPath}/adminex/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/adminex/css/style-responsive.css" rel="stylesheet">

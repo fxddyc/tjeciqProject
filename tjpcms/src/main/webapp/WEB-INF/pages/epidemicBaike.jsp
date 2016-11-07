@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-
+    <title>疫情百科</title>
     <link href="${pageContext.request.contextPath}/adminex/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/adminex/css/style-responsive.css" rel="stylesheet">
 

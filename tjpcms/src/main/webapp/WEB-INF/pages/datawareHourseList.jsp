@@ -9,7 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-
+    <title>数据中心</title>
     <link href="${pageContext.request.contextPath}/adminex/css/style.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/adminex/css/style-responsive.css" rel="stylesheet">
 
@@ -98,7 +98,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/elasticSearch/elasticsearch.jquery.js"></script>
 
 <script type="text/javascript">
-    var client = new $.es.Client({hosts: 'http://192.168.56.102:9200',log: 'trace'});
+    var client = new $.es.Client({hosts: 'http://reptile3.cn:9200',log: 'trace'});
     var size = 10;
     var from = 0;
     var queryRule;

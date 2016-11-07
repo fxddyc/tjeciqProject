@@ -56,7 +56,8 @@
 
                                     <p id="content">
                                     </p>
-                                    <a id="contentUrl" href="#" class="more">查看来源</a>
+
+                                    <a data-toggle="modal" data-target="#myModal1" class="more">查看来源</a>
                                 </div>
                             </div>
                         </div>
@@ -74,6 +75,27 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        原文链接二维码
+                                    </h4>
+                                </div>
+                                <div id="baikeUrlDiv" class="modal-body" style="text-align: center;">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                    </button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
                     </div>
 
                 </div>
@@ -99,7 +121,12 @@
             $("#time").text(json.time);
             $("#time2").text(json.time);
             $("#content").html(json.content);
-            $("#contentUrl").attr("href", json.contentUrl);
+            $("#baikeUrlDiv").qrcode({
+                render: "table", //table方式
+                width: 200, //宽度
+                height: 200, //高度
+                text: json.contentUrl //任意内容
+            });
         }, 'json');
 
 

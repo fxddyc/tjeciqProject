@@ -41,7 +41,7 @@
                                 <c:forEach items="${epidemicBaikeList}" var="baike">
                                     <div class="images item ">
                                         <a onclick="dj('${baike.rowKey}','${baike.epidemicName}');">
-                                            <img src="${baike.imgUrl}"
+                                            <img src="http://reptile3.cn/img/${baike.epidemicName}.jpg"
                                                  alt=""/>
                                         </a>
                                         <p>${baike.epidemicName}</p>

@@ -202,7 +202,8 @@
             if (json == null || json.length <= 0) {
                 $("#wordsBtn").append("<span class='label " + itemStyles[parseInt(itemStyles.length * Math.random())] + "'>" + "无分词" + "</span>&nbsp;&nbsp;");
             } else {
-                for (var key in json) {
+                var json2 = json.reverse();
+                for (var key in json2) {
                     $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
                 }
             }

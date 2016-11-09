@@ -3,6 +3,7 @@ package cn.com.eship.service;
 import cn.com.eship.model.KindDic;
 import cn.com.eship.model.Words;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,4 +32,6 @@ public interface WordsService {
     public void addKindDic(KindDic kindDic) throws Exception;
 
     public void uploadWords() throws Exception;
+
+    public List<Words> getWordsList() throws Exception;
 }

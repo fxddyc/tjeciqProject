@@ -56,6 +56,9 @@
                             <button class="btn btn-primary" data-toggle="modal" data-target="#myModal1">
                                 新增分词
                             </button>
+                            <button class="btn btn-primary" onclick="exExcel()">
+                                导出excel
+                            </button>
                         </div>
                     </div>
 
@@ -300,6 +303,11 @@
                 alert("更新分词成功");
             }
         }, 'json');
+
+    }
+    function exExcel() {
+        var url = '${pageContext.request.contextPath}/words/exExcel.do';
+        $('<form method="post" action="' + url + '"></form>').appendTo('body').submit().remove();
 
     }
 </script>

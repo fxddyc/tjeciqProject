@@ -136,4 +136,18 @@ public class WordsDaoImpl implements WordsDao {
         List<String> list = (List<String>) hibernateTemplate.find(hql);
         return list;
     }
+
+    public List<Words> getWordsList(){
+        String hql = "from Words words join fetch words.kindDic t1";
+        List<Words> list = (List<Words>) hibernateTemplate.execute(
+                new HibernateCallback() {
+                    public Object doInHibernate(Session session)
+                            throws HibernateException, SQLException {
+                        Query query = session.createQuery(hql);
+                        List list = query.list();
+                        return list;
+                    }
+                });
+        return list;
+    }
 }

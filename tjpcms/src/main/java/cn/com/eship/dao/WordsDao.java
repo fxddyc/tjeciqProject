@@ -46,5 +46,5 @@ public interface WordsDao {
 
     public List<String> findAllWordsList() throws Exception;
 
-
+    public List<Words> getWordsList() throws Exception;
 }

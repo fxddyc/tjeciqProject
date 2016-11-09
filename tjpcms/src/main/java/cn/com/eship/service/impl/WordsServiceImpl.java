@@ -89,4 +89,10 @@ public class WordsServiceImpl implements WordsService {
         List<String> list = wordsDao.findAllWordsList();
         FileUtils.writeLines(new File(ConfigUtils.readValue("upfile.properties", "filePath")), "utf-8", list);
     }
+
+    @Override
+    public List<Words> getWordsList() throws Exception {
+        List<Words> list = wordsDao.getWordsList();
+        return list;
+    }
 }

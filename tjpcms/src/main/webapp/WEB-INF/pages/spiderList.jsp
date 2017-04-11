@@ -54,10 +54,10 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" style="height:70%;">
                 <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-body">
+                        <div class="panel-body" style="height:90%;overflow-y:scroll;">
 
                             <table class="table table-hover table-bordered">
                                 <thead>

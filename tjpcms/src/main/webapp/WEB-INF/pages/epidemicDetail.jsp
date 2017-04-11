@@ -54,12 +54,12 @@
                                     <h4>疫情百科</h4>
                                 </div>
                                 <div class="col-md-12">
-                                    <div class="blog-img-sm">
+                                    <div class="blog-img-sm" >
                                         <img id="epidemicBaiKeImg" src="#"
-                                             alt="">
+                                             alt="" style="height:auto;width:auto">
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" style="height:80%;overflow-y:scroll;">
                                     <p id="baikeSummary">
 
                                     </p>
@@ -100,7 +100,7 @@
                                 <div class="col-md-12">
                                     <h4>信息分词</h4>
                                 </div>
-                                <div class="col-md-12" id="wordsBtn">
+                                <div class="col-md-12" id="wordsBtn" style="height:400px">
                                 </div>
                             </div>
                         </div>
@@ -164,6 +164,7 @@
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/modernizr.min.js"></script>
 <script src="${pageContext.request.contextPath}/jqqrcode/jquery-qrcode-0.14.0.min.js"></script>
+<script src="${pageContext.request.contextPath}/echarts/build/dist/echarts-all.js"></script>
 <script>
 
     var itemStyles = ['label-default', 'label-primary', 'label-success', 'label-info', 'label-warning', 'label-danger']
@@ -175,16 +176,21 @@
             height: 200, //高度
             text: '${epidemicAppear.rowKey}' //任意内容
         });
-        $.post('${pageContext.request.contextPath}/hbaseController/epidemicBaike.do', {'rowKey': '${epidemicAppear.epidemic.id}'}, function (data) {
+        $.post('${pageContext.request.contextPath}/hbaseController/epidemicBaike.do', {'rowKey': 'http://baike.baidu.com/item/${epidemicAppear.epidemic.epidemicName}'}, function (data) {
             var json = data;
-            $("#epidemicBaiKeImg").attr("src", json.imgUrl);
-            $("#baikeSummary").text(json.summary);
-            //$("#baikeContentUrl").attr("href", json.contentUrl);
+            $("#epidemicBaiKeImg").attr("src", 'http://reptile3.tj.ciq:8080/img/${epidemicAppear.epidemic.epidemicName}.jpg');
+            var summary = json.summary;
+			var a_regx = /(<a[^>]*>)|(<\/a>)|(<img[^>]*>)|(<em[^>]*>[\s\S]*?<\/em>[\s\S]{0,10}[编辑|锁定]+)/g;
+            summary = summary.replace(a_regx,"");
+	    $("#baikeSummary").append(summary.replace('main-content',''));
+	    $(".lemmaWgt-lemmaCatalog").remove();
+	    $(".top-tool").remove();
+	    $(".lemma-picture").remove();
             $("#baikeUrlDiv").qrcode({
                 render: "table", //table方式
                 width: 200, //宽度
                 height: 200, //高度
-                text: json.contentUrl //任意内容
+                text: 'http://baike.baidu.com/item/${epidemicAppear.epidemic.epidemicName}' //任意内容
             });
         }, 'json');
 
@@ -197,19 +203,73 @@
         }, 'json');
 
 
-        $.post('${pageContext.request.contextPath}/epidemic/epidemicWords.do', {'rowKey': '${epidemicAppear.rowKey}'}, function (data) {
-            var json = data;
-            if (json == null || json.length <= 0) {
-                $("#wordsBtn").append("<span class='label " + itemStyles[parseInt(itemStyles.length * Math.random())] + "'>" + "无分词" + "</span>&nbsp;&nbsp;");
-            } else {
-                var json2 = json.reverse();
-                for (var key in json2) {
-                    $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
-                }
-            }
+        <%--$.post('${pageContext.request.contextPath}/epidemic/epidemicWords.do', {'rowKey': '${epidemicAppear.rowKey}'}, function (data) {--%>
+            <%--var json = data;--%>
+            <%--if (json == null || json.length <= 0) {--%>
+                <%--$("#wordsBtn").append("<span class='label " + itemStyles[parseInt(itemStyles.length * Math.random())] + "'>" + "无分词" + "</span>&nbsp;&nbsp;");--%>
+            <%--} else {--%>
+                <%--for (var key in json) {--%>
+                    <%--$("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");--%>
+                <%--}--%>
+            <%--}--%>
 
-        }, 'json');
+        <%--}, 'json');--%>
+        findWordsCloud();
     });
+
+
+    function findWordsCloud() {
+        //设置数据
+        var option = {
+            tooltip: {
+                show: true
+            },
+            series: [{
+                name: '疫情字符云',
+                type: 'wordCloud',
+                size: ['80%', '80%'],
+                textRotation: [0, 45, 90, -45],
+                textPadding: 0,
+                autoSize: {
+                    enable: true,
+                    minSize: 14
+                },
+                data: []
+            }]
+        };
+        $.post('${pageContext.request.contextPath}/epidemic/epidemicWords.do', {'rowKey': '${epidemicAppear.rowKey}'},
+                function (data) {
+                    var json = data;
+                    option.series[0].data = [];
+                    var params = [];
+                    var num = 0;
+                    for(var key in json){
+                        var argx = /[0-9]+/;
+                        if(argx.test(key.trim)) console.log(key);
+                        params[num] = '{'+ '"name":' + '"' + key + '"' + ',"value":' + json[key] +  '}';
+                        num ++;
+                    }
+                    for (var i = 0; i<10;i++){
+                        params[i]['itemStyle'] = createRandomItemStyle();
+                        option.series[0].data.push(params[i]);
+                    }
+                    var myChart = echarts.init(document.getElementById('wordsBtn'));
+                    myChart.setOption(option);
+                },
+                "json");
+    }
+
+    function createRandomItemStyle() {
+        return {
+            normal: {
+                color: 'rgb(' + [
+                    Math.round(Math.random() * 160),
+                    Math.round(Math.random() * 160),
+                    Math.round(Math.random() * 160)
+                ].join(',') + ')'
+            }
+        };
+    }
 </script>
 
 

@@ -53,7 +53,7 @@
                                            placeholder="标题Xpath" value="${spider.titleXpath}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword6">标题Xpath</label>
+                                    <label for="exampleInputPassword6">列表链接Xpath</label>
                                     <input type="text" class="form-control" id="exampleInputPassword6" name="fetchUrlXpath"
                                            placeholder="列表链接Xpath" value="${spider.fetchUrlXpath}">
                                 </div>

@@ -15,7 +15,12 @@
 
 </head>
 <body class="sticky-header">
+<script>
+function aa(){
+$(this).attr('src','http://reptile3.cn:8080/img/liugan.jpg');
+}
 
+</script>
 
 <section>
     <%@include file="menu.jsp" %>
@@ -41,8 +46,7 @@
                                 <c:forEach items="${epidemicBaikeList}" var="baike">
                                     <div class="images item ">
                                         <a onclick="dj('${baike.rowKey}','${baike.epidemicName}');">
-                                            <img src="http://reptile3.cn/img/${baike.epidemicName}.jpg"
-                                                 alt=""/>
+                                            <img src="http://reptile3.tj.ciq:8080/img/${baike.epidemicName}.jpg" onerror="javascript:this.src='http://reptile3.tj.ciq:8080/img/liugan.jpg'" alt=""/>
                                         </a>
                                         <p>${baike.epidemicName}</p>
                                     </div>
@@ -109,12 +113,18 @@
                 function (data) {
                     var json = data;
                     $("#title").html(name);
-                    $("#jj").html(json);
+					var a_regx = /(<a[^>]*>)|(<\/a>)|(<img[^>]*>)|(<em[^>]*>[\s\S]*?<\/em>[\s\S]{0,10}[编辑|锁定]+)/g;
+					var main_content = json.replace(a_regx,"");
+                    $("#jj").html(main_content.replace('main-content',''));
+            $(".lemmaWgt-lemmaCatalog").remove();
+            $(".top-tool").remove();
+            $(".lemma-picture").remove();
                     $('#myModal').modal('show');
                 },
                 "text");
     }
 </script>
 </body>
+
 
 </html>

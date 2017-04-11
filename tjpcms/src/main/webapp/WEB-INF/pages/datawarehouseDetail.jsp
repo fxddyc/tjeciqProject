@@ -23,26 +23,7 @@
         <!--body wrapper start-->
         <div class="wrapper">
             <div class="row blog">
-                <div class="col-md-4">
-                    <div class="panel">
-                        <div class="panel-body">
-                            <ul class="p-info">
-                                <li>
-                                    <div class="title">疫情名称</div>
-                                    <div class="desk" id="epidemicName"></div>
-                                </li>
-                                <li>
-                                    <div class="title">时间</div>
-                                    <div class="desk" id="time"></div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
-
-                </div>
-
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="panel">
                         <div class="panel-body">
                             <div class="row">
@@ -77,7 +58,7 @@
                         </div>
                     </div>
 
-                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -113,6 +94,9 @@
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/modernizr.min.js"></script>
 
+<script src="${pageContext.request.contextPath}/jqqrcode/jquery-qrcode-0.14.0.min.js"></script>
+
+
 <script>
     $(document).ready(function () {
         $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseDetail.do', {'rowKey': '${rowKey}'}, function (data) {
@@ -120,7 +104,9 @@
             $("#epidemicName").text(json.epidemicName);
             $("#time").text(json.time);
             $("#time2").text(json.time);
-            $("#content").html(json.content);
+			var a_regx = /(<a[^>]*>)|(<\/a>)|(<img[^>]*>)/g;
+			var content_html = json.content?json.content.replace(a_regx,""):"";
+            $("#content").html(content_html);
             $("#baikeUrlDiv").qrcode({
                 render: "table", //table方式
                 width: 200, //宽度
@@ -133,7 +119,8 @@
         $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseWords.do', {'rowKey': '${rowKey}'}, function (data) {
             var json = data;
             for (var key in json) {
-                if(key.match(/^[0~9]*/)){
+			var regx = /^[0-9][0-9]{0,10}$/;
+                if(!key.match(regx)){
                     $("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
                 }
 

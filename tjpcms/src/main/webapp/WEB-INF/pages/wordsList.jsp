@@ -66,10 +66,22 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-default">
+                <div class="col-md-4">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            字典分类
+                        </div>
+                        <div class="panel-body blog-post">
+                            <ul id="dic_category"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            字典详情
+                        </div>
                         <div class="panel-body">
-
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
@@ -95,16 +107,12 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody id="wordsData">
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <div class="dataTables_paginate paging_bootstrap pagination">
-                                        <ul id="demo1"></ul>
-                                    </div>
-                                </tr>
-                                </tfoot>
+                                <tbody id="wordsData"></tbody>
+                                <tfoot></tfoot>
                             </table>
+                            <div class="dataTables_paginate paging_bootstrap pagination">
+                                <ul id="demo1"></ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,8 +211,7 @@
 
 <script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>
 
-<script type="text/javascript"
-        src="${pageContext.request.contextPath}/jqPaginator/dist/1.2.0/jqPaginator.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jqPaginator/dist/1.2.0/jqPaginator.min.js"></script>
 
 <script type="text/javascript">
 
@@ -256,6 +263,7 @@
             var json = data;
             for (var i = 0; i < json.length; i++) {
                 $("#addWordsKindDic").append("<option selected='selected' value='" + json[i].id + "'>" + json[i].kindName + "</option>");
+                $("#dic_category").append('<li><a class="dic_category" style="font-weight:bold" href="javascript:;" onclick="findWordsByCategory(this)"><i class="  fa fa-angle-right"></i>'+json[i].kindName+'</a></li>');
             }
 
         }, 'json');
@@ -269,6 +277,10 @@
             'kindName': kindNameCondition,
             'words': wordsCondition
         }, function (data) {
+            if(data.wordsListCount == 0){
+                $("#wordsData").empty();
+                return;
+            }
             $("#demo1").jqPaginator({
                 totalPages: Math.ceil(data.wordsListCount / 10),
                 visiblePages: 10,
@@ -309,6 +321,13 @@
         var url = '${pageContext.request.contextPath}/words/exExcel.do';
         $('<form method="post" action="' + url + '"></form>').appendTo('body').submit().remove();
 
+    }
+
+    function findWordsByCategory(obj){
+        if(obj && obj.text){
+            $("#kindName").val(obj.text);
+            search();
+        }
     }
 </script>
 </body>

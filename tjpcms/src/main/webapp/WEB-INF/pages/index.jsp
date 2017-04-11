@@ -285,7 +285,7 @@
             options: [
                 {
                     title: {
-                        'text': '2002疫情变化图示',
+                        'text': '2006疫情变化图示',
                         'subtext': '数据来自全球卫生组织'
                     },
                     tooltip: {'trigger': 'axis'},
@@ -338,67 +338,12 @@
                         {
                             'name': '全球',
                             'type': 'bar',
-                            'data': dataMap.dataGDP['2015']
+                            'data': dataMap.dataGDP['2006']
                         },
                         {
                             'name': '我国', 'yAxisIndex': 1, 'type': 'bar',
-                            'data': dataMap.dataFinancial['2015']
+                            'data': dataMap.dataFinancial['2006']
                         }
-                    ]
-                },
-                {
-                    title: {'text': '2015疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2015']},
-                        {'data': dataMap.dataFinancial['2015']}
-                    ]
-                },
-                {
-                    title: {'text': '2014疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2014']},
-                        {'data': dataMap.dataFinancial['2014']}
-                    ]
-                },
-                {
-                    title: {'text': '2013疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2013']},
-                        {'data': dataMap.dataFinancial['2013']}
-                    ]
-                },
-                {
-                    title: {'text': '2012疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2012']},
-                        {'data': dataMap.dataFinancial['2012']}]
-                },
-                {
-                    title: {'text': '2011疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2011']},
-                        {'data': dataMap.dataFinancial['2011']}
-                    ]
-                },
-                {
-                    title: {'text': '2010疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2010']},
-                        {'data': dataMap.dataFinancial['2010']}
-                    ]
-                },
-                {
-                    title: {'text': '2009疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2009']},
-                        {'data': dataMap.dataFinancial['2009']}
-                    ]
-                },
-                {
-                    title: {'text': '2008疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2008']},
-                        {'data': dataMap.dataFinancial['2008']}
                     ]
                 },
                 {
@@ -409,10 +354,58 @@
                     ]
                 },
                 {
-                    title: {'text': '2006疫情变化图示'},
+                    title: {'text': '2008疫情变化图示'},
                     series: [
-                        {'data': dataMap.dataGDP['2006']},
-                        {'data': dataMap.dataFinancial['2006']}
+                        {'data': dataMap.dataGDP['2008']},
+                        {'data': dataMap.dataFinancial['2008']}
+                    ]
+                },
+                {
+                    title: {'text': '2009疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2009']},
+                        {'data': dataMap.dataFinancial['2009']}
+                    ]
+                },
+                {
+                    title: {'text': '2010疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2010']},
+                        {'data': dataMap.dataFinancial['2010']}]
+                },
+                {
+                    title: {'text': '2011疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2011']},
+                        {'data': dataMap.dataFinancial['2011']}
+                    ]
+                },
+                {
+                    title: {'text': '2012疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2012']},
+                        {'data': dataMap.dataFinancial['2012']}
+                    ]
+                },
+                {
+                    title: {'text': '2013疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2013']},
+                        {'data': dataMap.dataFinancial['2013']}
+                    ]
+                },
+                {
+                    title: {'text': '2014疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2014']},
+                        {'data': dataMap.dataFinancial['2014']}
+                    ]
+                },
+                {
+                    title: {'text': '2015疫情变化图示'},
+                    series: [
+                        {'data': dataMap.dataGDP['2015']},
+                        {'data': dataMap.dataFinancial['2015']}
                     ]
                 }
             ]

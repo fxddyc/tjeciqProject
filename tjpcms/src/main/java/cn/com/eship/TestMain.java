@@ -1,10 +1,8 @@
 package cn.com.eship;
 
 
-import cn.com.eship.model.Words;
 import cn.com.eship.service.CommonService;
 import cn.com.eship.service.WordsService;
-import cn.com.eship.service.impl.CommonServiceImpl;
 import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
@@ -13,7 +11,9 @@ import org.apache.hadoop.hbase.client.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -21,8 +21,8 @@ import java.util.List;
  */
 public class TestMain {
     public static void main(String[] args) throws Exception {
-        //test3();
-        test8();
+        List<Map<String,Object>> list = new ArrayList<>();
+        System.out.println(list.getClass());
     }
 
     /**

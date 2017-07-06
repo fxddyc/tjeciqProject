@@ -34,5 +34,5 @@ public interface EpidemicAppearDao {
     public List<EpidemicAppear> findEpidemicAppearList(Map<String, Object> mapPram) throws Exception;
     public List<EpidemicAppear> findEpidemicAppearListOverride(Map<String, Object> mapPram) throws Exception;
     public int findEpidemicAppearListOverrideCount(Map<String, Object> mapPram) throws Exception;
-
+    public List<Map<String, String>> findWorldEpidemicAppearsTimeline() throws Exception;
 }

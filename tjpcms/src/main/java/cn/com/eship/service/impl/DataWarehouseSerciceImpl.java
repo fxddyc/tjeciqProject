@@ -103,10 +103,12 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
     public String makeDataWareHouseDetailJson(String rowKey) throws Exception {
         Map<String, String> jsonMap = new HashMap<String, String>();
         Table table = connection.getTable(TableName.valueOf("epidemicInfo"));
-        Scan scan = new Scan(rowKey.getBytes("utf-8"));
+        //Scan scan = new Scan(rowKey.getBytes("utf-8"));
+        Get get = new Get(rowKey.getBytes());
         //scan.addColumn("c1".getBytes(),"epidemicName".getBytes()).addColumn("c1".getBytes(),"imgUrl".getBytes());
-        ResultScanner resultScanner = table.getScanner(scan);
-        Result result = resultScanner.next();
+        //ResultScanner resultScanner = table.getScanner(scan);
+        //Result result = resultScanner.next();
+        Result result = table.get(get);
         if (result != null) {
             if (result.getRow() != null && result.getRow().length > 0) {
                 jsonMap.put("contentUrl", new String(result.getRow(), "utf-8"));
@@ -131,8 +133,8 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
             } else {
                 jsonMap.put("epidemicName", "");
             }
-            if (result.getValue("c1".getBytes(), "html".getBytes()) != null && result.getValue("c1".getBytes(), "html".getBytes()).length > 0) {
-                jsonMap.put("content", new String(result.getValue("c1".getBytes(), "html".getBytes()), "utf-8"));
+            if (result.getValue("c1".getBytes(), "content".getBytes()) != null && result.getValue("c1".getBytes(), "content".getBytes()).length > 0) {
+                jsonMap.put("content", new String(result.getValue("c1".getBytes(), "content".getBytes()), "utf-8"));
             } else {
                 jsonMap.put("content", "");
             }

@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-sweetalert-master/dist/sweetalert.css">
+    <script src="${pageContext.request.contextPath}/bootstrap-sweetalert-master/dist/sweetalert.js"></script>
 </head>
 <body>
 <!-- header section start-->

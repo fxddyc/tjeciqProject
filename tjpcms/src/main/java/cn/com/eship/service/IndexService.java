@@ -39,4 +39,5 @@ public interface IndexService {
      * @return
      */
     public Integer findEpidemicCount() throws Exception;
+    public String findWorldEpidemicAppearsTimeline() throws Exception;
 }

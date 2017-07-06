@@ -158,7 +158,8 @@
             el.slideDown(200); }
     });
 
-    var client = new $.es.Client({hosts: 'http://10.12.8.93:9200',log: 'trace'});
+    var client = new $.es.Client({hosts: 'http://sandbox.hortonworks.com:9200',log: 'trace'});
+    //sandbox.hortonworks.com
     var size = 10;
     var from = 0;
     var queryRule;
@@ -398,6 +399,8 @@
         });
 
     }
+
+
 
 </script>
 </body>

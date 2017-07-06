@@ -237,26 +237,53 @@
                 data: []
             }]
         };
-        $.post('${pageContext.request.contextPath}/epidemic/epidemicWords.do', {'rowKey': '${epidemicAppear.rowKey}'},
-                function (data) {
-                    var json = data;
-                    option.series[0].data = [];
-                    var params = [];
-                    var num = 0;
-                    for(var key in json){
-                        var argx = /[0-9]+/;
-                        if(argx.test(key.trim)) console.log(key);
-                        params[num] = '{'+ '"name":' + '"' + key + '"' + ',"value":' + json[key] +  '}';
-                        num ++;
-                    }
-                    for (var i = 0; i<10;i++){
-                        params[i]['itemStyle'] = createRandomItemStyle();
-                        option.series[0].data.push(params[i]);
-                    }
-                    var myChart = echarts.init(document.getElementById('wordsBtn'));
-                    myChart.setOption(option);
-                },
-                "json");
+        $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseWords.do', {'rowKey': '${epidemicAppear.rowKey}'}, function (data) {
+            var json = data;
+//            for (var i = 0; i<params.length;i++){
+//                option.series[0].data.push({name:key,value:json[key]});
+//            }
+            for (var key in json) {
+                var regx = /^[0-9][0-9]{0,10}$/;
+                if(!key.match(regx)){
+                    option.series[0].data.unshift({name:key,value:json[key]});
+                    //$("#wordsBtn").append("<button class='btn btn-default' type='button'>" + key + "*" + json[key] + "</button>");
+                }
+            }
+            var myChart = echarts.init(document.getElementById('wordsBtn'));
+            myChart.setOption(option);
+        }, 'json');
+        <%--$.post('${pageContext.request.contextPath}/epidemic/epidemicWords.do', {'rowKey': '${epidemicAppear.rowKey}'},--%>
+                <%--function (data) {--%>
+                    <%--var json = data;--%>
+                    <%--option.series[0].data = [];--%>
+                    <%--var params = [];--%>
+                    <%--var num = 0;--%>
+//                    for(var key in json){
+//                        var argx = /[0-9]+/;
+//                        var tmp = {};
+//                        tmp["name"]= key;
+//                        tmp["value"] = json[key];
+//                        params[num] = tmp;
+//                        num ++;
+//                    }
+                    <%--for(var i=0;i<params.length;i++){--%>
+                        <%--for(var j=i+1;j<params.length;j++){--%>
+                            <%--var tmpv = params[i];--%>
+                            <%--if(params[i]["value"]>params[j]["value"]){--%>
+                                <%--params[i] = params[j];--%>
+                                <%--params[j] = tmpv;--%>
+                            <%--}--%>
+                        <%--}--%>
+
+                    <%--}--%>
+                    <%--for (var i = 0; i<params.length;i++){--%>
+                        <%--params[i]['itemStyle'] = createRandomItemStyle();--%>
+                        <%--option.series[0].data.push(params[i]);--%>
+                    <%--}--%>
+                    <%--var myChart = echarts.init(document.getElementById('wordsBtn'));--%>
+                    <%--myChart.setOption(option);--%>
+                <%--},--%>
+                <%--"json");--%>
     }
 
     function createRandomItemStyle() {

@@ -1,22 +1,16 @@
 package cn.com.eship.service.impl;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
+import cn.com.eship.dao.EpidemicAppearDao;
+import cn.com.eship.dao.EpidemicDao;
+import cn.com.eship.model.EpidemicAppear;
+import cn.com.eship.service.IndexService;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.com.eship.dao.EpidemicAppearDao;
-import cn.com.eship.dao.EpidemicDao;
-import cn.com.eship.model.EpidemicAppear;
-import cn.com.eship.service.IndexService;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by simon on 16/7/14.
@@ -146,5 +140,10 @@ public class IndexServiceImpl implements IndexService {
             }
         }
         return map;
+    }
+
+    public String findWorldEpidemicAppearsTimeline() throws Exception{
+        List<Map<String, String>> list = epidemicAppearDao.findWorldEpidemicAppearsTimeline();
+        return new ObjectMapper().writeValueAsString(list);
     }
 }

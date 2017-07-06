@@ -2,21 +2,19 @@ package cn.com.eship.dao.impl;
 
 import cn.com.eship.dao.EpidemicAppearDao;
 import cn.com.eship.model.EpidemicAppear;
-import cn.com.eship.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.LongRange;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -275,5 +273,27 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
                 });
 
         return list.size();
+    }
+
+    public List<Map<String, String>> findWorldEpidemicAppearsTimeline()throws Exception{
+        String sql = "SELECT epidemic_name,SUM(appear_times) sat,DATE_FORMAT(appear_date,'%Y') date from t_epidemic_appear a LEFT JOIN t_epidemic b ON a.epidemic_id = b.id GROUP BY epidemic_id,DATE_FORMAT(appear_date,'%Y') HAVING date<2017 and date>2006 ORDER BY date desc,sat desc";
+        List<Map<String, String>> jsonList = new ArrayList<Map<String, String>>();
+        hibernateTemplate.execute(
+                new HibernateCallback() {
+                    public Object doInHibernate(Session session)throws HibernateException, SQLException {
+                        Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+                        List list = query.list();
+                        for (int i=0;i<list.size();i++){
+                            Map<String,String> map2= new HashMap<>();
+                            Map map = (Map)list.get(i);
+                            map2.put("name",(String) map.get("epidemic_name"));
+                            map2.put("value",map.get("sat").toString());
+                            map2.put("date",map.get("date").toString());
+                            jsonList.add(map2);
+                        }
+                        return jsonList;
+                    }
+                });
+        return jsonList;
     }
 }

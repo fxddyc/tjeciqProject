@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
 <!-- left side start-->
 <div class="left-side sticky-left-side">
 
@@ -71,9 +73,18 @@
 
                 </ul>
             </li>
+            <li class="menu-list nav-active"><a href="#"><i class="fa fa-home"></i> <span>OIE疫情信息</span></a>
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/oieEpidemicSearch//toOIEEpidemicSearchPage.do">OIE疫情查询</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
+                </ul>
+            </li>
         </ul>
         <!--sidebar nav end-->
 
     </div>
 </div>
+
 <!-- left side end-->

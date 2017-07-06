@@ -1,6 +1,5 @@
 package cn.com.eship.controller;
 
-import cn.com.eship.model.Epidemic;
 import cn.com.eship.model.EpidemicAppear;
 import cn.com.eship.model.Region;
 import cn.com.eship.service.IndexService;
@@ -68,5 +67,16 @@ public class IndexController {
             logger.error(e.getMessage());
         }
 
+    }
+
+    @RequestMapping("epidemicTimeline")
+    public void findWorldEpidemicAppearsTimeline(HttpServletResponse response) {
+        try {
+            String str = indexService.findWorldEpidemicAppearsTimeline();
+            System.out.println(str);
+            response.getOutputStream().write(str.getBytes("utf-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

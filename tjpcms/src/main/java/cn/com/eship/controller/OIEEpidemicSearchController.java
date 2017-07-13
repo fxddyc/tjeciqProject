@@ -14,8 +14,13 @@ public class OIEEpidemicSearchController {
     private OIEEpidemicSearchService oieEpidemicSearchService;
 
     @RequestMapping("/toOIEEpidemicSearchPage")
-    public String toDailyReportPage() {
+    public String toOIEEpidemicSearchPage() {
         return "OIEEpidemicSearch";
+    }
+
+    @RequestMapping("/toOIEDetailPage")
+    public String toOIEDetailPage() {
+        return "oieDetailPage";
     }
 
     @RequestMapping("/regionList")
@@ -35,7 +40,19 @@ public class OIEEpidemicSearchController {
     }
 
     @RequestMapping("/epidemicEventList")
-    public void epidemicEventList(String pageNo, String epidemicName, String region,String epidemicClass, String startDate, String endDate, HttpServletResponse response) throws Exception {
-        response.getOutputStream().write(oieEpidemicSearchService.makeEpidemicEventListJson(pageNo,epidemicName,region,epidemicClass,startDate,endDate).getBytes("utf-8"));
+    public void epidemicEventList(String pageNo, String epidemicName, String region,String epidemicClass, String startDate, String endDate,String interval, HttpServletResponse response) throws Exception {
+        response.getOutputStream().write(oieEpidemicSearchService.makeEpidemicEventListJson(pageNo,epidemicName,region,epidemicClass,startDate,endDate,interval).getBytes("utf-8"));
     }
+
+    @RequestMapping("epidemicSource")
+    public void epidemicSource(String rowKey, HttpServletResponse response) throws Exception {
+        response.getOutputStream().write(oieEpidemicSearchService.makeEpidemicSourceJson(rowKey).getBytes("utf-8"));
+    }
+
+    @RequestMapping("epidemicRecentOutbreakRegion")
+    public void findRecentOutbreakRegion(int interval,HttpServletResponse response) throws Exception {
+        response.getOutputStream().write(oieEpidemicSearchService.makeEpidemicRecentOutbreakRegionJson(interval).getBytes("utf-8"));
+    }
+
+
 }

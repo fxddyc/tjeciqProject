@@ -87,9 +87,9 @@
                                 <header class="panel-heading">
                                     查询结果
                                     <span class="tools pull-right">
-                                <button class="btn btn-primary" onclick="exExcel()">
-                                导出excel
-                                </button>
+                                <%--<button class="btn btn-primary" onclick="exExcel()">--%>
+                                <%--导出excel--%>
+                                <%--</button>--%>
                             </span>
                                 </header>
                                 <div class="panel-body" style="display: block;">
@@ -105,68 +105,10 @@
                                                 <th class="numeric">爆发次数</th>
                                                 <th class="numeric">临床表现</th>
                                                 <th class="numeric">解决时间</th>
+                                                <th class="numeric">操作</th>
                                             </tr>
                                             </thead>
                                             <tbody align="center" id="epidmicData">
-                                            <%--<tr>--%>
-                                                <%--<td><p>牛结节性皮肤病</p><p>Lumpy skin disease</p></td>--%>
-                                                <%--<td >A类</td>--%>
-                                                <%--<td class="numeric"><p>俄罗斯</p><p>Russia</p></td>--%>
-                                                <%--<td class="numeric">2017-06-13</td>--%>
-                                                <%--<td class="numeric">Recurrence</td>--%>
-                                                <%--<td class="numeric">1</td>--%>
-                                                <%--<td class="numeric">Clinical disease</td>--%>
-                                                <%--<td class="numeric">Continuing</td>--%>
-                                                <%--<td class="numeric">--%>
-                                                    <%--<button class='btn'>详细信息</button>--%>
-                                                    <%--<button class='btn'>原文链接</button>--%>
-                                                <%--</td>--%>
-                                            <%--</tr>--%>
-                                            <%--<tr>--%>
-                                                <%--<td><p>甲型高致病性流感</p><p>Highly pathogenic influenza A viruses</p></td>--%>
-                                                <%--<td >B类</td>--%>
-                                                <%--<td class="numeric"><p>俄罗斯</p><p>Russia</p></td>--%>
-                                                <%--<td class="numeric">2017-01-16</td>--%>
-                                                <%--<td class="numeric">Recurrence</td>--%>
-                                                <%--<td class="numeric">3</td>--%>
-                                                <%--<td class="numeric">Clinical disease</td>--%>
-                                                <%--<td class="numeric">29/03/2017</td>--%>
-                                                <%--<td class="numeric">--%>
-                                                    <%--<button class='btn'>详细信息</button>--%>
-                                                    <%--<button class='btn'>原文链接</button>--%>
-                                                <%--</td>--%>
-                                            <%--</tr>--%>
-                                            <%--<tr>--%>
-                                                <%--<td><p>牛结节性皮肤病</p><p>Lumpy skin disease</p></td>--%>
-                                                <%--<td >A类</td>--%>
-                                                <%--<td class="numeric"><p>俄罗斯</p><p>Russia</p></td>--%>
-                                                <%--<td class="numeric">2016-05-30</td>--%>
-                                                <%--<td class="numeric">Recurrence</td>--%>
-                                                <%--<td class="numeric">313</td>--%>
-                                                <%--<td class="numeric">Clinical disease</td>--%>
-                                                <%--<td class="numeric">15/02/2017</td>--%>
-                                                <%--<td class="numeric">--%>
-                                                    <%--<button class='btn'>详细信息</button>--%>
-                                                    <%--<button class='btn'>原文链接</button>--%>
-                                                <%--</td>--%>
-                                            <%--</tr>--%>
-                                            <%--<tr>--%>
-                                                <%--<td><p>高致病性禽流感</p><p>Highly path. avian influenza</p></td>--%>
-                                                <%--<td >A类</td>--%>
-                                                <%--<td class="numeric"><p>俄罗斯</p><p>Russia</p></td>--%>
-                                                <%--<td class="numeric">2016-11-23</td>--%>
-                                                <%--<td class="numeric">Recurrence</td>--%>
-                                                <%--<td class="numeric">2</td>--%>
-                                                <%--<td class="numeric">Clinical disease</td>--%>
-                                                <%--<td class="numeric">30/12/2016</td>--%>
-                                                <%--<td class="numeric">--%>
-                                                    <%--<button class='btn'>详细信息</button>--%>
-                                                    <%--<button class='btn'>原文链接</button>--%>
-                                                <%--</td>--%>
-                                            <%--</tr>--%>
-
-
-
                                             </tbody>
                                             <tfoot>
                                             <tr>
@@ -220,21 +162,41 @@
 
 
 <script type="text/javascript">
-    $("td").css("vertical-align","middle");
+
+    function getCookie(name){
+        var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+        if(arr != null) return unescape(arr[2]); return null;
+    }
+
+    function setCookie(name, value, expire){
+        var exp = new Date();
+        expire = expire ? expire : 30;
+        exp.setTime(exp.getTime() + expire*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";path=/;expires=" + exp.toGMTString();
+    }
+
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
 
     var conditionEpidemicName = '';
     var conditionRegion = '';
     var conditionEpidemicClass = '';
     var conditionStartDate = '';
     var conditionEndDate = '';
+    var conditionInterval = '';
 
-    function pageUtils() {
+    function pageUtils(interval) {
         $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicEventList.do', {
             'epidemicName':conditionEpidemicName,
             'epidemicClass':conditionEpidemicClass,
             'region': conditionRegion,
             'startDate': conditionStartDate,
-            'endDate': conditionEndDate
+            'endDate': conditionEndDate,
+            "interval": conditionInterval
         }, function (data) {
             $("#demo1").jqPaginator({
                 totalPages: Math.ceil(data.epidemicEventListCount / 10),
@@ -252,7 +214,9 @@
                         'epidemicClass':conditionEpidemicClass,
                         'region': conditionRegion,
                         'startDate': conditionStartDate,
-                        'endDate': conditionEndDate
+                        'endDate': conditionEndDate,
+                        "interval": conditionInterval,
+                        'pageNo': n - 1
                     }, function (data) {
                         var epidemicAppearList = data.epidemicEventList;
                         for (var i = 0; i < epidemicAppearList.length; i++) {
@@ -277,17 +241,9 @@
                                 "<td style=''><p>" + epidemicAppearList[i].reason + "</p></td>" +
                                 "<td style=''><p>" + epidemicAppearList[i].outbreaks + "</p></td>" +
                                 "<td style=''><p>" + epidemicAppearList[i].manifestation + "</p></td>" +
-                                "<td style=''>" + "<a href='${pageContext.request.contextPath}/epidemic/epidemicDetail.do?reportId=" + epidemicAppearList[i].report + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>";
+                                "<td style=''><p>" + epidemicAppearList[i].dateRes + "</p></td>" +
+                                "<td style=''>" + "<a href='${pageContext.request.contextPath}/oieEpidemicSearch/toOIEDetailPage.do?rowKey=" + epidemicAppearList[i].report + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>";
                             $("#epidmicData").append("<tr>"+tr+"</tr>");
-                            <%--$("#epidmicData").append("<tr><td style=''><p>" + epidemicAppearList[i].epidemicNameCn + "</p><p>" + epidemicAppearList[i].epidemicNameEng +"</p></td>" +--%>
-                                <%--"<td style=''><p>" + epidemicAppearList[i].diseaseClass + "</p></td>" +--%>
-                                <%--"<td style=''><p>" + epidemicAppearList[i].regionNameCn + "</p><p>" + epidemicAppearList[i].regionNameEng +"</p></td>" +--%>
-                                <%--"<td style=''><p>" + epidemicAppearList[i].date + "</p></td>" +--%>
-                                <%--"<td style=''><p>" + epidemicAppearList[i].reason + "</p></td>" +--%>
-                                <%--"<td style=''><p>" + epidemicAppearList[i].outbreaks + "</p></td>" +--%>
-                                <%--"<td style=''><p>" + epidemicAppearList[i].manifestation + "</p></td>" +--%>
-                                <%--"<td style=''>" + "<a href='${pageContext.request.contextPath}/epidemic/epidemicDetail.do?reportId=" + epidemicAppearList[i].report + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>"--%>
-                            <%--);--%>
                             $("td").css("vertical-align","middle");
                         }
                     }, 'json');
@@ -315,25 +271,67 @@
     }
 
     function checkNews(){
-        swal({
-                title: "有新增疫情报告，是否查看？",
-                text: "俄罗斯 新增 A类 牛结节性皮肤病 \n\r 荷兰 新增 B类 美洲蜂幼虫腐臭病 \n\r",
-                type: "info",
-                showCancelButton: true,
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "查看详情",
-                closeOnConfirm: false
-            },
-            function(){
-                window.location.href="${pageContext.request.contextPath}/oieEpidemicSearch//toOIEEpidemicSearchPage.do";
-            });
-    };
+        $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicEventList.do', {
+            'epidemicName':conditionEpidemicName,
+            'epidemicClass':conditionEpidemicClass,
+            'region': conditionRegion,
+            'startDate': conditionStartDate,
+            'endDate': conditionEndDate,
+            'interval':7
+        }, function (data) {
+            if (data.epidemicEventListCount>0){
+                var cookie_flag_r = getCookie('alert_flag');
+                var cookie_flag_w = "true";
+                if(cookie_flag_r =="true"){
+                    return
+                }
+                var epidemicAppearList = data.epidemicEventList;
+                var title_str = "7天内新增"+data.epidemicEventListCount+"例疫情报告，是否查看？";
+                var text_str = "";
+                for (var i = 0; i < epidemicAppearList.length; i++) {
+                    text_str += epidemicAppearList[i].date+" ";
+                    if (epidemicAppearList[i].regionNameCn !== null){
+                        text_str += epidemicAppearList[i].regionNameCn;
+                    }else {
+                        text_str += epidemicAppearList[i].country;
+                    }
+                    text_str += " 新增 ";
+                    text_str += epidemicAppearList[i].diseaseClass+" ";
+                    text_str += "疫情 ";
+                    if(epidemicAppearList[i].epidemicNameCn !== null){
+                        text_str += epidemicAppearList[i].epidemicNameCn;
+                    }else {
+                        text_str += epidemicAppearList[i].disease;
+                    }
+                    text_str += "\n\r";
+                }
+                if (cookie_flag_w!==""){
+                    swal({
+                            title: title_str,
+                            text: text_str,
+                            type: "info",
+                            showCancelButton: true,
+                            confirmButtonClass: "btn-danger",
+                            confirmButtonText: "查看详情",
+                            closeOnConfirm: false
+                        },
+                        function(){
+                            setCookie('alert_flag', cookie_flag_w, 1);
+                            window.location.href="${pageContext.request.contextPath}/oieEpidemicSearch/toOIEEpidemicSearchPage.do?from=alert";
+                        });
+                }
+
+            }
+        }, 'json');
+
+    }
 
     $(document).ready(function () {
         checkNews();
-        var flag = '${flag}';
-        if (flag != null && flag != '') {
-
+        var flag = GetQueryString("from");
+        if (flag != null && flag =="alert") {
+            conditionInterval=7;
+            pageUtils();
         } else {
             pageUtils();
         }

@@ -139,7 +139,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
     public List<Map<String, Object>> findEpidemicEventList(Map<String, Object> condition) throws Exception {
         List<Object> valuesPart = new ArrayList<Object>();
         StringBuffer hqlBuffer = new StringBuffer("SELECT a.disease,b.disease_name_cn,b.disease_name_eng,b.disease_class," +
-                "c.region_name_cn,c.region_name_eng,a.date,a.reason,a.outbreaks,a.manifestation,a.report" +
+                "c.region_name_cn,c.region_name_eng,a.date,a.reason,a.outbreaks,a.manifestation,a.report,a.date_res" +
                 " FROM (oie_epidemiological_event a" +
                 " LEFT JOIN oie_diseases b ON a.disease_id = b.id)" +
                 " LEFT JOIN oie_world_region c ON a.country_id = c.id WHERE 1=1");
@@ -164,6 +164,10 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
             wherePart.append(" and a.date <= date_format(?,'%Y-%m-%d')");
             valuesPart.add(condition.get("endDate"));
         }
+        if (condition.get("interval") != null) {
+            wherePart.append(" and a.date >= date_sub(curdate(),interval ? day)");
+            valuesPart.add(condition.get("interval"));
+        }
         if (wherePart.length()<1){
             wherePart.append(" and a.date >= date_sub(curdate(),interval 30 day)");
         }
@@ -175,9 +179,10 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                     public Object doInHibernate(Session session)
                             throws HibernateException, SQLException {
                         Query query = session.createSQLQuery(hql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
-                        query.setFirstResult((int) condition.get("pageNo"));
-                        query.setMaxResults(10);
-
+                        if (condition.get("pageNo")!=null){
+                            query.setFirstResult((int) condition.get("pageNo"));
+                            query.setMaxResults(10);
+                        }
                         for (int i = 0; i < valuesPart.size(); i++) {
                             if(valuesPart.get(i).getClass().toString().equals(ArrayList.class.toString())){
                                 query.setParameterList("region", (List<Integer>)valuesPart.get(i));
@@ -200,6 +205,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                             map2.put("reason",map.get("reason"));
                             map2.put("outbreaks",map.get("outbreaks"));
                             map2.put("manifestation",map.get("manifestation"));
+                            map2.put("dateRes",map.get("date_res"));
                             map2.put("report",map.get("report"));
                             jsonList.add(map2);
                         }
@@ -237,6 +243,10 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
         if (condition.get("endDate") != null) {
             wherePart.append(" and a.date <= date_format(?,'%Y-%m-%d')");
             valuesPart.add(condition.get("endDate"));
+        }
+        if (condition.get("interval") != null) {
+            wherePart.append(" and a.date >= date_sub(curdate(),interval ? day)");
+            valuesPart.add(condition.get("interval"));
         }
         if (wherePart.length()<1){
             wherePart.append(" and a.date >= date_sub(curdate(),interval 30 day)");

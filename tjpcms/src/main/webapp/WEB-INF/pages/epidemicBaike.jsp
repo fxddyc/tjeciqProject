@@ -128,3 +128,5 @@ $(this).attr('src','http://reptile3.cn:8080/img/liugan.jpg');
 
 
 </html>
+<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
+<script src="${pageContext.request.contextPath}/js/menuScript.js"></script>

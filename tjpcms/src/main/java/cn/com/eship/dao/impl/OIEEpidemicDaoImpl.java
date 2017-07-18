@@ -138,7 +138,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
     @Override
     public List<Map<String, Object>> findEpidemicEventList(Map<String, Object> condition) throws Exception {
         List<Object> valuesPart = new ArrayList<Object>();
-        StringBuffer hqlBuffer = new StringBuffer("SELECT a.disease,b.disease_name_cn,b.disease_name_eng,b.disease_class," +
+        StringBuffer hqlBuffer = new StringBuffer("SELECT a.disease,a.country,b.disease_name_cn,b.disease_name_eng,b.disease_class," +
                 "c.region_name_cn,c.region_name_eng,a.date,a.reason,a.outbreaks,a.manifestation,a.report,a.date_res" +
                 " FROM (oie_epidemiological_event a" +
                 " LEFT JOIN oie_diseases b ON a.disease_id = b.id)" +
@@ -164,7 +164,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
             wherePart.append(" and a.date <= date_format(?,'%Y-%m-%d')");
             valuesPart.add(condition.get("endDate"));
         }
-        if (condition.get("interval") != null) {
+        if (condition.get("endDate") == null&&condition.get("startDate") == null&&condition.get("interval") != null) {
             wherePart.append(" and a.date >= date_sub(curdate(),interval ? day)");
             valuesPart.add(condition.get("interval"));
         }
@@ -244,7 +244,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
             wherePart.append(" and a.date <= date_format(?,'%Y-%m-%d')");
             valuesPart.add(condition.get("endDate"));
         }
-        if (condition.get("interval") != null) {
+        if (condition.get("endDate") == null&&condition.get("startDate") == null&&condition.get("interval") != null) {
             wherePart.append(" and a.date >= date_sub(curdate(),interval ? day)");
             valuesPart.add(condition.get("interval"));
         }

@@ -52,30 +52,34 @@
                             <div class="row">
                                 <div class="col-lg-3 form-group">
                                     <label class="control-label">疫病名称</label>
-                                    <input type="text" id='epidemicName' class="form-control" placeholder="疫病名称">
+                                    <input type="text" id='epidemicName' class="form-control AQForm" placeholder="疫病名称">
                                 </div>
                                 <div class="col-lg-3 form-group">
                                     <label class="control-label">疫病类型</label>
-                                    <input type="text" id='epidemicClass' class="form-control" placeholder="疫病类型">
+                                    <input type="text" id='epidemicClass' class="form-control AQForm" placeholder="疫病类型">
                                 </div>
                                 <div class="col-lg-3 form-group">
                                     <label class="control-label">地域名称</label>
-                                    <input type="text" id="region" class="form-control" placeholder="地域名称">
+                                    <input type="text" id="region" class="form-control AQForm" placeholder="地域名称">
                                 </div>
                                 <div class="col-lg-3 form-group">
                                     <label class="control-label">时间段</label>
                                     <div data-date-minviewmode="months" data-date-viewmode="years"
                                          class="input-group input-large custom-date-range " data-date="102/2012"
                                          data-date-format="yyyy-mm-dd">
-                                        <input type="text" id="startDate" class="form-control dpd1" name="from">
+                                        <input type="text" id="startDate" class="form-control dpd1 AQForm" name="from">
                                         <span class="input-group-addon">到</span>
-                                        <input type="text" id="endDate" class="form-control dpd2" name="to">
+                                        <input type="text" id="endDate" class="form-control dpd2 AQForm" name="to">
                                     </div>
 
                                 </div>
                             </div>
-
+                            <div>
+                                <button class="btn btn-primary" onclick="initAdvancedQueryInput()">重置条件</button>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <button class="btn btn-primary" onclick="search();">查询</button>
+                            </div>
+
 
 
                         </div>
@@ -138,9 +142,10 @@
 
 <!-- Placed js at the end of the document so the pages load faster -->
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-1.10.2.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/typeahead/bootstrap3-typeahead.min.js"/>
+<script src="${pageContext.request.contextPath}/typeahead/bootstrap3-typeahead.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/modernizr.min.js"></script>
 <!--common scripts for all pages -->
@@ -179,7 +184,11 @@
     {
         var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if(r!=null)return  unescape(r[2]); return null;
+        if(r!=null)return  r[2]; return null;
+    }
+
+    function initAdvancedQueryInput(){
+        $(".AQForm").val("");
     }
 
     var conditionEpidemicName = '';
@@ -198,57 +207,59 @@
             'endDate': conditionEndDate,
             "interval": conditionInterval
         }, function (data) {
-            $("#demo1").jqPaginator({
-                totalPages: Math.ceil(data.epidemicEventListCount / 10),
-                visiblePages: 10,
-                currentPage: 1,
-                first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
-                prev: '<li class="prev"><a href="javascript:void(0);">上一页<\/a><\/li>',
-                next: '<li class="next"><a href="javascript:void(0);">下一页<\/a><\/li>',
-                last: '<li class="last"><a href="javascript:void(0);">尾页<\/a><\/li>',
-                page: '<li class="page"><a href="javascript:void(0);">{{page}}<\/a><\/li>',
-                onPageChange: function (n) {
-                    $("#epidmicData").empty();
-                    $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicEventList.do', {
-                        'epidemicName':conditionEpidemicName,
-                        'epidemicClass':conditionEpidemicClass,
-                        'region': conditionRegion,
-                        'startDate': conditionStartDate,
-                        'endDate': conditionEndDate,
-                        "interval": conditionInterval,
-                        'pageNo': n - 1
-                    }, function (data) {
-                        var epidemicAppearList = data.epidemicEventList;
-                        for (var i = 0; i < epidemicAppearList.length; i++) {
-                            var tr="";
+                $("#demo1").jqPaginator({
+                    totalPages: Math.ceil(data.epidemicEventListCount / 10),
+                    visiblePages: 10,
+                    currentPage: 1,
+                    first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
+                    prev: '<li class="prev"><a href="javascript:void(0);">上一页<\/a><\/li>',
+                    next: '<li class="next"><a href="javascript:void(0);">下一页<\/a><\/li>',
+                    last: '<li class="last"><a href="javascript:void(0);">尾页<\/a><\/li>',
+                    page: '<li class="page"><a href="javascript:void(0);">{{page}}<\/a><\/li>',
+                    onPageChange: function (n) {
+                        $("#epidmicData").empty();
+                        $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicEventList.do', {
+                            'epidemicName':conditionEpidemicName,
+                            'epidemicClass':conditionEpidemicClass,
+                            'region': conditionRegion,
+                            'startDate': conditionStartDate,
+                            'endDate': conditionEndDate,
+                            "interval": conditionInterval,
+                            'pageNo': n - 1
+                        }, function (data) {
+                            var epidemicAppearList = data.epidemicEventList;
+                            for (var i = 0; i < epidemicAppearList.length; i++) {
+                                var tr="";
 
-                            if(epidemicAppearList[i].epidemicNameCn !=null){
-                                var td = "<td style=''><p>"+epidemicAppearList[i].epidemicNameCn + "</p><p>" + epidemicAppearList[i].epidemicNameEng+"</p></td>";
-                                tr = tr+td;
-                            }else {
-                                var td= "<td style=''><p>" + epidemicAppearList[i].disease + "</p></td>";
-                                tr = tr+td;
+                                if(epidemicAppearList[i].epidemicNameCn !=null){
+                                    var td = "<td style=''><p>"+epidemicAppearList[i].epidemicNameCn + "</p><p>" + epidemicAppearList[i].epidemicNameEng+"</p></td>";
+                                    tr = tr+td;
+                                }else {
+                                    var td= "<td style=''><p>" + epidemicAppearList[i].disease + "</p></td>";
+                                    tr = tr+td;
+                                }
+                                tr = tr+"<td style=''><p>" + epidemicAppearList[i].diseaseClass + "</p></td>";
+                                if (epidemicAppearList[i].regionNameCn!= null){
+                                    var td = "<td style=''><p>" + epidemicAppearList[i].regionNameCn + "</p><p>" + epidemicAppearList[i].regionNameEng +"</p></td>"
+                                    tr = tr+td;
+                                }else {
+                                    var td= "<td style=''><p>" + epidemicAppearList[i].country + "</p></td>";
+                                    tr = tr+td;
+                                }
+                                tr = tr+"<td style=''><p>" + epidemicAppearList[i].date + "</p></td>" +
+                                    "<td style=''><p>" + epidemicAppearList[i].reason + "</p></td>" +
+                                    "<td style=''><p>" + epidemicAppearList[i].outbreaks + "</p></td>" +
+                                    "<td style=''><p>" + epidemicAppearList[i].manifestation + "</p></td>" +
+                                    "<td style=''><p>" + epidemicAppearList[i].dateRes + "</p></td>" +
+                                    "<td style=''>" + "<a href='${pageContext.request.contextPath}/oieEpidemicSearch/toOIEDetailPage.do?rowKey=" + epidemicAppearList[i].report + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>";
+                                $("#epidmicData").append("<tr>"+tr+"</tr>");
+                                $("td").css("vertical-align","middle");
                             }
-                            tr = tr+"<td style=''><p>" + epidemicAppearList[i].diseaseClass + "</p></td>";
-                            if (epidemicAppearList[i].regionNameCn!= null){
-                                var td = "<td style=''><p>" + epidemicAppearList[i].regionNameCn + "</p><p>" + epidemicAppearList[i].regionNameEng +"</p></td>"
-                                tr = tr+td;
-                            }else {
-                                var td= "<td style=''><p>" + epidemicAppearList[i].country + "</p></td>";
-                                tr = tr+td;
-                            }
-                            tr = tr+"<td style=''><p>" + epidemicAppearList[i].date + "</p></td>" +
-                                "<td style=''><p>" + epidemicAppearList[i].reason + "</p></td>" +
-                                "<td style=''><p>" + epidemicAppearList[i].outbreaks + "</p></td>" +
-                                "<td style=''><p>" + epidemicAppearList[i].manifestation + "</p></td>" +
-                                "<td style=''><p>" + epidemicAppearList[i].dateRes + "</p></td>" +
-                                "<td style=''>" + "<a href='${pageContext.request.contextPath}/oieEpidemicSearch/toOIEDetailPage.do?rowKey=" + epidemicAppearList[i].report + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>";
-                            $("#epidmicData").append("<tr>"+tr+"</tr>");
-                            $("td").css("vertical-align","middle");
-                        }
-                    }, 'json');
-                }
-            });
+                        }, 'json');
+                    }
+                });
+
+
         }, 'json');
     }
 
@@ -258,6 +269,7 @@
         conditionStartDate = '';
         conditionEndDate = '';
         conditionEpidemicClass = '';
+        conditionInterval = '';
     }
 
     function search() {
@@ -271,6 +283,11 @@
     }
 
     function checkNews(){
+        var cookie_flag_r = getCookie('alert_flag');
+        var cookie_flag_w = "true";
+        if(cookie_flag_r =="true"){
+            return
+        }
         $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicEventList.do', {
             'epidemicName':conditionEpidemicName,
             'epidemicClass':conditionEpidemicClass,
@@ -280,11 +297,6 @@
             'interval':7
         }, function (data) {
             if (data.epidemicEventListCount>0){
-                var cookie_flag_r = getCookie('alert_flag');
-                var cookie_flag_w = "true";
-                if(cookie_flag_r =="true"){
-                    return
-                }
                 var epidemicAppearList = data.epidemicEventList;
                 var title_str = "7天内新增"+data.epidemicEventListCount+"例疫情报告，是否查看？";
                 var text_str = "";
@@ -332,6 +344,11 @@
         if (flag != null && flag =="alert") {
             conditionInterval=7;
             pageUtils();
+        } else if(flag != null && flag =="map"){
+            var regionName = GetQueryString("name")
+            conditionRegion=decodeURI(regionName);
+            conditionInterval=150;
+            pageUtils();
         } else {
             pageUtils();
         }
@@ -353,3 +370,5 @@
 </script>
 </body>
 </html>
+<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
+<script src="${pageContext.request.contextPath}/js/menuScript.js"></script>

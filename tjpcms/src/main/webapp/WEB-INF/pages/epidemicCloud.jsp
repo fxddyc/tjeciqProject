@@ -202,4 +202,6 @@
 </script>
 
 </body>
-< / html >
+</html >
+<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
+<script src="${pageContext.request.contextPath}/js/menuScript.js"></script>

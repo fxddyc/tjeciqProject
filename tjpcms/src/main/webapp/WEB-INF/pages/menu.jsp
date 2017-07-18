@@ -6,10 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-
 <!-- left side start-->
-<div class="left-side sticky-left-side">
+<div class="left-side sticky-left-side" style="overflow: hidden;">
 
     <!--logo and iconic logo start-->
     <div class="logo">
@@ -44,41 +42,41 @@
 
         <!--sidebar nav start-->
         <ul class="nav nav-pills nav-stacked custom-nav">
-            <li class="menu-list nav-active"><a href="#"><i class="fa fa-home"></i> <span>控制面板</span></a>
+            <li class="menu-list"><a href="#"><i class="fa fa-bar-chart-o"></i> <span>WHO疫情</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/index/indexPage.do">仪表盘</a></li>
-                    <li><a href="${pageContext.request.contextPath}/epidemicCloud/epidemicCloudPage.do">疫情字符云</a></li>
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/index/indexPage.do">仪表盘</a></li>
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/epidemicCloud/epidemicCloudPage.do">疫情字符云</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/wordRegion/wordRegionPage.do">疫情地域分布</a></li>
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/wordRegion/wordRegionPage.do">疫情地域分布</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/epidemicBaike/epidemicBaikePage.do">疫情百科</a></li>
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/epidemicBaike/epidemicBaikePage.do">疫情百科</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">疫情综合查询</a></li>
-                </ul>
-
-                <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/dataWarehouse/toDatawarehousePage.do">数据中心</a></li>
-                </ul>
-
-                <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/words/toWordsPage.do">分词器</a></li>
-                </ul>
-
-                <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/spider/toSpiderListPage.do">爬虫列表</a></li>
-                    <li><a href="${pageContext.request.contextPath}/spider/toCreateSpiderPage.do">增加爬虫实例</a></li>
-
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">疫情综合查询</a></li>
                 </ul>
             </li>
-            <li class="menu-list nav-active"><a href="#"><i class="fa fa-home"></i> <span>OIE疫情信息</span></a>
+            <li class="menu-list"><a href="#"><i class="fa fa-bar-chart-o"></i> <span>OIE疫情</span></a>
                 <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/oieEpidemicSearch//toOIEEpidemicSearchPage.do">OIE疫情查询</a></li>
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/oieEpidemicSearch/toOIEEpidemicSearchPage.do">OIE疫情查询</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
+                </ul>
+            </li>
+            <li class="menu-list"><a href="#"><i class="fa fa-tasks"></i> <span>数据中心</span></a>
+                <ul class="sub-menu-list">
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/dataWarehouse/toDatawarehousePage.do">数据中心</a></li>
+                </ul>
+            </li>
+            <li class="menu-list"><a href="#"><i class="fa fa-cogs"></i> <span>控制面板</span></a>
+                <ul class="sub-menu-list">
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/words/toWordsPage.do">分词器</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/spider/toSpiderListPage.do">爬虫列表</a></li>
+                    <li><a class="menu-item" href="${pageContext.request.contextPath}/spider/toCreateSpiderPage.do">增加爬虫实例</a></li>
                 </ul>
             </li>
         </ul>

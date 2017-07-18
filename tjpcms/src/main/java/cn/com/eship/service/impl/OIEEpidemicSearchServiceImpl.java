@@ -51,7 +51,7 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
             parameMap.put("epidemicId", eid);
         }
         if (StringUtils.isNotBlank(region)) {
-            int rid = epidemicDao.findRegionIdByCondition(epidemicName);
+            int rid = epidemicDao.findRegionIdByCondition(region);
             parameMap.put("regionId", rid);
         }
         if (StringUtils.isNotBlank(epidemicClass)) {
@@ -161,14 +161,48 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
 
     private int transformEpidemicEventResion(String reason){
         reason = reason.replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-        String tenLevel = "First occurrence,First occurrence in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-        String sevenLevel = "Change in epidemiology,Emerging disease,New host,New pathogen,New strain，New strain in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-        String fourLevel = "Unexpected change or increase,Unusual host".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-        String oneLevel = "Recurrence".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-        if (oneLevel.contains(reason)) return 1;
-        if (fourLevel.contains(reason)) return 4;
-        if (sevenLevel.contains(reason)) return 7;
-        if (tenLevel.contains(reason)) return 10;
+//        String tenLevel = "First occurrence,First occurrence in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
+//        String sevenLevel = "Change in epidemiology,Emerging disease,New host,New pathogen,New strain，New strain in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
+//        String fourLevel = "Unexpected change or increase,Unusual host".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
+//        String oneLevel = "Recurrence".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
+//        if (oneLevel.contains(reason)) return 1;
+//        if (fourLevel.contains(reason)) return 4;
+//        if (sevenLevel.contains(reason)) return 7;
+//        if (tenLevel.contains(reason)) return 10;
+        if("First occurrence".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 10;
+        }
+        if("First occurrence in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 9;
+        }
+        if("Emerging disease".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 8;
+        }
+        if("Change in epidemiology".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 7;
+        }
+        if("New host".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 6;
+        }
+        if("New pathogen".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 5;
+        }
+        if("New strain".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 4;
+        }
+        if("New strain in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 3;
+        }
+        if("Recurrence".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 2;
+        }
+        if("Unexpected change or increase".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 1;
+        }
+        if("Unusual host".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+            return 0;
+        }
+
         return 0;
     }
 }

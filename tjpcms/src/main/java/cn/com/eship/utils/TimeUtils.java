@@ -9,6 +9,6 @@ import java.text.SimpleDateFormat;
  */
 public class TimeUtils {
     public static String convertToDateString(String date) throws Exception {
-        return StringUtils.isNotBlank(date) ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("dd/MM/yyyy").parse(date)) : "";
+        return StringUtils.isNotBlank(date) ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new SimpleDateFormat("MM/dd/yyyy").parse(date)) : "";
     }
 }

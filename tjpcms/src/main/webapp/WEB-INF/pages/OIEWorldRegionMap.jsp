@@ -100,6 +100,7 @@
 
 <script>
 
+
     var option = {
         backgroundColor: '#1b1b1b',
         title: {
@@ -134,29 +135,62 @@
             }
         },
         dataRange: {
-            splitList:[{
-                start: 1,
-                end: 3,
-                label: 'Recurrence',
-                color: '#00f'
-            },
+            splitList:[
                 {
-                    start: 4,
-                    end: 6,
-                    label: 'Unexpected change or increase,Unusual host',
-                    color: '#5f5'
-                },
-                {
-                    start: 5,
-                    end: 7,
-                    label: 'Change in epidemiology,Emerging disease,New host,New pathogen,New strain，New strain in the country',
-                    color: '#f80'
-                },
-                {
-                    start: 8,
+                    start: 10,
                     end: 10,
-                    label: 'First occurrence,First occurrence in the country',
+                    label: '第一次发生',
                     color: '#f00'
+                }, {
+                    start: 9,
+                    end: 9,
+                    label: '第一次在该国发生',
+                    color: '#f70'
+                }, {
+                    start: 8,
+                    end: 8,
+                    label: '紧急发病',
+                    color: '#ff0'
+                }, {
+                    start: 7,
+                    end: 7,
+                    label: '流行病学发生改变',
+                    color: '#8f0'
+                }, {
+                    start: 6,
+                    end: 6,
+                    label: '新的宿主',
+                    color: '#0f0'
+                }, {
+                    start: 5,
+                    end: 5,
+                    label: '新的致病源',
+                    color: '#0f8'
+                }, {
+                    start: 4,
+                    end: 4,
+                    label: '新的血清型',
+                    color: '#0ff'
+                }, {
+                    start: 3,
+                    end: 3,
+                    label: '该国发生某种疫病新的血清型',
+                    color: '#08f'
+                }, {
+                    start: 2,
+                    end: 2,
+                    label: '再次发生',
+                    color: '#00f'
+                }, {
+                    start: 1,
+                    end: 1,
+                    label: '发生预料之外的变化及增加',
+                    color: '#80f'
+                }, {
+                    start: 0,
+                    end: 0,
+                    label: '不常见的宿主',
+                    color: '#888'
                 }],
             textStyle:{color:'#fff'},
             realtime: true,
@@ -191,7 +225,9 @@
                     dataRange: {},
                     symbol:'emptyCircle',
                     symbolSize : function (v){
-                        return 10 + v/5
+                        var num = 10 + v/2
+                        if(num>50){num=50}
+                        return num
                     },
 //                    tooltip: {
 //                        show:false
@@ -217,23 +253,28 @@
 
 
     function findWorldMap() {
-        $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicRecentOutbreakRegion.do', {'interval':60}, function (data) {
+        $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicRecentOutbreakRegion.do', {'interval':30}, function (data) {
             if (data!=null){
                 option.series[0].markPoint.data = data.alertList;
                 option.series[0].data = data.regionList;
             }
             var myChart = echarts.init(document.getElementById('main'));
             myChart.setOption(option);
+            myChart.on(echarts.config.EVENT.CLICK, function(param){
+                var regionName = param.name;
+                if(regionName!=null&&regionName!=""){
+                    window.location.href="${pageContext.request.contextPath}/oieEpidemicSearch/toOIEEpidemicSearchPage.do?from=map&name="+encodeURI(regionName);
+                }
 
+            });
         }, 'json');
     }
 
 
     $(document).ready(function () {
         findWorldMap();
-
-
     });
+
 
 
 </script>
@@ -241,4 +282,5 @@
 
 </body>
 </html>
-
+<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
+<script src="${pageContext.request.contextPath}/js/menuScript.js"></script>

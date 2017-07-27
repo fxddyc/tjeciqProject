@@ -2,6 +2,7 @@ package cn.com.eship.service.impl;
 
 import cn.com.eship.dao.OIEEpidemicDao;
 import cn.com.eship.service.OIEEpidemicSearchService;
+import cn.com.eship.utils.CommenUtils;
 import cn.com.eship.utils.PageUtils;
 import cn.com.eship.utils.TimeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -84,12 +85,13 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
     }
 
     @Override
-    public String makeEpidemicRecentOutbreakRegionJson(int interval) throws Exception {
-        Map<String, Object> jsonMap = new HashMap<>();
-        Map<String, Object> parameMap = new HashMap<>();
+    public List<Map<String, Object>> findAlertListData(String alertDataInterval) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
         List<Map<String, Object>> jsonList = new ArrayList<>();
-        parameMap.put("interval", interval);
-        List<Map<String, Object>> epidemicAppearList = epidemicDao.findEpidemicEventList(parameMap);
+        if (StringUtils.isNotBlank(alertDataInterval)) {
+            paramMap.put("interval", alertDataInterval);
+        }
+        List<Map<String, Object>> epidemicAppearList = epidemicDao.findEpidemicEventList(paramMap);
         Map<String, Map<String, Object>> hashMap = new HashMap<>();
         if (epidemicAppearList != null && epidemicAppearList.size() > 0) {
             for (Map<String, Object> report : epidemicAppearList) {
@@ -115,21 +117,22 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
             }
             jsonList.addAll(hashMap.values());
         }
-        List<Map<String, Object>> list = findOutbreakRegionWithReason();
-        if (jsonList.size() > 0) {
-            jsonMap.put("alertList", jsonList);
-        }
-        if (list!=null&&list.size()>0){
-            jsonMap.put("regionList", list);
-        }
-        return new ObjectMapper().writeValueAsString(jsonMap);
+        return jsonList;
     }
 
-    private List<Map<String, Object>> findOutbreakRegionWithReason() throws Exception {
-        Map<String, Object> parameMap = new HashMap<>();
+    public List<Map<String, Object>> findMapListData(String mapDataInterval,String startDate,String endDate) throws Exception {
+        Map<String, Object> paramMap = new HashMap<>();
         List<Map<String, Object>> jsonList = new ArrayList<>();
-        parameMap.put("interval", 150);
-        List<Map<String, Object>> epidemicAppearList = epidemicDao.findEpidemicEventList(parameMap);
+        if (StringUtils.isNotBlank(mapDataInterval)) {
+            paramMap.put("interval", mapDataInterval);
+        }
+        if (StringUtils.isNotBlank(startDate)) {
+            paramMap.put("startDate", TimeUtils.convertToDateString(startDate));
+        }
+        if (StringUtils.isNotBlank(endDate)) {
+            paramMap.put("endDate", TimeUtils.convertToDateString(endDate));
+        }
+        List<Map<String, Object>> epidemicAppearList = epidemicDao.findEpidemicEventList(paramMap);
         Map<String, Map<String, Object>> jsonMap = new HashMap<>();
         if (epidemicAppearList != null && epidemicAppearList.size() > 0) {
             for (Map<String, Object> report : epidemicAppearList) {
@@ -140,7 +143,7 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
                     String eName = (report.get("epidemicNameCn") != null && !"".equals(report.get("epidemicNameCn"))) ? (String) report.get("epidemicNameCn") : (String) report.get("disease");
                     String event = report.get("date") + " " + report.get("regionNameCn") + " 发生 "
                             + report.get("diseaseClass") + " " + eName + " "+ report.get("outbreaks") + "次";
-                    int level = transformEpidemicEventResion(reason);
+                    int level = transformEpidemicEventReason(reason);
                     if (jsonMap.get(region) != null) {
                         map = jsonMap.get(region);
                         map.put("name", region);
@@ -159,50 +162,40 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
         return jsonList;
     }
 
-    private int transformEpidemicEventResion(String reason){
-        reason = reason.replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-//        String tenLevel = "First occurrence,First occurrence in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-//        String sevenLevel = "Change in epidemiology,Emerging disease,New host,New pathogen,New strain，New strain in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-//        String fourLevel = "Unexpected change or increase,Unusual host".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-//        String oneLevel = "Recurrence".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase();
-//        if (oneLevel.contains(reason)) return 1;
-//        if (fourLevel.contains(reason)) return 4;
-//        if (sevenLevel.contains(reason)) return 7;
-//        if (tenLevel.contains(reason)) return 10;
-        if("First occurrence".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+    private int transformEpidemicEventReason(String reason){
+        if(CommenUtils.compareString("First occurrence",reason)){
             return 10;
         }
-        if("First occurrence in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("First occurrence in the country",reason)){
             return 9;
         }
-        if("Emerging disease".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("Emerging disease",reason)){
             return 8;
         }
-        if("Change in epidemiology".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("Change in epidemiology",reason)){
             return 7;
         }
-        if("New host".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("New host",reason)){
             return 6;
         }
-        if("New pathogen".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("New pathogen",reason)){
             return 5;
         }
-        if("New strain".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("New strain",reason)){
             return 4;
         }
-        if("New strain in the country".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("New strain in the country",reason)){
             return 3;
         }
-        if("Recurrence".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("Recurrence",reason)){
             return 2;
         }
-        if("Unexpected change or increase".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("Unexpected change or increase",reason)){
             return 1;
         }
-        if("Unusual host".replaceAll("\\pP|\\pS|\\pZ","").toLowerCase().equals(reason)){
+        if(CommenUtils.compareString("Unusual host",reason)){
             return 0;
         }
-
         return 0;
     }
 }

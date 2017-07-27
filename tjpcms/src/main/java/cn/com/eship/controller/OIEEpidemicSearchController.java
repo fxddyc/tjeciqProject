@@ -49,10 +49,4 @@ public class OIEEpidemicSearchController {
         response.getOutputStream().write(oieEpidemicSearchService.makeEpidemicSourceJson(rowKey).getBytes("utf-8"));
     }
 
-    @RequestMapping("epidemicRecentOutbreakRegion")
-    public void findRecentOutbreakRegion(int interval,HttpServletResponse response) throws Exception {
-        response.getOutputStream().write(oieEpidemicSearchService.makeEpidemicRecentOutbreakRegionJson(interval).getBytes("utf-8"));
-    }
-
-
 }

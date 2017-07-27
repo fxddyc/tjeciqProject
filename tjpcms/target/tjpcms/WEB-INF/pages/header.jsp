@@ -9,6 +9,8 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-sweetalert-master/dist/sweetalert.css">
+    <script src="${pageContext.request.contextPath}/bootstrap-sweetalert-master/dist/sweetalert.js"></script>
 </head>
 <body>
 <!-- header section start-->
@@ -34,7 +36,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-usermenu pull-right">
-                    <li><a href="#"><i class="fa fa-sign-out"></i>退出登录</a></li>
+                    <li><a id="signout"><i class="fa fa-sign-out"></i>退出登录</a></li>
                 </ul>
             </li>
 
@@ -46,3 +48,21 @@
 <!-- header section end-->
 </body>
 </html>
+<script type="text/javascript">
+    $('#signout').click(function () {
+        swal({
+                title: '是否退出登录',
+                type: "info",
+                showCancelButton: true,
+                cancelButtonText:"否",
+                confirmButtonColor:"#DD6B55",
+                confirmButtonText: "是",
+                closeOnConfirm: false
+            },
+            function(){
+                $.post('${pageContext.request.contextPath}/system/signOut.do',null,function (data) {}, 'json')
+                window.location.href='${pageContext.request.contextPath}/system/login.do';
+            });
+
+    });
+</script>

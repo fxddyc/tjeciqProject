@@ -142,8 +142,8 @@ public class IndexServiceImpl implements IndexService {
         return map;
     }
 
-    public String findWorldEpidemicAppearsTimeline() throws Exception{
-        List<Map<String, String>> list = epidemicAppearDao.findWorldEpidemicAppearsTimeline();
+    public String findWorldEpidemicAppearsTimeline(String type) throws Exception{
+        List<Map<String, String>> list = epidemicAppearDao.findWorldEpidemicAppearsTimeline(type);
         return new ObjectMapper().writeValueAsString(list);
     }
 }

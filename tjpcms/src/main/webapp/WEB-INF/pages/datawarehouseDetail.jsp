@@ -98,21 +98,28 @@
 
 
 <script>
+
+    var reg = new RegExp("(^|&)rowKey=(.*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    console.info(r);
+    var rowkey=(r!==null)?r[2]:null;
+    console.info(rowkey);
     $(document).ready(function () {
-        $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseDetail.do', {'rowKey': '${rowKey}'}, function (data) {
+        $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseDetail.do', {'rowKey': rowkey}, function (data) {
             var json = data;
-            $("#epidemicName").text(json.epidemicName);
-            $("#time").text(json.time);
-            $("#time2").text(json.time);
-			var a_regx = /(<a[^>]*>)|(<\/a>)|(<img[^>]*>)/g;
-			var content_html = json.content?json.content.replace(a_regx,""):"";
-            $("#content").html(content_html);
             $("#baikeUrlDiv").qrcode({
                 render: "table", //table方式
                 width: 200, //宽度
                 height: 200, //高度
                 text: json.contentUrl //任意内容
             });
+            $("#epidemicName").text(json.epidemicName);
+            $("#time").text(json.time);
+            $("#time2").text(json.time);
+			var a_regx = /(<a[^>]*>)|(<\/a>)|(<img[^>]*>)/g;
+			var content_html = json.content?json.content.replace(a_regx,""):"";
+            $("#content").html(content_html);
+
         }, 'json');
 
 

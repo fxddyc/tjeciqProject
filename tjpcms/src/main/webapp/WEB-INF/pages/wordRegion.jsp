@@ -182,7 +182,7 @@
         },
         dataRange: {
             min: 0,
-            max: 10000,
+            max: 50,
             text: ['High', 'Low'],
             realtime: false,
             calculable: true,

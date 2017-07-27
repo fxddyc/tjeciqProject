@@ -6,17 +6,13 @@ import org.apache.poi.hwpf.usermodel.Range;
 
 import java.io.*;
 
-
-/**
- * Created by simon on 16/7/14.
- */
 public class TestMain {
     public static void main(String[] args) throws Exception {
         testWrite();
     }
 
     private static void testWrite() throws Exception {
-        String templatePath = "F:/test.doc";
+        String templatePath = "F:/test1.doc";
         InputStream is = new FileInputStream(templatePath);
         HWPFDocument doc = new HWPFDocument(is);
         Range range = doc.getRange();

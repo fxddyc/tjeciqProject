@@ -133,7 +133,6 @@
         $.post('${pageContext.request.contextPath}/common/regionList.do', null, function (data) {
             $('#region').typeahead({source: data})
         }, 'json');
-
     }
 
     function createRandomItemStyle() {
@@ -182,7 +181,7 @@
                 },
                 function (data) {
                     var json = data;
-                    option.series[0].data = []
+                    option.series[0].data = [];
                     for (var i = 0; i < json.length; i++) {
                         json[i]['itemStyle'] = createRandomItemStyle()
                         option.series[0].data.push(json[i])
@@ -203,4 +202,6 @@
 </script>
 
 </body>
-< / html >
+</html >
+<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
+<script src="${pageContext.request.contextPath}/js/menuScript.js"></script>

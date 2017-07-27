@@ -70,10 +70,9 @@ public class IndexController {
     }
 
     @RequestMapping("epidemicTimeline")
-    public void findWorldEpidemicAppearsTimeline(HttpServletResponse response) {
+    public void findWorldEpidemicAppearsTimeline(String type,HttpServletResponse response) {
         try {
-            String str = indexService.findWorldEpidemicAppearsTimeline();
-            System.out.println(str);
+            String str = indexService.findWorldEpidemicAppearsTimeline(type);
             response.getOutputStream().write(str.getBytes("utf-8"));
         } catch (Exception e) {
             e.printStackTrace();

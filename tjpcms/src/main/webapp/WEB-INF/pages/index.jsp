@@ -263,12 +263,31 @@
 
     }
 
-    function timeLine() {
+    function timeLine(type) {
 
-        var list = [];
-        $.post("${pageContext.request.contextPath}/index/epidemicTimeline.do",
+        $.post("${pageContext.request.contextPath}/index/epidemicTimeline.do",{"type":type},
             function (data) {
                 var json = data;
+                data.push(
+                    {"date":2016,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2016,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2007,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2007,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2007,"name":"手足口病","value":"0"},
+                    {"date":2007,"name":"黄热病","value":"0"},
+                    {"date":2008,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2009,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2009,"name":"黄热病","value":"0"},
+                    {"date":2009,"name":"手足口病","value":"0"},
+                    {"date":2010,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2010,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2010,"name":"手足口病","value":"0"},
+                    {"date":2010,"name":"黄热病","value":"0"},
+                    {"date":2011,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2011,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2011,"name":"手足口病","value":"0"},
+                    {"date":2011,"name":"黄热病","value":"0"}
+                    );
                 var yearlist={"2016":[],"2015":[],"2014":[],"2013":[],"2012":[],"2011":[],"2010":[],"2009":[],"2008":[],"2007":[]};
                 var diseaseList = {"2016":[],"2015":[],"2014":[],"2013":[],"2012":[],"2011":[],"2010":[],"2009":[],"2008":[],"2007":[]};
                 for(var i=0;i<data.length;i++){
@@ -279,7 +298,6 @@
                     }
 
                 }
-                console.info(diseaseList);
                 var option = {
                     timeline: {
                         data: [
@@ -340,7 +358,7 @@
                                     'name': '全球',
                                     'type': 'bar',
                                     'data': yearlist['2007']
-                                },
+                                }
                             ]
                         },
                         {
@@ -450,7 +468,7 @@
                                 'data': diseaseList['2016']
 
                             }]
-                        },
+                        }
                     ]
                 };
                 var myChart = echarts.init(document.getElementById('timeLine'));
@@ -464,11 +482,13 @@
     function yqTop10() {
         yqTop10Pie('top10Pie', '', '全球疫情TOP10');
         yqTop10Bar('top10Bar', '');
+        timeLine('world');
     }
 
     function yqLocalTop10() {
         yqTop10Pie('top10Pie', '中国', '我国疫情TOP10');
         yqTop10Bar('top10Bar', '中国');
+        timeLine('china');
     }
 
     $(document).ready(function () {

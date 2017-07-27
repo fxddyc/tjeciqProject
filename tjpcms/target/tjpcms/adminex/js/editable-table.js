@@ -18,9 +18,8 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" class="form-control small" value="' + aData[0] + '">';
                 jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
+                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[6] + '">';
                 jqTds[3].innerHTML = '<input type="text" class="form-control small" value="' + aData[3] + '">';
                 jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
                 jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
@@ -28,13 +27,59 @@ var EditableTable = function () {
 
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-                oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-                oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
-                oTable.fnDraw();
+                var userName = jqInputs[0].value;
+                var aData = oTable.fnGetData(nRow);
+                if (userName==null||userName===""){
+                    alert("用户名不能为空!");
+                    return
+                }
+                var passwd = jqInputs[1].value;
+                var transpwd="";
+                if (passwd==null||passwd.trim()===""||passwd.length<6){
+                    alert("密码不能为空并且不能小于6位!");
+                    return
+                }else {
+                    transpwd = passwd.substr(0,1)+"***"+passwd.substr(passwd.length-1);
+                }
+                var authority = jqInputs[2].value;
+
+                if (authority==null||authority===""){
+                    alert("用户权限不能为空");
+                    return
+                }
+                var uid = aData[7];
+                var basePath = '<%=basePath%>';
+                swal({
+                        title: "是否确认提交修改？",
+                        type: "info",
+                        showCancelButton: true,
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true
+                    },
+                    function(){
+                        $.post('/userManager/updateUserInfo.do',{
+                            "id":uid,
+                            "passWd":passwd,
+                            "authority":authority,
+                            "userName":userName
+                        },function (data) {
+                            setTimeout(function(){
+                                if(data!=null&&data.result!=null&&data.result===true){
+                                    oTable.fnClearTable();
+                                    oTable.fnDestroy();
+                                    findUserList();
+                                    nEditing=null;
+                                    swal("修改成功!");
+                                }else{
+                                    editRow(oTable, nRow);
+                                    swal("修改失败，请重新提交");
+                                }
+                            }, 1000);
+
+                        },'json').error(function() { restoreRow(oTable, nRow);swal("网络异常"); })
+
+                    });
+
             }
 
             function cancelEditRow(oTable, nRow) {
@@ -46,8 +91,10 @@ var EditableTable = function () {
                 oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
                 oTable.fnDraw();
             }
-
-            var oTable = $('#editable-sample').dataTable({
+            var tableBody=$("#table1")[0];
+            var oTable = $('#editable').dataTable({
+                'autoWidth':true,
+                'searching':false,
                 "aLengthMenu": [
                     [5, 15, 20, -1],
                     [5, 15, 20, "All"] // change per page values here
@@ -57,12 +104,13 @@ var EditableTable = function () {
                 "sDom": "<'row'<'col-lg-6'l><'col-lg-6'f>r>t<'row'<'col-lg-6'i><'col-lg-6'p>>",
                 "sPaginationType": "bootstrap",
                 "oLanguage": {
-                    "sLengthMenu": "_MENU_ records per page",
+                    "sLengthMenu": "每页 _MENU_条记录",
                     "oPaginate": {
-                        "sPrevious": "Prev",
-                        "sNext": "Next"
+                        "sPrevious": "上一页",
+                        "sNext": "下一页"
                     }
                 },
+                "bSort": false,
                 "aoColumnDefs": [{
                         'bSortable': false,
                         'aTargets': [0]
@@ -77,27 +125,56 @@ var EditableTable = function () {
 
             $('#editable-sample_new').click(function (e) {
                 e.preventDefault();
-                var aiNew = oTable.fnAddData(['', '', '', '',
-                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
+                var aiNew = oTable.fnAddData([tableBody.childElementCount+1, '', '', '',
+                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>','',''
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
                 editRow(oTable, nRow);
                 nEditing = nRow;
             });
 
-            $('#editable-sample a.delete').live('click', function (e) {
+            $('#editable a.delete').live('click', function (e) {
                 e.preventDefault();
-
-                if (confirm("Are you sure to delete this row ?") == false) {
-                    return;
-                }
-
                 var nRow = $(this).parents('tr')[0];
-                oTable.fnDeleteRow(nRow);
-                alert("Deleted! Do not forget to do some ajax to sync with backend :)");
+                var aData = oTable.fnGetData(nRow);
+                var userName = aData[1];
+                var uid = aData[7];
+                swal({
+                        title: "确定"+userName+"用户吗？",
+                        text: "你将无法恢复该用户！",
+                        type: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "确定删除",
+                        closeOnConfirm: false,
+                        showLoaderOnConfirm: true
+                    },
+                    function(isConfirm){
+                        if (isConfirm) {
+                            $.post('/userManager/deleteUser.do',{
+                                "id":uid
+                            },function (data) {
+                                setTimeout(function(){
+                                    if(data!=null&&data.result!=null&&data.result===true){
+                                        oTable.fnDeleteRow(nRow);
+                                        swal("删除成功", userName+"用户已经被删除。", "success");
+                                    }else{
+                                        swal("修改失败，请重新提交");
+                                    }
+                                }, 1000);
+
+                            },'json').error(function() { restoreRow(oTable, nRow);swal("网络异常,删除失败"); })
+                        } else {
+                            swal("取消！", "取消删除"+userName+"用户吗",
+                                "error");
+                        }
+
+
+                    });
+
             });
 
-            $('#editable-sample a.cancel').live('click', function (e) {
+            $('#editable a.cancel').live('click', function (e) {
                 e.preventDefault();
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
@@ -108,24 +185,16 @@ var EditableTable = function () {
                 }
             });
 
-            $('#editable-sample a.edit').live('click', function (e) {
+            $('#editable a.edit').live('click', function (e) {
                 e.preventDefault();
-
-                /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
-
                 if (nEditing !== null && nEditing != nRow) {
-                    /* Currently editing - but not this row - restore the old before continuing to edit mode */
                     restoreRow(oTable, nEditing);
                     editRow(oTable, nRow);
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
-                    /* Editing this row and want to save it */
                     saveRow(oTable, nEditing);
-                    nEditing = null;
-                    alert("Updated! Do not forget to do some ajax to sync with backend :)");
                 } else {
-                    /* No edit in progress - let's start one */
                     editRow(oTable, nRow);
                     nEditing = nRow;
                 }

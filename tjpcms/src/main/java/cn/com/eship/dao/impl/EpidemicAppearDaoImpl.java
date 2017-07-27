@@ -275,8 +275,15 @@ public class EpidemicAppearDaoImpl implements EpidemicAppearDao {
         return list.size();
     }
 
-    public List<Map<String, String>> findWorldEpidemicAppearsTimeline()throws Exception{
-        String sql = "SELECT epidemic_name,SUM(appear_times) sat,DATE_FORMAT(appear_date,'%Y') date from t_epidemic_appear a LEFT JOIN t_epidemic b ON a.epidemic_id = b.id GROUP BY epidemic_id,DATE_FORMAT(appear_date,'%Y') HAVING date<2017 and date>2006 ORDER BY date desc,sat desc";
+    public List<Map<String, String>> findWorldEpidemicAppearsTimeline(String type)throws Exception{
+        String whereCondition = "";
+        if (StringUtils.isNotEmpty(type)&&"china".equals(type)){
+            whereCondition = "AND a.region_id=31 ";
+        }
+        String sql = "SELECT epidemic_name,SUM(appear_times) sat,DATE_FORMAT(appear_date,'%Y') date " +
+                "FROM t_epidemic_appear a LEFT JOIN t_epidemic b ON a.epidemic_id = b.id " +
+                "WHERE 1=1 " +whereCondition+
+                "GROUP BY epidemic_id,DATE_FORMAT(appear_date,'%Y') HAVING date<2017 and date>2006 ORDER BY date desc,sat desc";
         List<Map<String, String>> jsonList = new ArrayList<Map<String, String>>();
         hibernateTemplate.execute(
                 new HibernateCallback() {

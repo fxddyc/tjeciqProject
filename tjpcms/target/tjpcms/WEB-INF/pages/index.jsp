@@ -137,7 +137,6 @@
 <%--<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>--%>
 
 <!--common scripts for all pages-->
-<script src="${pageContext.request.contextPath}/adminex/js/scripts.js"></script>
 
 <script src="${pageContext.request.contextPath}/echarts/build/dist/echarts-all.js"></script>
 
@@ -146,8 +145,6 @@
 <script src="${pageContext.request.contextPath}/echarts/timeline.js"></script>
 
 <script>
-
-
     function yqTop10Bar(id, regionName, title) {
         var option = {
             tooltip: {
@@ -266,173 +263,232 @@
 
     }
 
+    function timeLine(type) {
 
-    function timeLine() {
-        var option = {
-            timeline: {
-                data: [
-                    '2006-01-01', '2007-01-01', '2008-01-01', '2009-01-01', '2010-01-01',
-                    '2011-01-01', '2012-01-01', '2013-01-01', '2014-01-01', '2015-01-01'
-                ],
-                label: {
-                    formatter: function (s) {
-                        return s.slice(0, 4);
+        $.post("${pageContext.request.contextPath}/index/epidemicTimeline.do",{"type":type},
+            function (data) {
+                var json = data;
+                data.push(
+                    {"date":2016,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2016,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2007,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2007,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2007,"name":"手足口病","value":"0"},
+                    {"date":2007,"name":"黄热病","value":"0"},
+                    {"date":2008,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2009,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2009,"name":"黄热病","value":"0"},
+                    {"date":2009,"name":"手足口病","value":"0"},
+                    {"date":2010,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2010,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2010,"name":"手足口病","value":"0"},
+                    {"date":2010,"name":"黄热病","value":"0"},
+                    {"date":2011,"name":"中东呼吸综合征冠状病毒","value":"0"},
+                    {"date":2011,"name":"脊髓灰质炎","value":"0"},
+                    {"date":2011,"name":"手足口病","value":"0"},
+                    {"date":2011,"name":"黄热病","value":"0"}
+                    );
+                var yearlist={"2016":[],"2015":[],"2014":[],"2013":[],"2012":[],"2011":[],"2010":[],"2009":[],"2008":[],"2007":[]};
+                var diseaseList = {"2016":[],"2015":[],"2014":[],"2013":[],"2012":[],"2011":[],"2010":[],"2009":[],"2008":[],"2007":[]};
+                for(var i=0;i<data.length;i++){
+                    var year = data[i]['date'];
+                    if (yearlist[year].length<10){
+                        yearlist[year].push(data[i]);
+                        diseaseList[year].push(data[i]['name']);
                     }
-                },
-                autoPlay: true,
-                playInterval: 1000
-            },
-            options: [
-                {
-                    title: {
-                        'text': '2002疫情变化图示',
-                        'subtext': '数据来自全球卫生组织'
-                    },
-                    tooltip: {'trigger': 'axis'},
-                    legend: {
-                        x: 'right',
-                        'data': ['我国', '全球']
-                    },
-                    toolbox: {
-                        'show': true,
-                        orient: 'vertical',
-                        x: 'right',
-                        y: 'center',
-                        'feature': {
-                            'mark': {'show': true},
-                            'dataView': {'show': true, 'readOnly': false},
-                            'magicType': {'show': true, 'type': ['line', 'bar', 'stack', 'tiled']},
-                            'restore': {'show': true},
-                            'saveAsImage': {'show': true}
-                        }
-                    },
-                    calculable: true,
-                    grid: {'y': 80, 'y2': 100},
-                    xAxis: [{
-                        'type': 'category',
-                        'axisLabel': {'interval': 0},
-                        'data': [
-                            '霍乱',
-                            '中东呼吸综合征冠状病毒',
-                            '流感',
-                            '脑膜炎球菌',
-                            '麻疹',
-                            '埃博拉病毒',
-                            '登革热',
-                            '脊髓灰质炎',
-                            '黄热病',
-                            '小头症'
-                        ]
-                    }],
-                    yAxis: [
-                        {
-                            'type': 'value',
-                            'name': '疫情总次数'
-                        },
-                        {
-                            'type': 'value',
-                            'name': '平均次数'
-                        }
-                    ],
-                    series: [
-                        {
-                            'name': '全球',
-                            'type': 'bar',
-                            'data': dataMap.dataGDP['2015']
-                        },
-                        {
-                            'name': '我国', 'yAxisIndex': 1, 'type': 'bar',
-                            'data': dataMap.dataFinancial['2015']
-                        }
-                    ]
-                },
-                {
-                    title: {'text': '2015疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2015']},
-                        {'data': dataMap.dataFinancial['2015']}
-                    ]
-                },
-                {
-                    title: {'text': '2014疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2014']},
-                        {'data': dataMap.dataFinancial['2014']}
-                    ]
-                },
-                {
-                    title: {'text': '2013疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2013']},
-                        {'data': dataMap.dataFinancial['2013']}
-                    ]
-                },
-                {
-                    title: {'text': '2012疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2012']},
-                        {'data': dataMap.dataFinancial['2012']}]
-                },
-                {
-                    title: {'text': '2011疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2011']},
-                        {'data': dataMap.dataFinancial['2011']}
-                    ]
-                },
-                {
-                    title: {'text': '2010疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2010']},
-                        {'data': dataMap.dataFinancial['2010']}
-                    ]
-                },
-                {
-                    title: {'text': '2009疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2009']},
-                        {'data': dataMap.dataFinancial['2009']}
-                    ]
-                },
-                {
-                    title: {'text': '2008疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2008']},
-                        {'data': dataMap.dataFinancial['2008']}
-                    ]
-                },
-                {
-                    title: {'text': '2007疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2007']},
-                        {'data': dataMap.dataFinancial['2007']}
-                    ]
-                },
-                {
-                    title: {'text': '2006疫情变化图示'},
-                    series: [
-                        {'data': dataMap.dataGDP['2006']},
-                        {'data': dataMap.dataFinancial['2006']}
-                    ]
+
                 }
-            ]
-        };
+                var option = {
+                    timeline: {
+                        data: [
+                            '2007-01-01', '2008-01-01', '2009-01-01', '2010-01-01',
+                            '2011-01-01', '2012-01-01', '2013-01-01', '2014-01-01', '2015-01-01','2016-01-01'
+                        ],
+                        label: {
+                            formatter: function (s) {
+                                return s.slice(0, 4);
+                            }
+                        },
+                        autoPlay: true,
+                        playInterval: 1000
+                    },
+                    options: [
+                        {
+                            title: {
+                                'text': '2007疫情变化图示',
+                                'subtext': '数据来自全球卫生组织'
+                            },
+                            tooltip: {'trigger': 'axis'},
+                            legend: {
+                                x: 'right',
+                                'data': [' ', '全球']
+                            },
+                            toolbox: {
+                                'show': true,
+                                orient: 'vertical',
+                                x: 'right',
+                                y: 'center',
+                                'feature': {
+                                    'mark': {'show': true},
+                                    'dataView': {'show': true, 'readOnly': false},
+                                    'magicType': {'show': true, 'type': ['line', 'bar', 'stack', 'tiled']},
+                                    'restore': {'show': true},
+                                    'saveAsImage': {'show': true}
+                                }
+                            },
+                            calculable: true,
+                            grid: {'y': 80, 'y2': 100},
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data':diseaseList['2007']
+                            }],
+                            yAxis: [
+                                {
+                                    'type': 'value',
+                                    'name': '疫情总次数'
+                                },
+                                {
+                                    'type': 'value',
+                                    'name': '平均次数'
+                                }
+                            ],
+                            series: [
+                                {
+                                    'name': '全球',
+                                    'type': 'bar',
+                                    'data': yearlist['2007']
+                                }
+                            ]
+                        },
+                        {
+                            title: {'text': '2008疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2008']},
+                            ],
+                            xAxis: [{
+                            'type': 'category',
+                            'axisLabel': {'interval': 0},
+                            'data': diseaseList['2008']
 
-        var myChart = echarts.init(document.getElementById('timeLine'));
-        myChart.setOption(option);
+                        }],
 
+                        },
+                        {
+                            title: {'text': '2009疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2009']}
+                            ],
+                            xAxis: [{
+                            'type': 'category',
+                            'axisLabel': {'interval': 0},
+                            'data': diseaseList['2009']
 
+                        }],
+                        },
+                        {
+                            title: {'text': '2010疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2010']}],
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data': diseaseList['2010']
+
+                            }]
+                        },
+                        {
+                            title: {'text': '2011疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2011']}
+                            ],
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data': diseaseList['2011']
+
+                            }]
+                        },
+                        {
+                            title: {'text': '2012疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2012']}
+                            ],
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data': diseaseList['2012']
+
+                            }]
+                        },
+                        {
+                            title: {'text': '2013疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2013']}
+                            ],
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data': diseaseList['2013']
+
+                            }]
+                        },
+                        {
+                            title: {'text': '2014疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2014']}
+                            ],
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data': diseaseList['2014']
+
+                            }]
+                        },
+                        {
+                            title: {'text': '2015疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2015']}
+                            ],
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data': diseaseList['2015']
+
+                            }]
+                        },
+                        {
+                            title: {'text': '2016疫情变化图示'},
+                            series: [
+                                {'data': yearlist['2016']}
+                            ],
+                            xAxis: [{
+                                'type': 'category',
+                                'axisLabel': {'interval': 0},
+                                'data': diseaseList['2016']
+
+                            }]
+                        }
+                    ]
+                };
+                var myChart = echarts.init(document.getElementById('timeLine'));
+                myChart.setOption(option);
+
+            },
+            "json");
     }
 
 
     function yqTop10() {
         yqTop10Pie('top10Pie', '', '全球疫情TOP10');
         yqTop10Bar('top10Bar', '');
+        timeLine('world');
     }
 
     function yqLocalTop10() {
         yqTop10Pie('top10Pie', '中国', '我国疫情TOP10');
         yqTop10Bar('top10Bar', '中国');
+        timeLine('china');
     }
 
     $(document).ready(function () {
@@ -445,3 +501,5 @@
 </body>
 
 </html>
+<script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>
+<script src="${pageContext.request.contextPath}/js/menuScript.js"></script>

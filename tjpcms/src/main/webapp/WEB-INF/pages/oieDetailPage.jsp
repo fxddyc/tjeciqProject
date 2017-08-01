@@ -58,7 +58,7 @@
                                         原文链接二维码
                                     </h4>
                                 </div>
-                                <div id="baikeUrlDiv" class="modal-body" style="text-align: center;">
+                                <div id="qrCodeDiv" class="modal-body" style="text-align: center;">
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭
@@ -96,6 +96,12 @@
     $(document).ready(function () {
         var rowkey = GetQueryString("rowKey");
         rowkey = "http://www.oie.int/wahis_2/public/wahid.php/Reviewreport/Review?page_refer=MapFullEventReport&reportid="+rowkey;
+        $("#qrCodeDiv").qrcode({
+            render: "table",
+            width: 200,
+            height: 200,
+            text: rowkey
+        });
         $.post('${pageContext.request.contextPath}/dataWarehouse/datawarehouseDetail.do', {'rowKey': rowkey}, function (data) {
             var json = data;
             $("#epidemicName").text(json.epidemicName);

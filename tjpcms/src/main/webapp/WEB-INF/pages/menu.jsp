@@ -101,6 +101,11 @@
                     <li><a class="menu-item" id="mi12" href="${pageContext.request.contextPath}/userManager/toUserManagePage.do">用户管理</a></li>
                 </ul>
             </li>
+            <%--<li class="menu-list" id="testList"><a href="#"><i class="fa fa-bar-chart-o"></i> <span>Test</span></a>--%>
+                <%--<ul class="sub-menu-list">--%>
+                    <%--<li><a class="menu-item" id="test1" href="${pageContext.request.contextPath}/test/toTestPage.do">test1</a></li>--%>
+                <%--</ul>--%>
+            <%--</li>--%>
         </ul>
         <!--sidebar nav end-->
 

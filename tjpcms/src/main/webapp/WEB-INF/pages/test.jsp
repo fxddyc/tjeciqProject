@@ -173,9 +173,9 @@
             }
         },
         color: ['#f00','#f70','#ff0','#8f0',
-            '#0f0','#0f8','#0ff','#08f',
-            '#00f','#80f','#888'
-        ],
+                '#0f0','#0f8','#0ff','#08f',
+                '#00f','#80f','#888'
+            ],
         legend: {
             orient: 'vertical',
             x: 'left',
@@ -191,19 +191,16 @@
             trigger: 'item',
             showDelay: 50,
             formatter: function (params) {
-                console.info(params);
                 var dataMap = params.data.data;
                 var value = "";
                 if(typeof(dataMap)!=="string"){
                     for (var key in dataMap) {
                         if (parseInt(key) <= params.data.value) {
                             var dataList = dataMap[key];
-                            for(var i=0;i<dataList.length;i++){
-                                if(value===""){
-                                    value=dataList[i];
-                                }else {
-                                    value += "</br>"+dataList[i];
-                                }
+                            if(value!==""){
+                                value=dataList;
+                            }else {
+                                value += "</br>"+dataList;
                             }
                         }
                     }
@@ -256,19 +253,20 @@
 
 
     var mapMarkPoint = {
+//                    clickable:false,
         dataRange: {},
         symbol: 'emptyCircle',
-        symbolSize: function (v) {
-            var num = 10 + v/5;
-            if (num > 30) {
-                num = 30
+            symbolSize: function (v) {
+            var num = 10 + v / 2;
+            if (num > 50) {
+                num = 50
             }
             return num
         },
         effect: {
             show: true,
-            shadowBlur: 10,
-            color: "#fff"
+                shadowBlur: 10,
+                color: "#fff"
         },
         itemStyle: {
             normal: {
@@ -279,10 +277,10 @@
             }
         },
         data: []
-    };
+    }
 
     function findWorldMap() {
-        $.post('${pageContext.request.contextPath}/oieWorldRegion/epidemicRecentOutbreakRegion.do', {
+        $.post('${pageContext.request.contextPath}/test/epidemicRecentOutbreakRegion.do', {
             'alertInterval': alertInterval,
             'mapDataInterval': mapDataIntervalCondition,
             'startDate': startDateCondition,

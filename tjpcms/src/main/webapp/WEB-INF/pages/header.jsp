@@ -22,7 +22,6 @@
 
     <!--search start-->
     <form class="searchform" action="http://view.jqueryfuns.com/2014/4/10/7_df25ceea231ba5f44f0fc060c943cdae/index.html" method="post">
-        <input type="text" class="form-control" name="keyword" placeholder="Search here..." />
     </form>
     <!--search end-->
 

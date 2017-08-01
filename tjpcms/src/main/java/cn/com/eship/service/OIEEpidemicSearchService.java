@@ -11,5 +11,5 @@ public interface OIEEpidemicSearchService {
     String makeEpidemicEventListJson(String pageNo, String epidemicName, String region,String epidemicClass, String startDate, String endDate,String interval) throws Exception;
     String makeEpidemicSourceJson(String rowKey) throws Exception;
     List<Map<String, Object>> findAlertListData(String alertDataInterval)throws Exception;
-    List<Map<String, Object>> findMapListData(String mapDataInterval,String startDate,String endDate) throws Exception;
+    Map<String, List> findMapListData(String mapDataInterval, String startDate, String endDate) throws Exception;
 }

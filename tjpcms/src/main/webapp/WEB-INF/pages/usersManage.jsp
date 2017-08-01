@@ -27,18 +27,14 @@
                 <div class="col-sm-12">
                     <section class="panel">
                         <header class="panel-heading">
-                            Editable Table
-                            <span class="tools pull-right">
-                                <a href="javascript:;" class="fa fa-chevron-down"></a>
-                                <a href="javascript:;" class="fa fa-times"></a>
-                            </span>
+                            用户列表
                         </header>
                         <div class="panel-body">
                             <div class="adv-table editable-table ">
                                 <div class="clearfix">
                                     <div class="btn-group">
                                         <button id="editable-sample_new" class="btn btn-primary">
-                                            Add New <i class="fa fa-plus"></i>
+                                            添加新用户 <i class="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>

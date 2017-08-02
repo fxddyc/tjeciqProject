@@ -172,19 +172,19 @@
                 color: '#fff'
             }
         },
-        color: ['#f00','#f70','#ff0','#8f0',
-            '#0f0','#0f8','#0ff','#08f',
-            '#00f','#80f','#888'
+        color: ['#fff','#f00','#f70','#ff0',
+            '#8f0', '#0f0','#0f8','#0ff',
+            '#08f', '#00f','#80f','#888'
         ],
         legend: {
             orient: 'vertical',
             x: 'left',
             y: 'bottom',
             data: [
-                '第一次发生','第一次在该国发生','紧急发病','流行病学发生改变','新的宿主','新的致病源','新的血清型','该国发生某种疫病新的血清型','再次发生','发生预料之外的变化及增加','不常见的宿主'
+                '近期疫情提示','第一次发生','第一次在该国发生','紧急发病','流行病学发生改变','新的宿主','新的致病源','新的血清型',
+                '该国发生某种疫病新的血清型','再次发生','发生预料之外的变化及增加','不常见的宿主'
             ],
             selectedMode: 'multiple',
-            selected:{"alert":true},
             textStyle: {color: '#fff'}
         },
         tooltip: {
@@ -298,7 +298,7 @@
                     option.series[option.series.length-1].data=mapDataList[key];
                 }
                 var mapSeries={name:'',type:'map',mapType:'world',roam:true,mapLocation:{y:60},itemStyle:{normal:{borderColor:'rgba(100,149,237,1)',borderWidth:1.5,areaStyle:{color:'#1b1b1b'}}},showLegendSymbol:false,data:[],nameMap:nameMap,geoCoord:geoCoord,markPoint:""};
-                mapSeries.name="alert";
+                mapSeries.name="近期疫情提示";
                 option.series.push(mapSeries);
                 option.series[option.series.length-1].markPoint=mapMarkPoint;
                 option.series[option.series.length-1].markPoint.data = data.alertList;

@@ -172,7 +172,12 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
             wherePart.append(" and a.date >= date_sub(curdate(),interval 30 day)");
         }
         hqlBuffer.append(wherePart);
-        hqlBuffer.append(" order by a.date DESC");
+        if (condition.get("orderBy") != null) {
+            hqlBuffer.append(" order by ").append(condition.get("orderBy"));
+        }else {
+            hqlBuffer.append(" order by a.date DESC");
+        }
+
         String hql = hqlBuffer.toString();
         List<Map<String,Object>> jsonList = new ArrayList<>();
         hibernateTemplate.execute(new HibernateCallback() {

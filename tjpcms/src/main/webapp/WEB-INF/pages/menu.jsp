@@ -76,13 +76,16 @@
             </li>
             <li class="menu-list" id="ml2"><a href="#"><i class="fa fa-bar-chart-o"></i> <span>OIE疫情</span></a>
                 <ul class="sub-menu-list">
-                    <li><a class="menu-item" id="mi6" href="${pageContext.request.contextPath}/oieEpidemicSearch/toOIEEpidemicSearchPage.do">OIE疫情查询</a></li>
+                    <li><a class="menu-item" id="mi2_1" href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do">OIE疫情查询</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a class="menu-item" id="mi7" href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
+                    <li><a class="menu-item" id="mi2_2" href="${pageContext.request.contextPath}/oieEpidemicSearch/toOIEEpidemicSearchPage.do">OIE疫情查询</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a class="menu-item" id="mi2_3" href="${pageContext.request.contextPath}/weeklyReportExport/toReportPage.do">OIE疫情周报导出</a></li>
+                    <li><a class="menu-item" id="mi2_3" href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a class="menu-item" id="mi2_4" href="${pageContext.request.contextPath}/weeklyReportExport/toReportPage.do">OIE疫情周报导出</a></li>
                 </ul>
             </li>
             <li class="menu-list" id="ml3"><a href="#"><i class="fa fa-tasks"></i> <span>数据中心</span></a>

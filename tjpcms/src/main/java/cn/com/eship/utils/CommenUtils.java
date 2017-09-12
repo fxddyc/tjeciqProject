@@ -1,5 +1,13 @@
 package cn.com.eship.utils;
 
+import org.apache.batik.transcoder.TranscoderInput;
+import org.apache.batik.transcoder.TranscoderOutput;
+import org.apache.batik.transcoder.image.PNGTranscoder;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
 /**
@@ -22,4 +30,46 @@ public class CommenUtils {
         String str = uuid.toString().replace("-", "");
         return str;
     }
+
+    public static byte[] inputStream2ByteArray(InputStream in, boolean isClose){
+        byte[] byteArray = null;
+        try {
+            int total = in.available();
+            byteArray = new byte[total];
+            in.read(byteArray);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            if(isClose){
+                try {
+                    in.close();
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+        }
+        return byteArray;
+    }
+
+    public static ByteArrayInputStream convertToPng(String svgCode) throws Exception{
+        ByteArrayOutputStream outputStream = null;
+        try {
+            outputStream = new ByteArrayOutputStream();
+            byte[] bytes = svgCode.getBytes("utf-8");
+            PNGTranscoder t = new PNGTranscoder();
+            TranscoderInput input = new TranscoderInput(new ByteArrayInputStream(bytes));
+            TranscoderOutput output = new TranscoderOutput(outputStream);
+            t.transcode(input, output);
+            return new ByteArrayInputStream(outputStream.toByteArray());
+        } finally {
+            if (outputStream != null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
 }

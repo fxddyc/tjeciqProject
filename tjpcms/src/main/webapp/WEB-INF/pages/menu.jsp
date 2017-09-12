@@ -71,7 +71,7 @@
                     <li><a class="menu-item" id="mi4" href="${pageContext.request.contextPath}/epidemicBaike/epidemicBaikePage.do">疫情百科</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a class="menu-item" id="mi5"href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">疫情综合查询</a></li>
+                    <li><a class="menu-item" id="mi5" href="${pageContext.request.contextPath}/epidemic/epidemicListPage.do">疫情综合查询</a></li>
                 </ul>
             </li>
             <li class="menu-list" id="ml2"><a href="#"><i class="fa fa-bar-chart-o"></i> <span>OIE疫情</span></a>
@@ -80,6 +80,9 @@
                 </ul>
                 <ul class="sub-menu-list">
                     <li><a class="menu-item" id="mi7" href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a class="menu-item" id="mi2_3" href="${pageContext.request.contextPath}/weeklyReportExport/toReportPage.do">OIE疫情周报导出</a></li>
                 </ul>
             </li>
             <li class="menu-list" id="ml3"><a href="#"><i class="fa fa-tasks"></i> <span>数据中心</span></a>

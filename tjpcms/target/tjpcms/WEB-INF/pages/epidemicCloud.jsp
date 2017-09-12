@@ -184,7 +184,7 @@
                     option.series[0].data = [];
                     for (var i = 0; i < json.length; i++) {
                         json[i]['itemStyle'] = createRandomItemStyle()
-                        option.series[0].data.push(json[i])
+                        option.series[0].data=json;
                     }
                     var myChart = echarts.init(document.getElementById('main'));
                     myChart.setOption(option);

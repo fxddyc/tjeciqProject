@@ -131,7 +131,6 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                 return query.list();
             }
         });
-        System.out.println(list);
         return list;
     }
 

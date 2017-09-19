@@ -231,7 +231,7 @@
                             for (var i = 0; i < epidemicAppearList.length; i++) {
                                 var tr="";
 
-                                if(epidemicAppearList[i].epidemicNameCn !=null){
+                                if(epidemicAppearList[i].epidemicNameCn !=null&&epidemicAppearList[i].epidemicNameCn !=""){
                                     var td = "<td style=''><p>"+epidemicAppearList[i].epidemicNameCn + "</p><p>" + epidemicAppearList[i].epidemicNameEng+"</p></td>";
                                     tr = tr+td;
                                 }else {

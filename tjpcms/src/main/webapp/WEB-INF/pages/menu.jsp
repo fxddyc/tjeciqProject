@@ -26,7 +26,7 @@
 
     <!--logo and iconic logo start-->
     <div class="logo">
-        <a href="index.html"><img src="${pageContext.request.contextPath}/adminex/images/logo.png" alt=""></a>
+        <a href="index.html"><h4>天津检疫局疫情监测平台</h4></a>
     </div>
 
     <div class="logo-icon text-center">
@@ -76,7 +76,7 @@
             </li>
             <li class="menu-list" id="ml2"><a href="#"><i class="fa fa-bar-chart-o"></i> <span>OIE疫情</span></a>
                 <ul class="sub-menu-list">
-                    <li><a class="menu-item" id="mi2_1" href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do">OIE疫情查询</a></li>
+                    <li><a class="menu-item" id="mi2_1" href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do">OIE疫情概览</a></li>
                 </ul>
                 <ul class="sub-menu-list">
                     <li><a class="menu-item" id="mi2_2" href="${pageContext.request.contextPath}/oieEpidemicSearch/toOIEEpidemicSearchPage.do">OIE疫情查询</a></li>

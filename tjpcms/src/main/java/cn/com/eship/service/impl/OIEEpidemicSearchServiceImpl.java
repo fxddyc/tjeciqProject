@@ -53,8 +53,8 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
             parameMap.put("regionId", rid);
         }
         if (StringUtils.isNotBlank(epidemicClass)) {
-            List<Integer> list = epidemicDao.findEpidemicIdListByCondition(epidemicClass);
-            parameMap.put("epidemicClass", list);
+//            List<Integer> list = epidemicDao.findEpidemicIdListByCondition(epidemicClass);
+            parameMap.put("epidemicClass", epidemicClass);
         }
         if (StringUtils.isNotBlank(startDate)) {
             parameMap.put("startDate", TimeUtils.convertToDateString(startDate));
@@ -118,9 +118,9 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
     }
 
     @Override
-    public Map<String, List> findMapListData(String mapDataInterval, String startDate, String endDate) throws Exception {
+    public Map<String, List> findMapListData(String mapDataInterval, String startDate, String endDate,String epidemicName) throws Exception {
 
-        List<Map<String, Object>> epidemicAppearList = getEpidemicAppearList(mapDataInterval,startDate,endDate);
+        List<Map<String, Object>> epidemicAppearList = getEpidemicAppearList(mapDataInterval,startDate,endDate,epidemicName);
         Map<String, List> jsonMap = new HashMap<>();
         if (epidemicAppearList != null && epidemicAppearList.size() > 0) {
             Map<String, Map<String, List<String>>> regionEventMap = new HashMap<>();
@@ -225,7 +225,7 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
         return 0;
     }
 
-    private List<Map<String, Object>> getEpidemicAppearList(String mapDataInterval, String startDate, String endDate)throws Exception{
+    private List<Map<String, Object>> getEpidemicAppearList(String mapDataInterval, String startDate, String endDate,String epidemicName)throws Exception{
         Map<String, Object> paramMap = new HashMap<>();
         if (StringUtils.isNotBlank(mapDataInterval)) {
             paramMap.put("interval", mapDataInterval);
@@ -235,6 +235,10 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
         }
         if (StringUtils.isNotBlank(endDate)) {
             paramMap.put("endDate", TimeUtils.convertToDateString(endDate));
+        }
+        if (StringUtils.isNotBlank(epidemicName)) {
+            int eid = epidemicDao.findEpidemicIdByCondition(epidemicName);
+            paramMap.put("epidemicId", eid);
         }
         return epidemicDao.findEpidemicEventList(paramMap);
     }

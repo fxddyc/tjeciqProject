@@ -25,9 +25,10 @@ public class OIEWorldRegionMapController {
     }
 
     @RequestMapping("epidemicRecentOutbreakRegion")
-    public void findRecentOutbreakRegion(String alertDataInterval,String mapDataInterval,String startDate,String endDate,HttpServletResponse response) throws Exception {
+    public void findRecentOutbreakRegion(String alertDataInterval,String mapDataInterval,String startDate,String endDate,
+                                         String epidemicName,HttpServletResponse response) throws Exception {
         List<Map<String, Object>> alertList = oieEpidemicSearchService.findAlertListData(alertDataInterval);
-        Map<String, List> mapData = oieEpidemicSearchService.findMapListData(mapDataInterval,startDate,endDate);
+        Map<String, List> mapData = oieEpidemicSearchService.findMapListData(mapDataInterval,startDate,endDate,epidemicName);
         Map<String, Object> jsonMap = new HashMap<>();
         if (alertList!=null&&alertList.size() > 0) {
             jsonMap.put("alertList", alertList);

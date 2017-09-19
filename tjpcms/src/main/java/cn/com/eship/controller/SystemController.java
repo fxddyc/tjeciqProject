@@ -27,6 +27,11 @@ public class SystemController {
         return "login";
     }
 
+    @RequestMapping("systemMenu")
+    public String systemMenuPage() {
+        return "systemMenu";
+    }
+
     @RequestMapping("loginSubmit")
     public void loginAction(String userId, String passWd, HttpServletRequest req, HttpServletResponse response) throws Exception{
         Map<String,Object> map = systemService.checkUserIdentity(userId,passWd);

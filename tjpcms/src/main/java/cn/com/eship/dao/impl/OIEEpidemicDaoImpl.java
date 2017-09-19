@@ -152,7 +152,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
             valuesPart.add(condition.get("regionId"));
         }
         if (condition.get("epidemicClass") != null) {
-            wherePart.append(" and b.id in (:region) ");
+            wherePart.append(" and b.disease_class = ? ");
             valuesPart.add(condition.get("epidemicClass"));
         }
         if (condition.get("startDate") != null) {
@@ -188,11 +188,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                             query.setMaxResults(10);
                         }
                         for (int i = 0; i < valuesPart.size(); i++) {
-                            if(valuesPart.get(i).getClass().toString().equals(ArrayList.class.toString())){
-                                query.setParameterList("region", (List<Integer>)valuesPart.get(i));
-                            }else {
-                                query.setParameter(i, valuesPart.get(i));
-                            }
+                            query.setParameter(i, valuesPart.get(i));
                         }
                         List list = query.list();
                         for (int i=0;i<list.size();i++){
@@ -237,7 +233,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
             valuesPart.add(condition.get("regionId"));
         }
         if (condition.get("epidemicClass") != null) {
-            wherePart.append(" and b.id in (:region) ");
+            wherePart.append("  and b.disease_class = ? ");
             valuesPart.add(condition.get("epidemicClass"));
         }
         if (condition.get("startDate") != null) {
@@ -263,11 +259,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                     throws HibernateException, SQLException {
                 Query query = session.createSQLQuery(hql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
                 for (int i = 0; i < valuesPart.size(); i++) {
-                    if(valuesPart.get(i).getClass().toString().equals(ArrayList.class.toString())){
-                        query.setParameterList("region", (List<Integer>)valuesPart.get(i));
-                    }else {
-                        query.setParameter(i, valuesPart.get(i));
-                    }
+                    query.setParameter(i, valuesPart.get(i));
                 }
                 Map map = (Map)query.list().get(0);
                 BigInteger co = (BigInteger) map.get("n");
@@ -275,6 +267,40 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
             }
         });
         return l;
+    }
+
+    @Override
+    public List<Map<String, Object>> findTotalOutbreaksOfDate(Map<String, Object> condition) throws Exception {
+        List<Object> valuesPart = new ArrayList<Object>();
+        StringBuilder sqlBuilder = new StringBuilder("SELECT SUM(outbreaks) sum,date,DATE_FORMAT(date,'%Y') y FROM oie_epidemiological_event WHERE 1=1 ");
+        StringBuffer wherePart = new StringBuffer();
+        if (condition.get("startDate") != null) {
+            wherePart.append(" and date >= date_format(?,'%Y-%m-%d')");
+            valuesPart.add(condition.get("startDate"));
+        }
+        sqlBuilder.append(wherePart).append(" GROUP BY date ");
+        String sql = sqlBuilder.toString();
+        List<Map<String,Object>> jsonList = new ArrayList<>();
+        hibernateTemplate.execute(new HibernateCallback() {
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+                for (int i = 0; i < valuesPart.size(); i++) {
+                    query.setParameter(i, valuesPart.get(i));
+                }
+                List list = query.list();
+                for (int i=0;i<list.size();i++){
+                    Map<String,Object> map2= new HashMap<>();
+                    Map map = (Map)list.get(i);
+                    map2.put("date",map.get("date"));
+                    map2.put("sum",map.get("sum"));
+                    map2.put("y",map.get("y"));
+                    jsonList.add(map2);
+                }
+                return jsonList;
+            }
+        });
+        return jsonList;
     }
 
 

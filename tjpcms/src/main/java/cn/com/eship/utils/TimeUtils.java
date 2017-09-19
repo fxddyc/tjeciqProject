@@ -68,7 +68,6 @@ public class TimeUtils {
         }
 
         int typeNum = cDate.get(Calendar.WEEK_OF_YEAR)-1;
-        System.out.println(typeNum);
 
         firstDate.set(Calendar.WEEK_OF_YEAR, typeNum);
         firstDate.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
@@ -80,5 +79,12 @@ public class TimeUtils {
         timeMap.put("beginDate",beginDate);
         timeMap.put("endDate",endDate);
         return timeMap;
+    }
+
+    public static String getDateOfSomeDaysAgo(int dateInterval){
+        Calendar date = Calendar.getInstance();
+        date.setTime(new Date());
+        date.set(Calendar.DATE, date.get(Calendar.DATE) - dateInterval);
+        return new SimpleDateFormat("yyyy-MM-dd").format(date.getTime());
     }
 }

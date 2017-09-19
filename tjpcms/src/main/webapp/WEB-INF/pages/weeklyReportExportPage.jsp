@@ -94,6 +94,7 @@
 <script type="application/javascript">
     function initAdvancedQueryInput(){
         $(".AQForm").val("");
+        changeProcessBar(0);
     }
 
 

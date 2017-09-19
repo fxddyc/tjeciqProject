@@ -13,4 +13,5 @@ public interface OIEEpidemicDao {
     List<Integer> findEpidemicIdListByCondition(String condition) throws Exception;
     List<Map<String,Object>> findEpidemicEventList(Map<String, Object> condition) throws Exception;
     Long findTotalRecord(Map<String, Object> condition)throws Exception;
+    List<Map<String, Object>> findTotalOutbreaksOfDate(Map<String, Object> condition) throws Exception;
 }

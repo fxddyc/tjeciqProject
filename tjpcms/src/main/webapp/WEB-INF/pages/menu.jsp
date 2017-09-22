@@ -11,7 +11,7 @@
 <script type="text/javascript">
     function gc(name){
         var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
-        if(arr != null) return unescape(arr[2]); return null;
+        if(arr) return unescape(arr[2]); return null;
     }
     var ssid = '<%=session.getId()%>';
     var au = '<%=session.getAttribute("authority")%>';
@@ -85,7 +85,10 @@
                     <li><a class="menu-item" id="mi2_3" href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a class="menu-item" id="mi2_4" href="${pageContext.request.contextPath}/weeklyReportExport/toReportPage.do">OIE疫情周报导出</a></li>
+                    <li><a class="menu-item" id="mi2_4" href="${pageContext.request.contextPath}/oIEEpidemicPathController/oieEpidemicPathPage.do">OIE疫情传播路径</a></li>
+                </ul>
+                <ul class="sub-menu-list">
+                    <li><a class="menu-item" id="mi2_5" href="${pageContext.request.contextPath}/weeklyReportExport/toReportPage.do">OIE疫情周报导出</a></li>
                 </ul>
             </li>
             <li class="menu-list" id="ml3"><a href="#"><i class="fa fa-tasks"></i> <span>数据中心</span></a>

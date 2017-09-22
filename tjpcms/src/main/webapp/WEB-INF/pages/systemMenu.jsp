@@ -19,9 +19,33 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/sysMenu/css/animate.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/sysMenu/css/font-icon.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/adminex/fonts/css/font-awesome.min.css">
-</head>
-<body style="background: #65cea7 url('../../images/customFile/123.jpg') no-repeat fixed;">
+    <script type="text/javascript">
+        function gc(name){
+            var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+            if(arr) return unescape(arr[2]); return null;
+        }
+        var ssid = '<%=session.getId()%>';
+        var au = '<%=session.getAttribute("authority")%>';
+        var csid = gc('userSID');
+        if(ssid!==csid||!au||au===""){
+            window.location.href='${pageContext.request.contextPath}/system/login.do';
+        }
 
+
+    </script>
+</head>
+<body class="login-body">
+<section id="hero" class="section ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-sm-6 hero">
+                <div class="hero-content">
+                    <h1>系统菜单</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <section id="portfolio">
     <div class="container">
         <div class="row">
@@ -30,41 +54,47 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 portfolio-item"> <a href="work-details.html" class="portfolio-link">
+            <div class="col-sm-6 portfolio-item" id="ml1"> <a href="${pageContext.request.contextPath}/index/indexPage.do" class="portfolio-link">
                 <div class="caption">
                     <div class="caption-content">
-                        <h3>The Shape of Design</h3>
-                        <h4>Branding/Graphic</h4>
+                        <h2>WHO疫情指数分析功能</h2>
+                        <h4>WHO epidemic analysis function</h4>
                     </div>
                 </div>
-                <img src="../../images/customFile/who1.jpg" class="img-responsive" alt=""> </a> </div>
-            <div class="col-sm-6 portfolio-item"> <a href="work-details.html" class="portfolio-link">
+                <img src="../../images/customFile/who_menu.jpg" class="img-responsive" alt=""> </a> </div>
+            <div class="col-sm-6 portfolio-item" id="ml2"> <a href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do" class="portfolio-link">
                 <div class="caption">
                     <div class="caption-content">
-                        <h3>czarna kawka</h3>
-                        <h4>Branding</h4>
+                        <h2>OIE疫情指数分析功能</h2>
+                        <h4>OIE epidemic analysis function</h4>
                     </div>
                 </div>
-                <img src="../../images/customFile/oie1.jpg" class="img-responsive" alt=""> </a> </div>
-            <div class="col-sm-6 portfolio-item"> <a href="work-details.html" class="portfolio-link">
+                <img src="../../images/customFile/oie_menu.jpg" class="img-responsive" alt=""> </a> </div>
+            <div class="col-sm-6 portfolio-item" id="ml3"> <a href="${pageContext.request.contextPath}/dataWarehouse/toDatawarehousePage.do"" class="portfolio-link">
                 <div class="caption">
                     <div class="caption-content">
-                        <h3>czarna kawka</h3>
-                        <h4>Branding</h4>
+                        <h2>数据中心</h2>
+                        <h4>data center</h4>
                     </div>
                 </div>
-                <img src="../../images/customFile/sjzx.jpg" class="img-responsive" alt=""> </a> </div>
-            <div class="col-sm-6 portfolio-item"> <a href="work-details.html" class="portfolio-link">
+                <img src="../../images/customFile/dataCenter_menu.png" class="img-responsive" alt=""> </a> </div>
+            <div class="col-sm-6 portfolio-item" id="ml4"> <a href="${pageContext.request.contextPath}/words/toWordsPage.do" class="portfolio-link">
                 <div class="caption">
                     <div class="caption-content">
-                        <h3>czarna kawka</h3>
-                        <h4>Branding</h4>
+                        <h2>控制面板</h2>
+                        <h4>control panel</h4>
                     </div>
                 </div>
-                <img src="../../images/customFile/kzmb.png" class="img-responsive" alt=""> </a> </div>
+                <img src="../../images/customFile/controlPanel_menu.png" class="img-responsive" alt=""> </a> </div>
         </div>
     </div>
 </section>
+<script type="text/javascript">
+    var eles = au.split(";");
+    for(var i=0;i<eles.length;i++){
+        $("#"+eles[i]).remove();
+    }
+</script>
 
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-1.10.2.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>

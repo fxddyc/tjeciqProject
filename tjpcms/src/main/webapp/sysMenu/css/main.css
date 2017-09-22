@@ -78,7 +78,7 @@ ul li {
 	list-style: none;
 }
 .section {
-	padding: 50px 0;
+	padding: 5px 0;
 }
 .no-padding {
 	padding: 0;
@@ -289,21 +289,23 @@ ul li {
 /* ------------------------------------------------------------------------------
 	 Hero content
 -------------------------------------------------------------------------------*/
-.hero {
-	margin-top: 10%;
-}
+/*.hero {*/
+	/*margin-top: 10%;*/
+/*}*/
 .hero-content {
+
 }
 .hero h1 {
 	font-size: 48px;
 	text-transform: uppercase;
+
 }
 .hero h4 {
 	font-weight: 400;
 }
-.hero p {
-	padding-top: 20px;
-}
+/*.hero p {*/
+	/*padding-top: 20px;*/
+/*}*/
 /* ------------------------------------------------------------------------------
 	 Portfolio
 -------------------------------------------------------------------------------*/
@@ -342,6 +344,13 @@ ul li {
 }
 #portfolio .portfolio-item .portfolio-link .caption .caption-content i {
 	margin-top: -12px;
+}
+#portfolio .portfolio-item .portfolio-link .caption .caption-content h2 {
+	margin: 0;
+	color: #e9eaed;
+	font-size: 30px;
+	letter-spacing: 4px;
+	text-transform: uppercase;
 }
 #portfolio .portfolio-item .portfolio-link .caption .caption-content h3 {
 	margin: 0;

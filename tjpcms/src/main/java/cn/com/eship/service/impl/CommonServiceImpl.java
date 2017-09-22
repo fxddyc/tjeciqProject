@@ -2,8 +2,10 @@ package cn.com.eship.service.impl;
 
 import cn.com.eship.dao.EpidemicDao;
 import cn.com.eship.dao.KindDicDao;
+import cn.com.eship.dao.OIEDiseasesEntityDao;
 import cn.com.eship.dao.WordsDao;
 import cn.com.eship.model.KindDic;
+import cn.com.eship.model.OieDiseasesEntity;
 import cn.com.eship.service.CommonService;
 import org.apache.htrace.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class CommonServiceImpl implements CommonService {
     private WordsDao wordsDao;
     @Autowired
     private KindDicDao kindDicDao;
+    @Autowired
+    private OIEDiseasesEntityDao oieDiseasesEntityDao;
 
     @Override
     public String makeEpidemicNameListJson() throws Exception {
@@ -48,5 +52,10 @@ public class CommonServiceImpl implements CommonService {
             jsonList.add(map);
         }
         return new ObjectMapper().writeValueAsString(jsonList);
+    }
+
+    @Override
+    public List<OieDiseasesEntity> findOieDiseasesEntityList(OieDiseasesEntity oieDiseasesEntity) throws Exception {
+        return oieDiseasesEntityDao.findOieDiseasesEntityList(oieDiseasesEntity);
     }
 }

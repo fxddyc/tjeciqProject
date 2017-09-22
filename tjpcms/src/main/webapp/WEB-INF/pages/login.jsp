@@ -59,7 +59,7 @@
                 console.info(data);
                 if (data!==null){
                     if(data.result===true){
-                        window.location.href="${pageContext.request.contextPath}/index/indexPage.do"
+                        window.location.href="${pageContext.request.contextPath}/system/systemMenu.do"
                     }else {
                         $("#alertInfo").show();
                     }

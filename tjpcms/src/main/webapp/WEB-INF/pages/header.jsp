@@ -59,8 +59,10 @@
                 closeOnConfirm: false
             },
             function(){
-                $.post('${pageContext.request.contextPath}/system/signOut.do',null,function (data) {}, 'json')
-                window.location.href='${pageContext.request.contextPath}/system/login.do';
+                $.post('${pageContext.request.contextPath}/system/signOut.do',null,function (data) {}, 'json').complete(function () {
+                    window.location.href='${pageContext.request.contextPath}/system/login.do';
+                });
+
             });
 
     });

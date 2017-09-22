@@ -10,13 +10,15 @@
             <key-property name="report" column="report"/>
         </composite-id>
         <property name="country" column="country"/>
-        <property name="countryId" column="country_id"/>
         <property name="date" column="date"/>
         <property name="disease" column="disease"/>
-        <property name="diseaseId" column="disease_id"/>
         <property name="reason" column="reason"/>
         <property name="manifestation" column="manifestation"/>
         <property name="outbreaks" column="outbreaks"/>
         <property name="dateRes" column="date_res"/>
+        <many-to-one name="oieWorldRegionEntity" column="country_id" class="cn.com.eship.model.OieWorldRegionEntity" not-null="true"
+                     fetch="join"/>
+        <many-to-one name="oieDiseasesEntity" column="disease_id" class="cn.com.eship.model.OieDiseasesEntity" not-null="true"
+                     fetch="join"/>
     </class>
 </hibernate-mapping>

@@ -136,7 +136,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
 
     @Override
     public List<Map<String, Object>> findEpidemicEventList(Map<String, Object> condition) throws Exception {
-        List<Object> valuesPart = new ArrayList<Object>();
+        List<Object> valuesPart = new ArrayList<>();
         StringBuffer hqlBuffer = new StringBuffer("SELECT a.disease,a.country,b.disease_name_cn,b.disease_name_eng,b.disease_class," +
                 "c.region_name_cn,c.region_name_eng,a.date,a.reason,a.outbreaks,a.manifestation,a.report,a.date_res" +
                 " FROM (oie_epidemiological_event a" +
@@ -303,5 +303,55 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
         return jsonList;
     }
 
+
+    @Override
+    public List<Map<String, Object>> findEpidemicHistoryScatter() throws Exception {
+        List<Map<String,Object>> jsonList = new ArrayList<>();
+        String sql = "SELECT disease,disease_name_cn,COUNT(report) rn,SUM(outbreaks) sum,COUNT(DISTINCT country) cn " +
+                "FROM oie_epidemiological_event a " +
+                "LEFT JOIN oie_diseases b " +
+                "   ON a.disease_id=b.id " +
+                "GROUP BY disease";
+        hibernateTemplate.execute(new HibernateCallback() {
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+                List list = query.list();
+                for (int i=0;i<list.size();i++){
+                    Map map = (Map)list.get(i);
+                    Map<String,Object> map2= new HashMap<>();
+                    map2.put("disease",map.get("disease"));
+                    map2.put("epidemicNameCn",map.get("disease_name_cn"));
+                    map2.put("sum",map.get("sum"));
+                    map2.put("rn",map.get("rn"));
+                    map2.put("cn",map.get("cn"));
+                    jsonList.add(map2);
+                }
+                return jsonList;
+            }
+        });
+        return jsonList;
+    }
+
+    @Override
+    public Map<String, Object> findTotalOutbreaksAndReportOfDays(int interval)throws Exception{
+        Map<String,Object> jsonMap = new HashMap<>();
+        String sql = "SELECT SUM(outbreaks) so,COUNT(report) cr " +
+                "FROM oie_epidemiological_event " +
+                "WHERE date>=SUBDATE(CURDATE(),INTERVAL ? day)";
+        hibernateTemplate.execute(new HibernateCallback() {
+            public Object doInHibernate(Session session)
+                    throws HibernateException, SQLException {
+                Query query = session.createSQLQuery(sql).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+                query.setParameter(0, interval);
+                List list = query.list();
+                if(list!=null && list.size()>0){
+                    jsonMap.putAll((Map)list.get(0));
+                }
+                return jsonMap;
+            }
+        });
+        return jsonMap;
+    }
 
 }

@@ -34,4 +34,12 @@ public class OIEDashboardController {
     public void getDiseaseEventListData(String pageNo,String startDate,String endDate,String epidemicClass,HttpServletResponse response)throws Exception {
         response.getOutputStream().write(oieDashboardService.getDiseaseEventListData(pageNo,startDate,endDate,epidemicClass).getBytes("utf-8"));
     }
+    @RequestMapping("/getDiseaseScatterData")
+    public void getDiseaseScatterData(HttpServletResponse response)throws Exception {
+        response.getOutputStream().write(oieDashboardService.getDiseaseScatterData().getBytes("utf-8"));
+    }
+    @RequestMapping("/findGeneralFormData.do")
+    public void findGeneralFormData(HttpServletResponse response)throws Exception {
+        response.getOutputStream().write(oieDashboardService.findGeneralFormData().getBytes("utf-8"));
+    }
 }

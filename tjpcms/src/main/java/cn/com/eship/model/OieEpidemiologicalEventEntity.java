@@ -14,13 +14,62 @@ public class OieEpidemiologicalEventEntity {
     private String report;
     private String country;
     private String countryId;
+    private OieWorldRegionEntity oieWorldRegionEntity;
     private Date date;
     private String disease;
     private String diseaseId;
+    private String diseaseIdFK;
+    private OieDiseasesEntity oieDiseasesEntity;
     private String reason;
     private String manifestation;
     private Integer outbreaks;
     private String dateRes;
+    private String startDate;
+    private String endDate;
+
+    public String getDiseaseIdFK() {
+        return diseaseIdFK;
+    }
+
+    public void setDiseaseIdFK(String diseaseIdFK) {
+        this.diseaseIdFK = diseaseIdFK;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "country_id")
+    public OieWorldRegionEntity getOieWorldRegionEntity() {
+        return oieWorldRegionEntity;
+    }
+
+    public void setOieWorldRegionEntity(OieWorldRegionEntity oieWorldRegionEntity) {
+        this.oieWorldRegionEntity = oieWorldRegionEntity;
+    }
+
+    @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "disease_id")
+    public OieDiseasesEntity getOieDiseasesEntity() {
+        return oieDiseasesEntity;
+    }
+
+    public void setOieDiseasesEntity(OieDiseasesEntity oieDiseasesEntity) {
+        this.oieDiseasesEntity = oieDiseasesEntity;
+    }
 
     @Id
     @Column(name = "id")
@@ -32,7 +81,7 @@ public class OieEpidemiologicalEventEntity {
         this.id = id;
     }
 
-    @Id
+    @Basic
     @Column(name = "report")
     public String getReport() {
         return report;
@@ -52,8 +101,7 @@ public class OieEpidemiologicalEventEntity {
         this.country = country;
     }
 
-    @Basic
-    @Column(name = "country_id")
+    @Transient
     public String getCountryId() {
         return countryId;
     }
@@ -82,8 +130,7 @@ public class OieEpidemiologicalEventEntity {
         this.disease = disease;
     }
 
-    @Basic
-    @Column(name = "disease_id")
+    @Transient
     public String getDiseaseId() {
         return diseaseId;
     }

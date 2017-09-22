@@ -94,4 +94,44 @@ public class OIEDashboardServiceImpl implements OIEDashboardService {
         return new ObjectMapper().writeValueAsString(jsonMap);
     }
 
+    @Override
+    public String getDiseaseScatterData() throws Exception {
+        List<Map<String, Object>> dataList = oieEpidemicDao.findEpidemicHistoryScatter();
+        List<Object[]> jsonList = new ArrayList<>();
+        if (dataList!=null&&dataList.size()>0){
+            for (Map<String, Object> map : dataList) {
+
+                String eName = (map.get("epidemicNameCn") != null && !"".equals(map.get("epidemicNameCn"))) ? (String) map.get("epidemicNameCn") : (String) map.get("disease");
+                int sum = map.get("sum")!=null?Integer.parseInt(map.get("sum").toString()):0;
+                int rn = map.get("rn")!=null?Integer.parseInt(map.get("rn").toString()):0;
+                int cn = map.get("cn")!=null?Integer.parseInt(map.get("cn").toString()):0;
+                Object[] oa = new Object[]{eName,sum,rn,cn};
+                jsonList.add(oa);
+            }
+
+        }
+        return new ObjectMapper().writeValueAsString(jsonList);
+    }
+
+    @Override
+    public String findGeneralFormData() throws Exception{
+        Map<String, Object> jsonData = new HashMap<>();
+        int[] ra = findTotalOutbreaksAndReportOfDays(1);
+        jsonData.put("oneDay",ra);
+        ra = findTotalOutbreaksAndReportOfDays(7);
+        jsonData.put("sevenDay",ra);
+        ra = findTotalOutbreaksAndReportOfDays(30);
+        jsonData.put("thirtyDay",ra);
+        return new ObjectMapper().writeValueAsString(jsonData);
+
+    }
+
+    private int[] findTotalOutbreaksAndReportOfDays(int interval)throws Exception{
+        Map<String, Object> map = oieEpidemicDao.findTotalOutbreaksAndReportOfDays(interval);
+        int so = map.get("so")!=null?Integer.parseInt(map.get("so").toString()):0;
+        int cr = map.get("cr")!=null?Integer.parseInt(map.get("cr").toString()):0;
+        return new int[]{so,cr};
+    }
+
+
 }

@@ -107,14 +107,14 @@
                                 <table class="col-lg-12">
                                     <tr class="col-lg-4">
                                         <td><b>α 角（内旋转角）</b></td>
-                                        <td><input id="alpha" type="range" min="0" max="90" value="0"/> <span id="alpha-value" class="value"></span></td>
+                                        <td><label for="alpha"></label><input id="alpha" type="range" min="0" max="90" value="0"/> <span id="alpha-value" class="value"></span></td>
 
 
 
                                     </tr>
                                     <tr class="col-lg-4">
                                         <td><b>β 角（外旋转角）</b></td>
-                                        <td><input id="beta" type="range" min="-90" max="90" value="0"/> <span id="beta-value" class="value"></span></td>
+                                        <td><label for="beta"></label><input id="beta" type="range" min="-90" max="90" value="0"/> <span id="beta-value" class="value"></span></td>
                                     </tr>
                                     <tr class="col-lg-4">
                                         <td><button class="btn btn-info " type="button" id="resetRange"><i class="fa fa-refresh"></i> 重置视角</button></td>
@@ -128,7 +128,7 @@
 
         </div>
 
-        <div class="modal fade col-lg-12" id="detailMod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade col-lg-12" id="detailMod" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
             <div class="modal-dialog" style="width:1000px">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #2a6496">
@@ -263,8 +263,10 @@
         },
         tooltip: {
             formatter: function () {
-                return this.key+'<br/> 共发生：<b>' + this.x +
-                    '</b>次<br/> 被报告： <b>' + this.y + '</b>';
+                console.info(this.point.z)
+                return this.key+'<br/> 共发生: <b>' + this.x +
+                    '</b>次<br/> 被报告: <b>' + this.y + '</b>次<br/>' +
+                    '共涉及: <b>'+this.point.z+'个国家</b>';
             }
         },
         colors:$.map(Highcharts.getOptions().colors, function (color) {

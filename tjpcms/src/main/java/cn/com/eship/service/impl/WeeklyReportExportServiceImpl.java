@@ -441,10 +441,10 @@ public class WeeklyReportExportServiceImpl implements WeeklyReportExportService 
         textList.add(findDiseaseHistoryDataList());
         textList.add(findContinentDiseaseHistoryData());
         textList.add(findDetailTableData());
-        System.out.println(textList.size());
-        String inputUrl = "F://TestFile//reportTemplet.docx";
+        //            inputUrl = "F://TestFile//no_data_reportTemplet.docx";
+        String inputUrl = "/root/app/reportTemplet.docx";
         if (textMap.get("${totalCases}")==null||"0".equals(textMap.get("${totalCases}"))){
-            inputUrl = "F://TestFile//no_data_reportTemplet.docx";
+            inputUrl = "/root/app/no_data_reportTemplet.docx";
         }
         return WorderToNewWordUtils.changWord(inputUrl, textMap, textList);
     }

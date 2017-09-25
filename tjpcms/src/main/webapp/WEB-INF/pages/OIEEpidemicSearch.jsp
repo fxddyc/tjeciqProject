@@ -55,8 +55,12 @@
                                     <input type="text" id='epidemicName' class="form-control AQForm" placeholder="疫病名称">
                                 </div>
                                 <div class="col-lg-3 form-group">
-                                    <label class="control-label">疫病类型</label>
-                                    <input type="text" id='epidemicClass' class="form-control AQForm" placeholder="疫病类型">
+                                    <label class="control-label" for="epidemicClass">疫病类型</label>
+                                    <select id='epidemicClass' class="form-control AQForm">
+                                        <option value="一类">一类</option>
+                                        <option value="二类">二类</option>
+                                        <option value="其他类">其他类</option>
+                                    </select>
                                 </div>
                                 <div class="col-lg-3 form-group">
                                     <label class="control-label">地域名称</label>
@@ -355,9 +359,6 @@
 
         $.post('${pageContext.request.contextPath}/oieEpidemicSearch/regionList.do', null, function (data) {
             $('#region').typeahead({source: data})
-        }, 'json');
-        $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicKindList.do', null, function (data) {
-            $('#epidemicClass').typeahead({source: data})
         }, 'json');
 
         $.post('${pageContext.request.contextPath}/oieEpidemicSearch/epidemicNameList.do', null, function (data) {

@@ -498,7 +498,13 @@
         return geoObj;
     }
 
-    function initChart(data, selectObj) {
+    function initChart(data1, selectObj) {
+        //data['pathAndValueResult'][((data['pathAndValueResult'].length) - 1)]
+        var pathAndValueResultLength = data1['pathAndValueResult'].length;
+        var firstLocationName = data1['pathAndValueResult'][0][0]['name'];
+        var firstLocationValue = data1['pathAndValueResult'][0][1]['value'];
+        var firstLocation = {name: firstLocationName, value: firstLocationValue};
+        var lastLocation = data1['pathAndValueResult'][pathAndValueResultLength - 1][1];
         var myChart = echarts.init(document.getElementById('oiePathChart'));
         var option = {
             backgroundColor: '#1b1b1b',
@@ -572,7 +578,7 @@
                                 borderColor: 'rgba(30,144,255,0.5)'
                             }
                         },
-                        data: data['pathList'],
+                        data: data1['pathList'],
                     },
                     geoCoord: getGeo()
                 },
@@ -586,7 +592,7 @@
                         effect: {
                             show: true,
                             scaleSize: 1,
-                            period: 10,
+                            period: 30,
                             color: '#fff',
                             shadowBlur: 10
                         },
@@ -599,7 +605,29 @@
                                 }
                             }
                         },
-                        data: data['pathAndValueResult']
+                        data: data1['pathAndValueResult']
+                    },
+                    markPoint: {
+                        symbol: 'emptyCircle',
+                        symbolSize: function (v) {
+                            return 10 + v / 10
+                        },
+                        effect: {
+                            show: true,
+                            shadowBlur: 0
+                        },
+                        itemStyle: {
+                            normal: {
+                                label: {show: false}
+                            },
+                            emphasis: {
+                                label: {position: 'top'}
+                            }
+                        },
+                        data: [
+                            firstLocation,
+                            lastLocation
+                        ]
                     }
                 }
             ]
@@ -607,6 +635,7 @@
 
         myChart.setOption(option);
     }
+
 
     function formartDate(date) {
         var dateArray = date.split('/');

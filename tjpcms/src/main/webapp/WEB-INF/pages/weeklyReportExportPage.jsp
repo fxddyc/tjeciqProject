@@ -30,7 +30,7 @@
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                OIE信息综合查询
+                                OIE疫情周报导出
                             </div>
                             <div class="panel-body">
                                 <div class="row">
@@ -42,7 +42,7 @@
                                             <input id="startDate" class="form-control dpd1 AQForm" name="from" placeholder="选择该周内任意一天">
                                             <div class="input-group-btn">
                                                 <button class="btn btn-primary" onclick="initAdvancedQueryInput()">X</button>
-                                                <button class="btn btn-info" onclick="exportHighcharts('word');">导出报告</button>
+                                                <button class="btn btn-info" onclick="exportHighcharts();">导出报告</button>
                                             </div>
                                         </div>
                                     </div>
@@ -365,20 +365,17 @@
             var flag = checkSvgDataStatus();
             window.setTimeout(function () {
                 flag = checkSvgDataStatus();
-                console.info(flag);
-                if (flag==true) {
+                if (flag===true) {
                     changeProcessBar(50);
                     uploadSvgString();
                 }else {
                     var tv = window.setInterval(function () {
                         flag = checkSvgDataStatus();
-                        if (flag==true){
+                        if (flag===true){
                             changeProcessBar(50);
                             uploadSvgString();
                             window.clearInterval(tv);
                         }
-
-
                         console.info("notReady")
                     },500)
                 }
@@ -391,7 +388,7 @@
                 'startDateCondition':startDateCondition
                 },
                 function (data) {
-                    if (data!=null&&data.length>0){
+                    if (data&&data.length>0){
                         var dataList = [];
                         for (var i=0;i<data.length;i++){
                             var param = [];
@@ -401,10 +398,9 @@
                         }
                         diseaseClassPieOption.series[0].data=dataList;
                         $('#container_pie').highcharts(diseaseClassPieOption);
+                        diseaseClassDataFlag=true
                     }
-                }, 'json').complete(function () {
-                diseaseClassDataFlag=true
-            });
+                }, 'json');
         }
 
         function findDiseaseDetailData(startDateCondition) {
@@ -412,17 +408,17 @@
                     'startDateCondition':startDateCondition
                 },
                 function (data) {
-                    if (data!=null&&data.length>0){
+                    if (data&&data.length>0){
                         var seriesList = [];
                         for (var i=0;i<data.length;i++){
                             seriesList.push(data[i])
                         }
                         diseaseOutbreakChars.series=seriesList;
                         $('#container').highcharts(diseaseOutbreakChars);
+                        diseaseDetailDataFlag=true;
                     }
-                }, 'json').complete(function () {
-                diseaseDetailDataFlag=true
-            });
+
+                }, 'json');
         }
 
         function findContinentDiseaseHistoryData(startDateCondition) {
@@ -430,7 +426,7 @@
                     'startDateCondition':startDateCondition
                 },
                 function (data) {
-                    if (data!=null&&data.length>0){
+                    if (data&&data.length>0){
                         var dataList = [];
                         for (var i=0;i<data.length;i++){
                             var param = [];
@@ -442,11 +438,10 @@
                         }
                         diseaseHistoryCharOption.series[0].data=dataList;
                         $('#container_bar').highcharts(diseaseHistoryCharOption);
+                        continentDiseaseHistoryDataFlag=true;
                     }
 
-                }, 'json').complete(function () {
-                continentDiseaseHistoryDataFlag=true;
-            });
+                }, 'json');
         }
 
         function findReportReasonData(startDateCondition) {
@@ -454,7 +449,7 @@
                     'startDateCondition':startDateCondition
                 },
                 function (data) {
-                    if (data!=null&&data.length>0){
+                    if (data&&data.length>0){
                         var dataList = [];
                         for (var i=0;i<data.length;i++){
                             var param = [];
@@ -464,11 +459,10 @@
                         }
                         reportReasonPieOption.series[0].data=dataList;
                         $('#container_rr_pie').highcharts(reportReasonPieOption);
+                        reportReasonDataFlag=true;
                     }
 
-                }, 'json').complete(function () {
-                reportReasonDataFlag=true
-            });
+                }, 'json');
         }
 
 

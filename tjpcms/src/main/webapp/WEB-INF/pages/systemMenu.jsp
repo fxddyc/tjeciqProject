@@ -65,8 +65,8 @@
             <div class="col-sm-6 portfolio-item" id="ml2"> <a href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do" class="portfolio-link">
                 <div class="caption">
                     <div class="caption-content">
-                        <h2>OIE疫情指数分析功能</h2>
-                        <h4>OIE epidemic analysis function</h4>
+                        <h2>国际动物疫情动态分析与预警系统</h2>
+                        <h4>OIE epidemic analysis and warning system</h4>
                     </div>
                 </div>
                 <img src="../../images/customFile/oie_menu.jpg" class="img-responsive" alt=""> </a> </div>

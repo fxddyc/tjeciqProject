@@ -1,5 +1,6 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <meta charset="utf-8">
@@ -173,7 +174,10 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
+      <div id="containers"></div>
+         <div id="slider">
 
+  </div>
 
         <!--body wrapper end-->
     </div>
@@ -192,6 +196,7 @@
 
 <script src="${pageContext.request.contextPath}/hcharts/highcharts.js"></script>
 <script src="${pageContext.request.contextPath}/hcharts/highcharts-3d.js"></script>
+<script src="${pageContext.request.contextPath}/hcharts/highcharts-more.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/jqPaginator/dist/1.2.0/jqPaginator.min.js"></script>
 
@@ -494,7 +499,61 @@
         findDiseaseScatterData();
 
     });
-    
+    $(function () {
+      var aar =new Array();
+      <c:forEach items="${diseases}" var="ss">
+       aar.push('${ss}');
+      </c:forEach>
+      var arr = new Array();
+      <c:forEach items="${outbreaks}" var="rr">
+       arr.push(parseInt('${rr}'));
+      </c:forEach>
+      // Set up the chart
+        var chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'containers',
+                type: 'column',
+                options3d: {
+                    enabled: true,
+                    alpha: 0,
+                    beta: 0,
+                    depth: 50,
+                    viewDistance: 25
+                }
+            },
+            title: {
+                text: '疫情展示图'
+            },
+            subtitle: {
+                text: '可通过滑动下方滑块测试'
+            },
+            plotOptions: {
+                column: {
+                    depth: 25
+                }
+            },
+              xAxis: {
+              categories:aar
+                    },
+            series: [{
+                name:'疫情次数',
+                data: arr
+            }]
+        });
+        function showValues() {
+            $('#alpha-value').html(chart.options.chart.options3d.alpha);
+            $('#beta-value').html(chart.options.chart.options3d.beta);
+            $('#depth-value').html(chart.options.chart.options3d.depth);
+        }
+        // Activate the sliders
+        $('#slider input').on('input change', function () {
+            chart.options.chart.options3d[this.id] = this.value;
+            showValues();
+            chart.redraw(false);
+        });
+        showValues();
+    });
+
 </script>
 </html>
 <script src="${pageContext.request.contextPath}/adminex/js/jquery.nicescroll.js"></script>

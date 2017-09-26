@@ -516,7 +516,7 @@
                     enabled: true,
                     alpha: 2,
                     beta: 2,
-                    depth: 50,
+                    depth: 20,
                     viewDistance: 25
                 }
             },

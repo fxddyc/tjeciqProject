@@ -1,5 +1,4 @@
 
-
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
@@ -185,9 +184,9 @@
             </div><!-- /.modal -->
         </div>
 
-  </div>
 
         <!--body wrapper end-->
+    </div>
     <!-- main content end-->
 </section>
 
@@ -203,7 +202,6 @@
 
 <script src="${pageContext.request.contextPath}/hcharts/highcharts.js"></script>
 <script src="${pageContext.request.contextPath}/hcharts/highcharts-3d.js"></script>
-<script src="${pageContext.request.contextPath}/hcharts/highcharts-more.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/jqPaginator/dist/1.2.0/jqPaginator.min.js"></script>
 
@@ -318,7 +316,7 @@
             data:[]
         }]
     };
-    
+
     function setCalendarSize() {
         var wn = document.body.clientWidth;
         if(wn>=1450){
@@ -361,7 +359,7 @@
 
     function findCalendarHeatMapData() {
         $.post('${pageContext.request.contextPath}/oieDashboard/getCalendarHeatMapData.do',
-                null,
+            null,
             function (data) {
                 if (data){
                     for (var key in data){
@@ -478,8 +476,8 @@
         $('#alpha-value').html(sChart.options.chart.options3d.alpha);
         $('#beta-value').html(sChart.options.chart.options3d.beta);
     }
-    
-    
+
+
     function findTotalOutbreaksAndReportOfDays() {
         $.post('${pageContext.request.contextPath}/oieDashboard/findGeneralFormData.do', null,
             function (data) {
@@ -506,7 +504,6 @@
 
     });
 
-
     $(function () {
         var aar =[];
         <c:forEach items="${diseases}" var="ss">
@@ -517,29 +514,19 @@
         arr.push(parseInt('${rr}'));
         </c:forEach>
         // Set up the chart
-
-    $(function () {
-      var aar =[];
-      <c:forEach items="${diseases}" var="ss">
-       aar.push('${ss}');
-      </c:forEach>
-      var arr = [];
-      <c:forEach items="${outbreaks}" var="rr">
-       arr.push(parseInt('${rr}'));
-      </c:forEach>
         new Highcharts.Chart({
             chart: {
                 renderTo: 'containers',
                 type: 'column',
                 options3d: {
                     enabled: true,
-                    alpha: 2,
+                    alpha: 10,
                     beta: 7,
-
                     depth: 50,
                     viewDistance: 25
                 }
             },
+            credits:{enabled:false},
             title: {
                 text: '三十天内疫情爆发次数TOP10'
             },
@@ -549,8 +536,8 @@
                 }
             },
             xAxis: {
-              categories:aar
-                    },
+                categories:aar
+            },
             series: [{
                 name:'疫情爆发次数',
                 data: arr

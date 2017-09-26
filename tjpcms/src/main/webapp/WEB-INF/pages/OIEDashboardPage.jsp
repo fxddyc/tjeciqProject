@@ -515,8 +515,8 @@
                 options3d: {
                     enabled: true,
                     alpha: 2,
-                    beta: 2,
-                    depth: 20,
+                    beta: 7,
+                    depth: 50,
                     viewDistance: 25
                 }
             },

@@ -90,6 +90,11 @@
                 <ul class="sub-menu-list">
                     <li><a class="menu-item" id="mi2_5" href="${pageContext.request.contextPath}/weeklyReportExport/toReportPage.do">OIE疫情周报导出</a></li>
                 </ul>
+                <ul class="sub-menu-list">
+                    <li><a class="menu-item" id="mi2_6"
+                           href="${pageContext.request.contextPath}/epidemicItem/epidemicItemList.do">中华人民共和国进境动物检疫疫病名录</a>
+                    </li>
+                </ul>
             </li>
             <li class="menu-list" id="ml3"><a href="#"><i class="fa fa-tasks"></i> <span>数据中心</span></a>
                 <ul class="sub-menu-list">

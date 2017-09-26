@@ -3,6 +3,7 @@ package cn.com.eship.controller;
 import cn.com.eship.service.OIEDashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +18,11 @@ public class OIEDashboardController {
     public OIEDashboardController(OIEDashboardService oieDashboardService) {
         this.oieDashboardService = oieDashboardService;
     }
+
     @RequestMapping("/toOIEDashboardPage")
-    public String toOIEDashboardPage() {
+    public String toOIEDashboardPage(Model model) throws Exception {
+        model.addAttribute("outbreaks",oieDashboardService.getOutbreaks());
+        model.addAttribute("diseases",oieDashboardService.getDiseases());
         return "OIEDashboardPage";
     }
 

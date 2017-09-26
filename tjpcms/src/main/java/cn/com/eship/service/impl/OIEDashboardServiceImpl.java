@@ -1,6 +1,7 @@
 package cn.com.eship.service.impl;
 
 import cn.com.eship.dao.OIEEpidemicDao;
+import cn.com.eship.dao.OIETestDao;
 import cn.com.eship.dao.WeeklyReportExportDao;
 import cn.com.eship.service.OIEDashboardService;
 import cn.com.eship.utils.PageUtils;
@@ -17,11 +18,12 @@ import java.util.*;
 public class OIEDashboardServiceImpl implements OIEDashboardService {
     private final WeeklyReportExportDao weeklyReportExportDao;
     private final OIEEpidemicDao oieEpidemicDao;
-
+    private final OIETestDao oieTestDao;
     @Autowired
-    public OIEDashboardServiceImpl(WeeklyReportExportDao weeklyReportExportDao, OIEEpidemicDao oieEpidemicDao) {
+    public OIEDashboardServiceImpl(WeeklyReportExportDao weeklyReportExportDao, OIEEpidemicDao oieEpidemicDao,OIETestDao oieTestDao) {
         this.weeklyReportExportDao = weeklyReportExportDao;
         this.oieEpidemicDao = oieEpidemicDao;
+        this.oieTestDao = oieTestDao;
     }
 
     public String getDiseaseClassPieData(int dateInterval) throws Exception {
@@ -124,6 +126,16 @@ public class OIEDashboardServiceImpl implements OIEDashboardService {
         jsonData.put("thirtyDay",ra);
         return new ObjectMapper().writeValueAsString(jsonData);
 
+    }
+
+    @Override
+    public List<Integer> getOutbreaks() throws Exception {
+        return oieTestDao.getOutbreaks();
+    }
+
+    @Override
+    public List<String> getDiseases() throws Exception {
+        return oieTestDao.getDiseases();
     }
 
     private int[] findTotalOutbreaksAndReportOfDays(int interval)throws Exception{

@@ -523,11 +523,6 @@
             title: {
                 text: '三十天内疫情爆发次数前十展示图'
             },
-            plotOptions: {
-                column: {
-                    depth: 25
-                }
-            },
               xAxis: {
               categories:aar
                     },

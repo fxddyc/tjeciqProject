@@ -126,15 +126,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12" >
-                    <div class="panel panel-default" >
-                        <div class="panel-body" >
-                            <div id="containers"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
         </div>
 
@@ -142,7 +133,7 @@
             <div class="modal-dialog" style="width:1000px">
                 <div class="modal-content">
                     <div class="modal-header" style="background-color: #2a6496">
-                        <button type="button" class="close" data-dismiss="modal">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             &times;
                         </button>
                         <h4 class="modal-title" id="myModalLabel">
@@ -273,6 +264,7 @@
         },
         tooltip: {
             formatter: function () {
+                console.info(this.point.z)
                 return this.key+'<br/> 共发生: <b>' + this.x +
                     '</b>次<br/> 被报告: <b>' + this.y + '</b>次<br/>' +
                     '共涉及: <b>'+this.point.z+'个国家</b>';
@@ -339,9 +331,9 @@
                     var dataList = [];
                     for (var i=0;i<data.length;i++){
                         var param = [];
-                        var diseaseName = data[i]['diseaseClass'];
+                        var diseaseName = data[i].diseaseClass;
                         param.push(diseaseName);
-                        param.push(data[i]['ttc']);
+                        param.push(data[i].ttc);
                         dataList.push(param)
                     }
                     diseaseClassPieOption.series[0].data=dataList;
@@ -392,7 +384,7 @@
             'epidemicClass':epidemicClass
         }, function (data) {
             $("#demo1").jqPaginator({
-                totalPages: Math.ceil(data['epidemicEventListCount'] / 10),
+                totalPages: Math.ceil(data.epidemicEventListCount / 10),
                 visiblePages: 10,
                 currentPage: 1,
                 first: '<li class="first"><a href="javascript:void(0);">首页<\/a><\/li>',
@@ -408,30 +400,30 @@
                         'epidemicClass':epidemicClass,
                         'pageNo': n - 1
                     }, function (data) {
-                        var epidemicAppearList = data['epidemicEventList'];
+                        var epidemicAppearList = data.epidemicEventList;
                         for (var i = 0; i < epidemicAppearList.length; i++) {
                             var tr="";
-                            var td = "<td style=''></td>";
-                            if(epidemicAppearList[i]['epidemicNameCn']&&epidemicAppearList[i]['epidemicNameCn'] !==""){
-                                td = "<td style=''><p>"+epidemicAppearList[i]['epidemicNameCn'] + "</p><p>" + epidemicAppearList[i]['epidemicNameEng']+"</p></td>";
+
+                            if(epidemicAppearList[i].epidemicNameCn&&epidemicAppearList[i].epidemicNameCn !==""){
+                                var td = "<td style=''><p>"+epidemicAppearList[i].epidemicNameCn + "</p><p>" + epidemicAppearList[i].epidemicNameEng+"</p></td>";
                                 tr = tr+td;
                             }else {
-                                td= "<td style=''><p>" + epidemicAppearList[i].disease + "</p></td>";
+                                var td= "<td style=''><p>" + epidemicAppearList[i].disease + "</p></td>";
                                 tr = tr+td;
                             }
-                            tr = tr+"<td style=''><p>" + epidemicAppearList[i]['diseaseClass'] + "</p></td>";
-                            if (epidemicAppearList[i]['regionNameCn']){
-                                td = "<td style=''><p>" + epidemicAppearList[i]['regionNameCn'] + "</p><p>" + epidemicAppearList[i]['regionNameEng'] +"</p></td>";
+                            tr = tr+"<td style=''><p>" + epidemicAppearList[i].diseaseClass + "</p></td>";
+                            if (epidemicAppearList[i].regionNameCn){
+                                var td = "<td style=''><p>" + epidemicAppearList[i].regionNameCn + "</p><p>" + epidemicAppearList[i].regionNameEng +"</p></td>"
                                 tr = tr+td;
                             }else {
-                                td= "<td style=''><p>" + epidemicAppearList[i]['country'] + "</p></td>";
+                                var td= "<td style=''><p>" + epidemicAppearList[i].country + "</p></td>";
                                 tr = tr+td;
                             }
-                            tr = tr+"<td style=''><p>" + epidemicAppearList[i]['date'] + "</p></td>" +
-                                "<td style=''><p>" + epidemicAppearList[i]['reason'] + "</p></td>" +
-                                "<td style=''><p>" + epidemicAppearList[i]['outbreaks'] + "</p></td>" +
-                                "<td style=''><p>" + epidemicAppearList[i]['dateRes'] + "</p></td>" +
-                                "<td style=''>" + "<a href='${pageContext.request.contextPath}/oieEpidemicSearch/toOIEDetailPage.do?rowKey=" + epidemicAppearList[i]['report'] + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>";
+                            tr = tr+"<td style=''><p>" + epidemicAppearList[i].date + "</p></td>" +
+                                "<td style=''><p>" + epidemicAppearList[i].reason + "</p></td>" +
+                                "<td style=''><p>" + epidemicAppearList[i].outbreaks + "</p></td>" +
+                                "<td style=''><p>" + epidemicAppearList[i].dateRes + "</p></td>" +
+                                "<td style=''>" + "<a href='${pageContext.request.contextPath}/oieEpidemicSearch/toOIEDetailPage.do?rowKey=" + epidemicAppearList[i].report + "'><button class='btn btn-primary'>详细信息</button></a>" + "</td>" + "</tr>";
                             $("#epidemicData").append("<tr>"+tr+"</tr>");
                             $("td").css("vertical-align","middle");
                             $('#detailMod').modal('show').css({
@@ -482,11 +474,11 @@
         $.post('${pageContext.request.contextPath}/oieDashboard/findGeneralFormData.do', null,
             function (data) {
                 if (data){
-                    console.info(data['thirtyDay'][0]);
-                    var odo = data['oneDay'][0]?data['oneDay'][0]:0;
-                    var odr = data['oneDay'][1]?data['oneDay'][1]:0;
-                    var sdo = data['sevenDay'][0]?data['sevenDay'][0]:0;
-                    var tdo = data['thirtyDay'][0]?data['thirtyDay'][0]:0;
+                    console.info(data.thirtyDay[0]);
+                    var odo = data.oneDay[0]?data.oneDay[0]:0;
+                    var odr = data.oneDay[1]?data.oneDay[1]:0;
+                    var sdo = data.sevenDay[0]?data.sevenDay[0]:0;
+                    var tdo = data.thirtyDay[0]?data.thirtyDay[0]:0;
                     $('#odo').text(odo);
                     $('#odr').text(odr);
                     $('#sdo').text(sdo);
@@ -502,46 +494,6 @@
         findCalendarHeatMapData();
         findDiseaseScatterData();
 
-    });
-
-    $(function () {
-        var aar =[];
-        <c:forEach items="${diseases}" var="ss">
-        aar.push('${ss}');
-        </c:forEach>
-        var arr = [];
-        <c:forEach items="${outbreaks}" var="rr">
-        arr.push(parseInt('${rr}'));
-        </c:forEach>
-        // Set up the chart
-        var chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'containers',
-                type: 'column',
-                options3d: {
-                    enabled: true,
-                    alpha: 0,
-                    beta: 0,
-                    depth: 50,
-                    viewDistance: 25
-                }
-            },
-            title: {
-                text: '三十天内疫情爆发次数TOP10'
-            },
-            plotOptions: {
-                column: {
-                    depth: 25
-                }
-            },
-            xAxis: {
-                categories:aar
-            },
-            series: [{
-                name:'疫情次数',
-                data: arr
-            }]
-        });
     });
     
 </script>

@@ -508,15 +508,14 @@
       <c:forEach items="${outbreaks}" var="rr">
        arr.push(parseInt('${rr}'));
       </c:forEach>
-      // Set up the chart
         var chart = new Highcharts.Chart({
             chart: {
                 renderTo: 'containers',
                 type: 'column',
                 options3d: {
                     enabled: true,
-                    alpha: 0,
-                    beta: 0,
+                    alpha: 2,
+                    beta: 2,
                     depth: 50,
                     viewDistance: 25
                 }
@@ -537,14 +536,6 @@
                 data: arr
             }]
         });
-
-        // Activate the sliders
-        $('#slider input').on('input change', function () {
-            chart.options.chart.options3d[this.id] = this.value;
-            showValues();
-            chart.redraw(false);
-        });
-        showValues();
     });
 
 </script>

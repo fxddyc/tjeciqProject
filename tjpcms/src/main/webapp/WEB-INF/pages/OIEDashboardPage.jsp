@@ -522,10 +522,7 @@
                 }
             },
             title: {
-                text: '疫情展示图'
-            },
-            subtitle: {
-                text: '可通过滑动下方滑块测试'
+                text: '三十天内疫情爆发次数前十展示图'
             },
             plotOptions: {
                 column: {
@@ -540,11 +537,7 @@
                 data: arr
             }]
         });
-        function showValues() {
-            $('#alpha-value').html(chart.options.chart.options3d.alpha);
-            $('#beta-value').html(chart.options.chart.options3d.beta);
-            $('#depth-value').html(chart.options.chart.options3d.depth);
-        }
+
         // Activate the sliders
         $('#slider input').on('input change', function () {
             chart.options.chart.options3d[this.id] = this.value;

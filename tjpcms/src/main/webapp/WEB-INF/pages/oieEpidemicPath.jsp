@@ -66,6 +66,7 @@
                                         <input type="text" id="startDate" class="form-control dpd1 AQForm" name="from">
                                         <span class="input-group-addon">到</span>
                                         <input type="text" id="endDate" class="form-control dpd2 AQForm" name="to">
+                                        <button class="btn btn-primary" onclick="initAdvancedQueryInput()">X</button>
                                     </div>
 
                                 </div>

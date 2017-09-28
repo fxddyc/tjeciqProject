@@ -300,13 +300,24 @@
             }
         },
         yAxis: {
-            min: 0
+            min: 0,
+            title:{
+                text:'报告次数'
+            }
         },
         xAxis: {
-            min: 0
+            min: 0,
+            title:{
+                text:'爆发次数'
+            }
+
         },
         zAxis: {
-            min: 0
+            min: 0,
+            title:{
+                text:'影响国家',
+                x:-100
+            }
         },
         legend: {
             enabled: false
@@ -482,7 +493,6 @@
         $.post('${pageContext.request.contextPath}/oieDashboard/findGeneralFormData.do', null,
             function (data) {
                 if (data){
-                    console.info(data['thirtyDay'][0]);
                     var odo = data['oneDay'][0]?data['oneDay'][0]:0;
                     var odr = data['oneDay'][1]?data['oneDay'][1]:0;
                     var sdo = data['sevenDay'][0]?data['sevenDay'][0]:0;
@@ -526,6 +536,19 @@
                     viewDistance: 25
                 }
             },
+            colors:$.map(Highcharts.getOptions().colors, function (color) {
+                return {
+                    radialGradient: {
+                        cx: 0.4,
+                        cy: 0.3,
+                        r: 0.5
+                    },
+                    stops: [
+                        [0, color],
+                        [1, Highcharts.Color(color).brighten(-0.2).get('rgb')]
+                    ]
+                };
+            }),
             credits:{enabled:false},
             title: {
                 text: '三十天内疫情爆发次数TOP10'
@@ -538,7 +561,16 @@
             xAxis: {
                 categories:aar
             },
+            yAxis:{
+              title:{
+                  text:'爆发次数'
+              }
+            },
+            legend: {
+                enabled: false
+            },
             series: [{
+                colorByPoint: true,
                 name:'疫情爆发次数',
                 data: arr
             }]

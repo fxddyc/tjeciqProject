@@ -50,7 +50,7 @@
 
                         <div class="panel-body">
                             <div class="row">
-                                <div class="col-lg-3 form-group">
+                                <div class="col-lg-2 form-group">
                                     <label class="control-label">疫病名称</label>
                                     <select id="epidemicNameSelect" class="form-control AQForm">
                                         <c:forEach items="${oieDiseasesEntityList}" var="oieDiseasesEntity">
@@ -66,7 +66,9 @@
                                         <input type="text" id="startDate" class="form-control dpd1 AQForm" name="from">
                                         <span class="input-group-addon">到</span>
                                         <input type="text" id="endDate" class="form-control dpd2 AQForm" name="to">
-                                        <button class="btn btn-primary" onclick="initAdvancedQueryInput()">X</button>
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-primary" onclick="initAdvancedQueryInput()">X</button>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -74,8 +76,6 @@
                             <div>
                                 <button class="btn btn-primary" onclick="search();">查询</button>
                             </div>
-
-
                         </div>
 
                     </div>
@@ -133,6 +133,11 @@
 
 
 <script type="text/javascript">
+
+    function initAdvancedQueryInput(){
+        $(".AQForm").val("");
+    }
+
     function getGeo() {
         var nameMap = {
             'Afghanistan': '阿富汗',
@@ -501,11 +506,20 @@
 
     function initChart(data1, selectObj) {
         //data['pathAndValueResult'][((data['pathAndValueResult'].length) - 1)]
-        var pathAndValueResultLength = data1['pathAndValueResult'].length;
-        var firstLocationName = data1['pathAndValueResult'][0][0]['name'];
-        var firstLocationValue = data1['pathAndValueResult'][0][1]['value'];
-        var firstLocation = {name: firstLocationName, value: firstLocationValue};
-        var lastLocation = data1['pathAndValueResult'][pathAndValueResultLength - 1][1];
+        var pathAndValueResultLength = 0;
+        var firstLocationName = "";
+        var firstLocationValue = "";
+        var firstLocation = "";
+        var lastLocation = "";
+        if(data1&&data1.size>0){
+            firstLocationName = data1['pathAndValueResult'][0][0]['name'];
+            firstLocationValue = data1['pathAndValueResult'][0][1]['value'];
+            firstLocation = {name: firstLocationName, value: firstLocationValue};
+            lastLocation = data1['pathAndValueResult'][pathAndValueResultLength - 1][1];
+            pathAndValueResultLength = data1['pathAndValueResult'].length;
+        }
+
+
         var myChart = echarts.init(document.getElementById('oiePathChart'));
         var option = {
             backgroundColor: '#1b1b1b',

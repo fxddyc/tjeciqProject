@@ -228,9 +228,12 @@
         click:function(e){openDetailMod(null,null,e.point.name)}}}}},series:[{type:'pie',data:[]}]};
 
 
-    var calendarHeatMapOption={tooltip:{position:'top',formatter:function(params){return params.marker+params.value[0]+
+    var calendarHeatMapOption={title: {
+        text: '疫情日历',
+        left: 'center'
+    },tooltip:{position:'top',formatter:function(params){return params.marker+params.value[0]+
         ' 共爆发 '+params.value[1]+' 例疫情 '}},visualMap:{min:0,max:500,calculable:true,orient:'horizontal',left:'center'
-        ,top:'top'},calendar:[{range:'2015',cellSize:setCalendarSize(),dayLabel:{firstDay:1,nameMap:'cn'},monthLabel:
+        ,top:'bottom'},calendar:[{range:'2015',cellSize:setCalendarSize(),dayLabel:{firstDay:1,nameMap:'cn'},monthLabel:
         {nameMap:'cn'}},{top:260,range:'2016',cellSize:setCalendarSize(),dayLabel:{firstDay:1,nameMap:'cn'},monthLabel:
         {nameMap:'cn'}},{top:450,range:'2017',cellSize:setCalendarSize(),dayLabel:{firstDay:1,nameMap:'cn'},monthLabel:
         {nameMap:'cn'}}],series:[]};
@@ -269,7 +272,7 @@
         },
         credits:{enabled:false},
         title: {
-            text: '疫情历史爆发情况分布'
+            text: '<b>疫情历史爆发情况分布</b>'
         },
         tooltip: {
             formatter: function () {
@@ -530,8 +533,8 @@
                 type: 'column',
                 options3d: {
                     enabled: true,
-                    alpha: 10,
-                    beta: 7,
+                    alpha: 0,
+                    beta: 0,
                     depth: 50,
                     viewDistance: 25
                 }
@@ -551,7 +554,7 @@
             }),
             credits:{enabled:false},
             title: {
-                text: '三十天内疫情爆发次数TOP10'
+                text: '<b>三十天内疫情爆发次数TOP10</b>'
             },
             plotOptions: {
                 column: {

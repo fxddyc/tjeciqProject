@@ -4,6 +4,7 @@ package cn.com.eship.dao.impl;
  * Created by liq on 17/9/22.
  */
 import cn.com.eship.dao.OIETestDao;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -47,7 +48,7 @@ public class OIETestDaoImpl implements OIETestDao {
 
     @Override
     public List<String> getDiseases() throws Exception {
-        String sql = "SELECT a.date,SUM(a.outbreaks),a.disease,b.disease_name_cn FROM oie_epidemiological_event a  LEFT JOIN oie_diseases b ON a.disease=b.disease_name_eng OR a.disease_id=b.id  WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= a.date GROUP BY a.disease ORDER BY SUM(a.outbreaks) DESC LIMIT 10\n";
+        String sql = "SELECT a.date,SUM(a.outbreaks),a.disease,b.disease_name_cn FROM oie_epidemiological_event a  LEFT JOIN oie_diseases b ON a.disease_id=b.id  WHERE DATE_SUB(CURDATE(), INTERVAL 30 DAY) <= a.date GROUP BY a.disease ORDER BY SUM(a.outbreaks) DESC LIMIT 10";
         List<String> commonList = new ArrayList<String>();
         hibernateTemplate.execute(new HibernateCallback() {
             public Object doInHibernate(Session session)
@@ -56,11 +57,12 @@ public class OIETestDaoImpl implements OIETestDao {
                 List list = query.list();
                 for (int i=0;i<list.size();i++){
                     Map map = (Map)list.get(i);
-                    if((String) map.get("disease")!=null ||(String) map.get("disease")!=""){
+                    if(StringUtils.isNotEmpty((String)map.get("disease_name_cn"))){
                         commonList.add((String) map.get("disease_name_cn"));
                     }else{
                         commonList.add((String) map.get("disease"));
                     }
+
                 }
                 return commonList;
             }

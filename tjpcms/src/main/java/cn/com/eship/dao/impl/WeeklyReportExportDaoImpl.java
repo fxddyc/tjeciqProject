@@ -223,7 +223,8 @@ public class WeeklyReportExportDaoImpl implements WeeklyReportExportDao {
                 "LEFT JOIN oie_diseases b " +
                 " ON a.disease_id = b.id " +
                 "WHERE a.date >= date_format(?,'%Y-%m-%d') " +
-                "AND a.date <= date_format(?,'%Y-%m-%d');";
+                "AND a.date <= date_format(?,'%Y-%m-%d')" +
+                "GROUP BY a.disease;";
         List<Map<String,Object>> jsonList = new ArrayList<>();
         hibernateTemplate.execute(new HibernateCallback() {
             public Object doInHibernate(Session session)

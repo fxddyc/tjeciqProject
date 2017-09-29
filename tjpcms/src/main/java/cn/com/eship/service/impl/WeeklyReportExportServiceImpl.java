@@ -377,7 +377,7 @@ public class WeeklyReportExportServiceImpl implements WeeklyReportExportService 
         List<String[]> tableList = new ArrayList<>();
         if (tcl != null && tcl.size() > 0) {
             for (Map<String,Object> map:tcl){
-                String eName = (map.get("epidemicNameCn") != null && !"".equals(map.get("epidemicNameCn"))) ? (String) map.get("epidemicNameCn") : (String) map.get("disease");
+                String eName = (map.get("diseaseNameCn") != null && !"".equals(map.get("diseaseNameCn"))) ? (String) map.get("diseaseNameCn") : (String) map.get("disease");
                 String diseaseClass = (map.get("diseaseClass")!=null)? (String) map.get("diseaseClass") :"其他类";
                 int outbreaks = map.get("outbreaks")!=null?Integer.parseInt(map.get("outbreaks").toString()):0;
                 String continent = (map.get("continent")!=null&& !"".equals(map.get("continent")))?(String)map.get("continent"):"";
@@ -441,8 +441,8 @@ public class WeeklyReportExportServiceImpl implements WeeklyReportExportService 
         textList.add(findDiseaseHistoryDataList());
         textList.add(findContinentDiseaseHistoryData());
         textList.add(findDetailTableData());
-        //            inputUrl = "F://TestFile//no_data_reportTemplet.docx";
-        String inputUrl = "/root/app/reportTemplet.docx";
+        String inputUrl = "F://TestFile/reportTemplet.docx";
+//        String inputUrl = "/root/app/reportTemplet.docx";
         if (textMap.get("${totalCases}")==null||"0".equals(textMap.get("${totalCases}"))){
             inputUrl = "/root/app/no_data_reportTemplet.docx";
         }

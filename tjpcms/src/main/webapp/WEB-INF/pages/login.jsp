@@ -25,7 +25,7 @@
 
     <form class="form-signin" id='loginForm'>
         <div class="form-signin-heading text-center">
-            <h1 class="sign-title">天津检疫局疫情监测平台</h1>
+            <h1 class="sign-title">天津检验检疫局疫情监测平台</h1>
             <img src="${pageContext.request.contextPath}/adminex/images/line_chart.png" alt=""/>
         </div>
         <div class="login-wrap">

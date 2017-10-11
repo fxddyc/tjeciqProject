@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-md-7 col-sm-6 hero">
                 <div class="hero-content">
-                    <h1>系统菜单</h1>
+
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <div class="col-sm-6 portfolio-item" id="ml2"> <a href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do" class="portfolio-link">
                 <div class="caption">
                     <div class="caption-content">
-                        <h2>国际动物疫情动态分析与预警系统</h2>
+                        <h2>动物疫情监测与预警系统</h2>
                         <h4>OIE epidemic analysis and warning system</h4>
                     </div>
                 </div>
@@ -89,12 +89,7 @@
         </div>
     </div>
 </section>
-<script type="text/javascript">
-    var eles = au.split(";");
-    for(var i=0;i<eles.length;i++){
-        $("#"+eles[i]).remove();
-    }
-</script>
+
 
 <script src="${pageContext.request.contextPath}/adminex/js/jquery-1.10.2.min.js"></script>
 <script src="${pageContext.request.contextPath}/adminex/js/bootstrap.min.js"></script>
@@ -103,7 +98,12 @@
 <script src="${pageContext.request.contextPath}/adminex/js/modernizr.min.js"></script>
 <script src="${pageContext.request.contextPath}/sysMenu/js/main.js"></script>
 
-
+<script type="text/javascript">
+    var eles = au.split(";");
+    for(var i=0;i<eles.length;i++){
+        $("#"+eles[i]).remove();
+    }
+</script>
 <script type="application/javascript">
 
 </script>

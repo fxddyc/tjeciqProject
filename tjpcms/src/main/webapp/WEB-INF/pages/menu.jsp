@@ -26,7 +26,7 @@
 
     <!--logo and iconic logo start-->
     <div class="logo">
-        <a href="index.html"><h4>天津检疫局疫情监测平台</h4></a>
+        <a href="index.html"><h4>疫情监测与预警平台</h4></a>
     </div>
 
     <div class="logo-icon text-center">

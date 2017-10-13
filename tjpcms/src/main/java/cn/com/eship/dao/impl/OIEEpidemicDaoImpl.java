@@ -307,11 +307,12 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
     @Override
     public List<Map<String, Object>> findEpidemicHistoryScatter() throws Exception {
         List<Map<String,Object>> jsonList = new ArrayList<>();
-        String sql = "SELECT disease,disease_name_cn,COUNT(report) rn,SUM(outbreaks) sum,COUNT(DISTINCT country) cn " +
+        String sql = "SELECT disease,disease_name_cn,disease_class,COUNT(report) rn,SUM(outbreaks) sum,COUNT(DISTINCT country) cn " +
                 "FROM oie_epidemiological_event a " +
                 "LEFT JOIN oie_diseases b " +
                 "   ON a.disease_id=b.id " +
-                "GROUP BY disease";
+                "GROUP BY disease " +
+                "ORDER BY sum DESC ";
         hibernateTemplate.execute(new HibernateCallback() {
             public Object doInHibernate(Session session)
                     throws HibernateException, SQLException {
@@ -322,6 +323,7 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                     Map<String,Object> map2= new HashMap<>();
                     map2.put("disease",map.get("disease"));
                     map2.put("epidemicNameCn",map.get("disease_name_cn"));
+                    map2.put("epidemicClass",map.get("disease_class"));
                     map2.put("sum",map.get("sum"));
                     map2.put("rn",map.get("rn"));
                     map2.put("cn",map.get("cn"));

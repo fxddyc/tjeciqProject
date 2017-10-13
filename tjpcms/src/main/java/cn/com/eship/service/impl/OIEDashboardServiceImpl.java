@@ -99,20 +99,42 @@ public class OIEDashboardServiceImpl implements OIEDashboardService {
     @Override
     public String getDiseaseScatterData() throws Exception {
         List<Map<String, Object>> dataList = oieEpidemicDao.findEpidemicHistoryScatter();
-        List<Object[]> jsonList = new ArrayList<>();
+        Map<String,List<Object>> jsonMap = new HashMap<>();
         if (dataList!=null&&dataList.size()>0){
-            for (Map<String, Object> map : dataList) {
 
+            jsonMap.put("aClass",new ArrayList<>());
+            jsonMap.put("bClass",new ArrayList<>());
+            jsonMap.put("cClass",new ArrayList<>());
+            List<Object> top10 = new ArrayList<>();
+            for(int i=0;i<10;i++){
+                int sum = Integer.valueOf(dataList.get(i).get("sum").toString());
+                top10.add(sum);
+            }
+            jsonMap.put("top10",top10);
+            for (Map<String, Object> map : dataList) {
                 String eName = (map.get("epidemicNameCn") != null && !"".equals(map.get("epidemicNameCn"))) ? (String) map.get("epidemicNameCn") : (String) map.get("disease");
                 int sum = map.get("sum")!=null?Integer.parseInt(map.get("sum").toString()):0;
                 int rn = map.get("rn")!=null?Integer.parseInt(map.get("rn").toString()):0;
                 int cn = map.get("cn")!=null?Integer.parseInt(map.get("cn").toString()):0;
-                Object[] oa = new Object[]{eName,sum,rn,cn};
-                jsonList.add(oa);
+                String epidemicClass = map.get("epidemicClass")!=null&& !"".equals(map.get("epidemicClass"))?(String) map.get("epidemicClass"):"其他类";
+                Object[] da = new Object[]{eName,sum,rn,cn};
+                List<Object> list = new ArrayList<>();
+                switch (epidemicClass){
+                    case "一类":
+                        list = jsonMap.get("aClass");
+                        break;
+                    case "二类":
+                        list = jsonMap.get("bClass");
+                        break;
+                    case "其他类":
+                        list = jsonMap.get("cClass");
+                        break;
+                }
+                list.add(da);
             }
 
         }
-        return new ObjectMapper().writeValueAsString(jsonList);
+        return new ObjectMapper().writeValueAsString(jsonMap);
     }
 
     @Override

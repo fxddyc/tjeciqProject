@@ -46,7 +46,7 @@ $(this).attr('src','http://reptile3.cn:8080/img/liugan.jpg');
                                 <c:forEach items="${epidemicBaikeList}" var="baike">
                                     <div class="images item ">
                                         <a onclick="dj('${baike.rowKey}','${baike.epidemicName}');">
-                                            <img src="http://reptile3.tj.ciq:8080/img/${baike.epidemicName}.jpg" onerror="javascript:this.src='http://reptile3.tj.ciq:8080/img/liugan.jpg'" alt=""/>
+                                            <img src="${pageContext.request.contextPath}/img/${baike.epidemicName}.jpg" onerror="javascript:this.src='http://reptile3.tj.ciq:8080/img/liugan.jpg'" alt=""/>
                                         </a>
                                         <p>${baike.epidemicName}</p>
                                     </div>

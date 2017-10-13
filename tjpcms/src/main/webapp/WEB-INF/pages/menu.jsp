@@ -85,7 +85,7 @@
                     <li><a class="menu-item" id="mi2_3" href="${pageContext.request.contextPath}/oieWorldRegion/toOIEWorldRegionPage.do">OIE疫情地域分布</a></li>
                 </ul>
                 <ul class="sub-menu-list">
-                    <li><a class="menu-item" id="mi2_4" href="${pageContext.request.contextPath}/oIEEpidemicPathController/oieEpidemicPathPage.do">OIE疫情传播路径</a></li>
+                    <li><a class="menu-item" id="mi2_4" href="${pageContext.request.contextPath}/oIEEpidemicPathController/oieEpidemicPathPage.do">OIE疫情爆发时间路径</a></li>
                 </ul>
                 <ul class="sub-menu-list">
                     <li><a class="menu-item" id="mi2_5" href="${pageContext.request.contextPath}/weeklyReportExport/toReportPage.do">OIE疫情周报导出</a></li>

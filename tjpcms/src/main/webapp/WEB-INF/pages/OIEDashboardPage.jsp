@@ -103,7 +103,7 @@
                 <div class="col-lg-12" >
                     <div class="panel" >
                         <div class="panel-body" >
-                            <div id="diseaseScatter" style="height:650px;"></div>
+                            <div id="diseaseScatter" style="height:650px"></div>
                             <div id="sliders" >
                                 <table class="col-lg-12">
                                     <tr class="col-lg-4">
@@ -202,6 +202,7 @@
 
 <script src="${pageContext.request.contextPath}/hcharts/highcharts.js"></script>
 <script src="${pageContext.request.contextPath}/hcharts/highcharts-3d.js"></script>
+<script src="${pageContext.request.contextPath}/hcharts/modules/broken-axis.js"></script>
 <script type="text/javascript"
         src="${pageContext.request.contextPath}/jqPaginator/dist/1.2.0/jqPaginator.min.js"></script>
 
@@ -242,7 +243,7 @@
 
     var diseaseScatterOption = {
         chart: {
-            margin: 50,
+            margin: 70,
             type: 'scatter',
             options3d: {
                 enabled: true,
@@ -251,9 +252,9 @@
                 depth: 250,
                 viewDistance: 5,
                 frame: {
-                    bottom: { size: 1, color: 'rgba(0,0,0,0.02)' },
-                    back: { size: 1, color: 'rgba(0,0,0,0.04)' },
-                    side: { size: 1, color: 'rgba(0,0,0,0.06)' }
+                    bottom: { size: 1, color: 'rgba(0,0,0,0.2)' },
+                    back: { size: 1, color: 'rgba(0,0,0,0.05)' },
+                    side: { size: 5, color: 'rgba(0,0,0,0.15)' }
                 }
             },
             events: {
@@ -303,24 +304,30 @@
             }
         },
         yAxis: {
+
             min: 0,
             title:{
-                text:'报告次数'
-            }
+                text:'<b>报告次数</b>'
+            },
+
         },
         xAxis: {
+            tickPixelInterval: 10,
+            breaks: [],
             min: 0,
             title:{
-                text:'爆发次数'
-            }
+                text:'<b>爆发次数</b>'
+            },
+            visible:true
 
         },
         zAxis: {
             min: 0,
             title:{
-                text:'影响国家',
-                x:-100
-            }
+                text:'<b>影响国家</b>',
+                x:0
+            },
+            offset:-20
         },
         legend: {
             enabled: false
@@ -328,8 +335,17 @@
         series: [{
             colorByPoint: true,
             data:[]
+        },{
+            marker:{symbol:'square'},
+            colorByPoint: true,
+            data:[]
+        },{
+            marker:{symbol:'triangle'},
+            colorByPoint: true,
+            data:[]
         }]
     };
+
 
     function setCalendarSize() {
         var wn = document.body.clientWidth;
@@ -344,12 +360,16 @@
 
 
 
+
+
     function findDiseaseClassData() {
         $.post('${pageContext.request.contextPath}/oieDashboard/getDiseaseClassPieData.do', {
                 'dateInterval': dateIntervalCondition
             },
             function (data) {
-                if (data&&data.length>0){
+                if (data){
+                    if(data.length<=0){diseaseClassPieOption.title.text="上周无新增疫情爆发报告"}
+
                     var dataList = [];
                     for (var i=0;i<data.length;i++){
                         var param = [];
@@ -460,13 +480,23 @@
         }, 'json');
     }
 
+
+
     function findDiseaseScatterData() {
         $.post('${pageContext.request.contextPath}/oieDashboard/getDiseaseScatterData.do', {
                 'dateInterval': dateIntervalCondition
             },
             function (data) {
-                if (data&&data.length>0){
-                    diseaseScatterOption.series[0].data=data;
+                if (data){
+                    diseaseScatterOption.series[0].data=data['aClass'];
+                    diseaseScatterOption.series[1].data=data['bClass'];
+                    diseaseScatterOption.series[2].data=data['cClass'];
+                    var top10d = data['top10'];
+                    for(var i=0;i<9;i++){
+                        if(top10d[i]-top10d[i+1]>700){
+                            diseaseScatterOption.xAxis.breaks.push({from:top10d[i+1]+50,to:top10d[i]-50})
+                        }
+                    }
                     var diseaseScatterChart = new Highcharts.Chart("diseaseScatter",diseaseScatterOption);
                     $('#sliders').find('input').on('input change', function () {
                         diseaseScatterChart.options.chart.options3d[this.id] = this.value;

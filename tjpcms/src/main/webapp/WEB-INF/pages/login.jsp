@@ -22,18 +22,6 @@
 
 
 
-
-    <!-- Facebook and Twitter integration -->
-    <meta property="og:title" content=""/>
-    <meta property="og:image" content=""/>
-    <meta property="og:url" content=""/>
-    <meta property="og:site_name" content=""/>
-    <meta property="og:description" content=""/>
-    <meta name="twitter:title" content="" />
-    <meta name="twitter:image" content="" />
-    <meta name="twitter:url" content="" />
-    <meta name="twitter:card" content="" />
-
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" href="favicon.ico">
 
@@ -61,6 +49,7 @@
         <div class="text-center" >
 
             <h1 style="margin: 0;color: #080e1f">动物疫情监测与预警系统</h1>
+                <%--<h1 style="margin: 0;color: #fff">动物疫情监测与预警系统</h1>--%>
         </div>
     </div>
 
@@ -84,8 +73,8 @@
                 <div class="form-group">
                     <label for="remember"><input type="checkbox" id="remember"> 记住用户名</label>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="登录" class="btn btn-primary">
+                <div class="form-group text-center">
+                    <input type="submit" value="  登录  " class="btn btn-primary btn-lg">
                 </div>
                 <div class="alert alert-danger" style="text-align:center;display:none" id="alertInfo">用户名或密码错误</div>
             </form>
@@ -113,7 +102,6 @@
         var userId = $('#userId').val();
         var passWd = $('#passWd').val();
         $.post('${pageContext.request.contextPath}/system/loginSubmit.do',{'userId':userId,'passWd':passWd},function (data) {
-            console.info(data);
             if (data!==null){
                 if(data.result===true){
                     window.location.href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do"

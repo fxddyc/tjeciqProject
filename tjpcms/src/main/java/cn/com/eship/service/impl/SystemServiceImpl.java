@@ -36,8 +36,8 @@ public class SystemServiceImpl implements SystemService {
     }
 
     @Override
-    public String updateUserInfo(String id, String userName,String passWd,String authority) throws IOException {
-        Map<String,Object> map = userDao.updateUserInfo(id,userName,passWd,authority);
+    public String updateUserInfo(String id, String userName,String passWd,String authority,String email,String department) throws IOException {
+        Map<String,Object> map = userDao.updateUserInfo(id,userName,passWd,authority,email,department);
         if (map!=null&&map.size()>0){
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.writeValueAsString(map);

@@ -158,7 +158,7 @@
             el.slideDown(200); }
     });
 
-    var client = new $.es.Client({hosts: ${pageContext.request.contextPath},log: 'trace'});
+    var client = new $.es.Client({hosts: 'http://dwyq.tj.ciq:9200',log: 'trace'});
     //sandbox.hortonworks.com
     var size = 10;
     var from = 0;

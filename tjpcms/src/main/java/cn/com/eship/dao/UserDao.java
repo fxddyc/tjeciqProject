@@ -9,7 +9,7 @@ import java.util.Map;
 public interface UserDao {
     Map<String,Object> checkUserIdentity(String userID, String passWd);
     List<Map<String,Object>> findUserList();
-    Map<String,Object> updateUserInfo(String id, String userName,String passWd,String authority);
+    Map<String,Object> updateUserInfo(String id, String userName,String passWd,String authority,String email,String department);
     Map<String,Object> deleteUser(String id);
 
 }

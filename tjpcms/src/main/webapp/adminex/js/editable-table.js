@@ -19,10 +19,12 @@ var EditableTable = function () {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
                 jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[6] + '">';
+                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[8] + '">';
                 jqTds[3].innerHTML = '<input type="text" class="form-control small" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
-                jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                jqTds[4].innerHTML = '<input type="text" class="form-control small" value="' + aData[4] + '">';
+                jqTds[5].innerHTML = '<input type="text" class="form-control small" value="' + aData[5] + '">';
+                jqTds[6].innerHTML = '<a class="edit" href="">Save</a>';
+                jqTds[7].innerHTML = '<a class="cancel" href="">Cancel</a>';
             }
 
             function saveRow(oTable, nRow) {
@@ -41,13 +43,15 @@ var EditableTable = function () {
                 }else {
                     transpwd = passwd.substr(0,1)+"***"+passwd.substr(passwd.length-1);
                 }
-                var authority = jqInputs[2].value;
+                var email = jqInputs[2].value;
+                var department = jqInputs[3].value;
+                var authority = jqInputs[4].value;
 
                 if (authority==null||authority===""){
                     alert("用户权限不能为空");
                     return
                 }
-                var uid = aData[7];
+                var uid = aData[9];
                 var basePath = '<%=basePath%>';
                 swal({
                         title: "是否确认提交修改？",
@@ -61,7 +65,9 @@ var EditableTable = function () {
                             "id":uid,
                             "passWd":passwd,
                             "authority":authority,
-                            "userName":userName
+                            "userName":userName,
+                            "email":email,
+                            "department":department
                         },function (data) {
                             setTimeout(function(){
                                 if(data!=null&&data.result!=null&&data.result===true){
@@ -88,7 +94,9 @@ var EditableTable = function () {
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
+                oTable.fnUpdate(jqInputs[4].value, nRow, 4, false);
+                oTable.fnUpdate(jqInputs[5].value, nRow, 5, false);
+                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 6, false);
                 oTable.fnDraw();
             }
             var tableBody=$("#table1")[0];
@@ -125,7 +133,7 @@ var EditableTable = function () {
 
             $('#editable-sample_new').click(function (e) {
                 e.preventDefault();
-                var aiNew = oTable.fnAddData([tableBody.childElementCount+1, '', '', '',
+                var aiNew = oTable.fnAddData([tableBody.childElementCount+1, '', '', '','','visitor',
                         '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>','',''
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
@@ -138,7 +146,7 @@ var EditableTable = function () {
                 var nRow = $(this).parents('tr')[0];
                 var aData = oTable.fnGetData(nRow);
                 var userName = aData[1];
-                var uid = aData[7];
+                var uid = aData[9];
                 swal({
                         title: "确定"+userName+"用户吗？",
                         text: "你将无法恢复该用户！",

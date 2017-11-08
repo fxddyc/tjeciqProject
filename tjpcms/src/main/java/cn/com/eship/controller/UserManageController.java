@@ -36,11 +36,12 @@ public class UserManageController {
     }
 
     @RequestMapping("updateUserInfo")
-    public void updateUserInfo(String id,String userName,String passWd,String authority,HttpServletRequest req,HttpServletResponse response) throws IOException {
+    public void updateUserInfo(String id,String userName,String passWd,String authority,
+                               String email,String department,HttpServletRequest req,HttpServletResponse response) throws IOException {
         HttpSession session = req.getSession();
         String sa = (String) session.getAttribute("authority");
         if(StringUtils.isNotEmpty(sa)&&sa.equals("all")){
-            String str = systemService.updateUserInfo(id,userName,passWd,authority);
+            String str = systemService.updateUserInfo(id,userName,passWd,authority,email,department);
             if (StringUtils.isNotEmpty(str)){
                 response.getOutputStream().write(str.getBytes("utf-8"));
             }

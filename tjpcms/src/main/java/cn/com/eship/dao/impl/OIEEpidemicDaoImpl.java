@@ -98,7 +98,12 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                 query.setParameter(0, condition);
                 query.setParameter(1, condition);
                 query.setMaxResults(1);
-                return query.list().get(0);
+                List list = query.list();
+                if (list!=null||list.size()>0){
+                    return list.get(0);
+                }else {
+                    return null;
+                }
             }
         });
         return id;
@@ -114,7 +119,12 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
                 query.setParameter(0, condition);
                 query.setParameter(1, condition);
                 query.setMaxResults(1);
-                return query.list().get(0);
+                List list = query.list();
+                if (list!=null||list.size()>0){
+                    return list.get(0);
+                }else {
+                    return null;
+                }
             }
         });
         return id;

@@ -30,6 +30,7 @@ public class OIEDashboardController {
     public void getDiseaseClassPieData(int dateInterval, HttpServletResponse response)throws Exception {
         response.getOutputStream().write(oieDashboardService.getDiseaseClassPieData(dateInterval).getBytes("utf-8"));
     }
+
     @RequestMapping("/getCalendarHeatMapData")
     public void getCalendarHeatMapData(HttpServletResponse response)throws Exception {
         response.getOutputStream().write(oieDashboardService.getCalendarHeatMapData().getBytes("utf-8"));

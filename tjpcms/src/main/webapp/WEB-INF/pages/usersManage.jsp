@@ -45,6 +45,8 @@
                                         <th>序号</th>
                                         <th>用户名</th>
                                         <th>密码</th>
+                                        <th>邮箱</th>
+                                        <th>部门</th>
                                         <th>权限</th>
                                         <th>编辑</th>
                                         <th>删除</th>
@@ -90,10 +92,15 @@
             if(data!==null){
                 $('#table1').empty();
                 for(var i=0;i<data.length;i++){
-                    var psswd = data[i].passWd;
+                    var psswd = data[i]['passWd'];
                     var transpwd = psswd.substr(0,1)+"***"+psswd.substr(psswd.length-1);
                     var authority = data[i].authority;
-                    var tdstr = "<td>"+($("#table1")[0].childElementCount+1)+"</td><td>"+data[i].name+"</td><td>"+transpwd+"</td><td>"+authority+
+                    var email = data[i]['email'];
+                    var department = data[i]['department'];
+                    var tdstr = "<td>"+($("#table1")[0].childElementCount+1)+"</td><td>"+data[i].name+"</td><td>"+transpwd+"</td>"+
+                        '<td>'+email+'</a></td>' +
+                        '<td>'+department+'</a></td>' +
+                        '<td>'+authority+'</td>'+
                         '<td><a class="edit" href="javascript:;">Edit</a></td>' +
                         '<td><a class="delete" href="javascript:;">Delete</a></td>'+
                         "<td style='display: none'>"+psswd+"</td><td style='display: none'>"+data[i].id+"</td>";

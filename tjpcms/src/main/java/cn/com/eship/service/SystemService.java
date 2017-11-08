@@ -12,6 +12,6 @@ import java.util.Map;
 public interface SystemService {
     Map<String,Object> checkUserIdentity(String userID, String passWd);
     String findUserList() throws IOException;
-    String updateUserInfo(String id, String userName,String passWd,String authority) throws IOException;
+    String updateUserInfo(String id, String userName,String passWd,String authority,String email,String department) throws IOException;
     String deleteUser(String id)throws IOException;
 }

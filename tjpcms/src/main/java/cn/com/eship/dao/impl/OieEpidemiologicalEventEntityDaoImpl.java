@@ -8,9 +8,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by simon on 2017/9/19.
@@ -22,8 +20,8 @@ public class OieEpidemiologicalEventEntityDaoImpl implements OieEpidemiologicalE
 
     @Override
     public List<Object[]> findOieEpidemiologicalEventCountPath(OieEpidemiologicalEventEntity oieEpidemiologicalEventEntity) throws Exception {
-        StringBuffer sqlBuffer = new StringBuffer("select oieEpidemiologicalEventEntity.oieWorldRegionEntity.regionNameCn,sum(oieEpidemiologicalEventEntity.outbreaks) from OieEpidemiologicalEventEntity oieEpidemiologicalEventEntity where 1 = 1 and oieEpidemiologicalEventEntity.oieWorldRegionEntity.regionNameCn != ''");
-        StringBuffer groupbyPart = new StringBuffer(" group by oieEpidemiologicalEventEntity.oieWorldRegionEntity.regionNameCn");
+        StringBuffer sqlBuffer = new StringBuffer("select oieEpidemiologicalEventEntity.date,oieEpidemiologicalEventEntity.oieWorldRegionEntity.regionNameCn,sum(oieEpidemiologicalEventEntity.outbreaks) from OieEpidemiologicalEventEntity oieEpidemiologicalEventEntity where 1 = 1 and oieEpidemiologicalEventEntity.oieWorldRegionEntity.regionNameCn != ''");
+        StringBuffer groupbyPart = new StringBuffer(" group by oieEpidemiologicalEventEntity.date,oieEpidemiologicalEventEntity.oieWorldRegionEntity.regionNameCn");
         StringBuffer orderByPart = new StringBuffer(" order by oieEpidemiologicalEventEntity.date");
         List<Object> values = new ArrayList<>();
         StringBuffer wherePart = new StringBuffer();

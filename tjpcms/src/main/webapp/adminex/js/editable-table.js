@@ -104,8 +104,8 @@ var EditableTable = function () {
                 'autoWidth':true,
                 'searching':false,
                 "aLengthMenu": [
-                    [5, 15, 20, -1],
-                    [5, 15, 20, "All"] // change per page values here
+                    [5, 10, 20, -1],
+                    [5, 10, 20, "All"] // change per page values here
                 ],
                 // set the initial value
                 "iDisplayLength": 5,
@@ -118,7 +118,6 @@ var EditableTable = function () {
                         "sNext": "下一页"
                     }
                 },
-                "bSort": false,
                 "aoColumnDefs": [{
                         'bSortable': false,
                         'aTargets': [0]
@@ -133,7 +132,7 @@ var EditableTable = function () {
 
             $('#editable-sample_new').click(function (e) {
                 e.preventDefault();
-                var aiNew = oTable.fnAddData([tableBody.childElementCount+1, '', '', '','','visitor',
+                var aiNew = oTable.fnAddData([0, '', '', '','','visitor',
                         '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>','',''
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);

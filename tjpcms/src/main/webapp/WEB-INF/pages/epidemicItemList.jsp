@@ -46,7 +46,7 @@
                         </div>
                         <%--@elvariable id="chineseStandardAnimalEpidemicItem" type="cn.com.eship.model.ChineseStandardAnimalEpidemicItem"--%>
                         <form:form commandName="chineseStandardAnimalEpidemicItem"
-                                   action="${pageContext.request.contextPath}/epidemicItem/epidemicItemList.do">
+                                   action="${pageContext.request.contextPath}/epidemicItem/epidemicItemListPage.do">
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-lg-3 form-group">

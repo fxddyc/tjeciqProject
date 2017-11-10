@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -22,11 +24,17 @@ public class EpidemicItemController {
         this.epidemicItemService = epidemicItemService;
     }
 
-    @RequestMapping("epidemicItemList")
-    public String epidemicItemList(ChineseStandardAnimalEpidemicItem  chineseStandardAnimalEpidemicItem, Model model) throws Exception {
+    @RequestMapping("epidemicItemListPage")
+    public String EpidemicItemListPage(ChineseStandardAnimalEpidemicItem  chineseStandardAnimalEpidemicItem, Model model) throws Exception {
         List<ChineseStandardAnimalEpidemicItem> epidemicItemList = epidemicItemService.findEpidemicItemList(chineseStandardAnimalEpidemicItem);
         model.addAttribute("epidemicItemList", epidemicItemList);
         return "epidemicItemList";
+    }
+
+    @RequestMapping("epidemicItemList")
+    public @ResponseBody
+    List<ChineseStandardAnimalEpidemicItem> getEpidemicItemList(ChineseStandardAnimalEpidemicItem  chineseStandardAnimalEpidemicItem, HttpServletResponse response) throws Exception {
+        return epidemicItemService.findEpidemicItemList(chineseStandardAnimalEpidemicItem);
     }
 
 

@@ -92,7 +92,7 @@
                 </ul>
                 <ul class="sub-menu-list">
                     <li><a class="menu-item" id="mi2_6"
-                           href="${pageContext.request.contextPath}/epidemicItem/epidemicItemList.do">中华人民共和国进境动物检疫疫病名录</a>
+                           href="${pageContext.request.contextPath}/epidemicItem/epidemicItemListPage.do">中华人民共和国进境动物检疫疫病名录</a>
                     </li>
                 </ul>
             </li>

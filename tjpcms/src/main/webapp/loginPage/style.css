@@ -14,12 +14,12 @@ body {
 }
 body.style-2 {
   background-size: cover;
-  background: #ffffff url(../loginPage/images/6.png) no-repeat -30% center;
+  background: #ffffff url(images/9.jpeg) no-repeat -30% center;
   height: 100%;
 }
 body.style-3 {
   background-size: cover;
-  background: #ffffff url(../loginPage/images/6.png) no-repeat;
+  background: #ffffff url(images/9.jpeg) no-repeat;
   height: 100%;
 }
 

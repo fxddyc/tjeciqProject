@@ -37,5 +37,11 @@ public class EpidemicItemController {
         return epidemicItemService.findEpidemicItemList(chineseStandardAnimalEpidemicItem);
     }
 
+    @RequestMapping("getEpidemicListByCondition")
+    public @ResponseBody
+    List<ChineseStandardAnimalEpidemicItem> getEpidemicListByCondition(String condition) throws Exception {
+        return epidemicItemService.findEpidemicItemListByCondition(condition);
+    }
+
 
 }

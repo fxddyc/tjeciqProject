@@ -25,7 +25,8 @@ public class EpidemicItemDaoImpl implements EpidemicItemDao {
         StringBuilder hqlBuilder = new StringBuilder("FROM ChineseStandardAnimalEpidemicItem epidemicItem WHERE 1 = 1");
         if (epidemicItem != null) {
             if (StringUtils.isNotBlank(epidemicItem.getDiseaseNameCn())) {
-                hqlBuilder.append(" AND epidemicItem.diseaseNameCn LIKE ?");
+                hqlBuilder.append(" AND epidemicItem.diseaseNameCn LIKE ? OR epidemicItem.diseaseNameEng LIKE ?");
+                valueList.add("%" + epidemicItem.getDiseaseNameCn() + "%");
                 valueList.add("%" + epidemicItem.getDiseaseNameCn() + "%");
             }
             if (StringUtils.isNotBlank(epidemicItem.getDiseaseClass())) {

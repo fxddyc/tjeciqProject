@@ -10,7 +10,6 @@ import org.apache.htrace.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -40,13 +39,20 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
     }
 
     @Override
-    public String makeEpidemicEventListJson(String pageNo, String epidemicName, String region,String epidemicClass, String startDate, String endDate,String interval) throws Exception {
+    public  Map<String, Object> makeEpidemicEventListJson(String pageNo, String epidemicName, String region,String epidemicClass, String startDate, String endDate,String interval) throws Exception {
         Map<String, Object> jsonMap = new HashMap<>();
         Map<String, Object> parameMap = new HashMap<>();
-        parameMap.put("pageNo", PageUtils.getFirstPosition(StringUtils.isNotBlank(pageNo) ? Integer.parseInt(pageNo) : 0));
+        if(StringUtils.isNotEmpty(pageNo)){
+            parameMap.put("pageNo",PageUtils.getFirstPosition(Integer.parseInt(pageNo)));
+        }
         if (StringUtils.isNotBlank(epidemicName)) {
             int eid = epidemicDao.findEpidemicIdByCondition(epidemicName);
-            parameMap.put("epidemicId", eid);
+            if (eid==0){
+                return jsonMap;
+            }else {
+                parameMap.put("epidemicId", eid);
+            }
+
         }
         if (StringUtils.isNotBlank(region)) {
             int rid = epidemicDao.findRegionIdByCondition(region);
@@ -69,10 +75,9 @@ public class OIEEpidemicSearchServiceImpl implements OIEEpidemicSearchService{
         if (epidemicAppearList != null && epidemicAppearList.size() > 0) {
             jsonMap.put("epidemicEventList", epidemicAppearList);
             jsonMap.put("epidemicEventListCount", epidemicDao.findTotalRecord(parameMap));
+            jsonMap.put("result",true);
         }
-        org.codehaus.jackson.map.ObjectMapper objectMapper = new org.codehaus.jackson.map.ObjectMapper();
-        objectMapper.getSerializationConfig().setDateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-        return objectMapper.writeValueAsString(jsonMap);
+        return jsonMap;
     }
 
     @Override

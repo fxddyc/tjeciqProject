@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface EpidemicItemService {
     List<ChineseStandardAnimalEpidemicItem> findEpidemicItemList(ChineseStandardAnimalEpidemicItem epidemicItem) throws Exception;
+    List<ChineseStandardAnimalEpidemicItem> findEpidemicItemListByCondition(String condition) throws Exception;
 }

@@ -37,6 +37,20 @@
     <!--[if lt IE 9]>
     <script src="${pageContext.request.contextPath}/loginPage/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript">
+        function gc(name){
+            var arr = document.cookie.match(new RegExp("(^| )"+name+"=([^;]*)(;|$)"));
+            if(arr) return unescape(arr[2]); return null;
+        }
+        var ssid = '<%=session.getId()%>';
+        var au = '<%=session.getAttribute("authority")%>';
+        var csid = gc('userSID');
+        if(ssid===csid&&au!==null&&au!==""){
+            window.location.href='${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do';
+        }
+
+
+    </script>
 
 </head>
 <body style='font-family: "Lucida Grande", Lucida Sans Unicode, Hiragino Sans GB, WenQuanYi Micro Hei, Verdana, Aril, sans-serif;'>

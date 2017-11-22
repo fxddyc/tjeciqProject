@@ -26,11 +26,11 @@
 
     <!--logo and iconic logo start-->
     <div class="logo">
-        <a href="index.html"><h4>疫情监测与预警平台</h4></a>
+        <a href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do"><h4>疫情监测与预警平台</h4></a>
     </div>
 
     <div class="logo-icon text-center">
-        <a href="index.html"><img src="${pageContext.request.contextPath}/adminex/images/logo_icon.png" alt=""></a>
+        <a href="${pageContext.request.contextPath}/oieDashboard/toOIEDashboardPage.do"><img src="${pageContext.request.contextPath}/adminex/images/logo_icon.png" alt=""></a>
     </div>
     <!--logo and iconic logo end-->
 
@@ -128,8 +128,10 @@
 
 <script type="text/javascript">
     var eles = au.split(";");
+    var eleCount = 0;
     for(var i=0;i<eles.length;i++){
-        $("#"+eles[i]).remove();
+        var ele = $("#"+eles[i]);
+        ele.remove();
     }
 </script>
 

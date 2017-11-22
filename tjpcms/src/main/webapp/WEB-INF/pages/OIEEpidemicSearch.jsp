@@ -209,8 +209,9 @@
             'region': conditionRegion,
             'startDate': conditionStartDate,
             'endDate': conditionEndDate,
-            "interval": conditionInterval
+            "interval": conditionInterval,
         }, function (data) {
+            if(data && data.result===true){
                 $("#demo1").jqPaginator({
                     totalPages: Math.ceil(data.epidemicEventListCount / 10),
                     visiblePages: 10,
@@ -262,6 +263,8 @@
                         }, 'json');
                     }
                 });
+            }
+
 
 
         }, 'json');

@@ -16,7 +16,7 @@ import java.util.*;
 
 @Repository
 public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
-    private final HibernateTemplate hibernateTemplate;
+    private HibernateTemplate hibernateTemplate;
 
     @Autowired
     public OIEEpidemicDaoImpl(HibernateTemplate hibernateTemplate) {
@@ -90,44 +90,55 @@ public class OIEEpidemicDaoImpl implements OIEEpidemicDao {
 
     @Override
     public int findEpidemicIdByCondition(String condition) throws Exception {
-        String hql = "select id from OieDiseasesEntity where diseaseNameEng = ? or diseaseNameCn = ?";
-        int id =  (int) hibernateTemplate.execute(new HibernateCallback() {
-            public Object doInHibernate(Session session)
-                    throws HibernateException, SQLException {
-                Query query = session.createQuery(hql);
-                query.setParameter(0, condition);
-                query.setParameter(1, condition);
-                query.setMaxResults(1);
-                List list = query.list();
-                if (list!=null||list.size()>0){
-                    return list.get(0);
-                }else {
-                    return null;
-                }
+        Session session = null;
+        try{
+            String hql = "select id from oie_diseases where disease_name_eng = ? or disease_name_cn = ?";
+            session = hibernateTemplate.getSessionFactory().openSession();
+            Query query = session.createSQLQuery(hql);
+            query.setParameter(0, condition);
+            query.setParameter(1, condition);
+            List list = query.list();
+            if (list!=null&&list.size()>0){
+                return (int)list.get(0);
+            }else {
+                return 0;
             }
-        });
-        return id;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+
+        }finally {
+            if (session!=null&&session.isOpen()){
+                session.close();
+            }
+        }
+
     }
 
     @Override
-    public int findRegionIdByCondition(String condition) throws Exception {
-        String hql = "select id from OieWorldRegionEntity where regionNameEng = ? or regionNameCn = ?";
-        int id =  (int) hibernateTemplate.execute(new HibernateCallback() {
-            public Object doInHibernate(Session session)
-                    throws HibernateException, SQLException {
-                Query query = session.createQuery(hql);
-                query.setParameter(0, condition);
-                query.setParameter(1, condition);
-                query.setMaxResults(1);
-                List list = query.list();
-                if (list!=null||list.size()>0){
-                    return list.get(0);
-                }else {
-                    return null;
-                }
+    public int findRegionIdByCondition(String condition){
+        Session session = null;
+        try{
+            String hql = "select id from oie_world_region where region_name_eng = ? or region_name_cn = ?";
+            session = hibernateTemplate.getSessionFactory().openSession();
+            Query query = session.createSQLQuery(hql);
+            query.setParameter(0, condition);
+            query.setParameter(1, condition);
+            List list = query.list();
+            if (list!=null&&list.size()>0){
+                return (int)list.get(0);
+            }else {
+                return 0;
             }
-        });
-        return id;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+
+        }finally {
+            if (session!=null&&session.isOpen()){
+                session.close();
+            }
+        }
     }
 
     @Override

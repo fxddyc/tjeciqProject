@@ -57,6 +57,7 @@
         <servlet-name>springmvc</servlet-name>
         <!-- 不要使用/* -->
         <url-pattern>*.do</url-pattern>
+        <url-pattern>*.post</url-pattern>
     </servlet-mapping>
 
     <filter>
@@ -74,6 +75,7 @@
     <filter-mapping>
         <filter-name>openSessionInViewFilter</filter-name>
         <url-pattern>*.do</url-pattern>
+        <url-pattern>*.post</url-pattern>
     </filter-mapping>
 
     <filter>

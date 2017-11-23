@@ -319,7 +319,7 @@
             var svg_rr_pie = rr_pie!=null?rr_pie.getSVG():'';
             var form = $("#uploadData");
             form.attr("method","post");
-            form.attr("action",'${pageContext.request.contextPath}/weeklyReportExport/importSvgString.do?'+Date.parse(new Date()));
+            form.attr("action",'${pageContext.request.contextPath}/weeklyReportExport/importSvgString.post?'+Date.parse(new Date()));
             var input1 = $("#in1");
             input1.attr("value",startDateCondition);
             var input2 = $("#in2");

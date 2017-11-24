@@ -3,11 +3,15 @@ package cn.com.eship.service.impl;
 
 import cn.com.eship.service.DataWarehouseSercice;
 import cn.com.eship.utils.ConfigUtils;
+import cn.com.eship.utils.PageUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.Get;
+import org.apache.hadoop.hbase.client.Result;
+import org.apache.hadoop.hbase.client.Table;
 import org.apache.htrace.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -134,7 +138,8 @@ public class DataWarehouseSerciceImpl implements DataWarehouseSercice {
                 jsonMap.put("epidemicName", "");
             }
             if (result.getValue("c1".getBytes(), "content".getBytes()) != null && result.getValue("c1".getBytes(), "content".getBytes()).length > 0) {
-                jsonMap.put("content", new String(result.getValue("c1".getBytes(), "content".getBytes()), "utf-8"));
+                String content = new String(result.getValue("c1".getBytes(), "content".getBytes()), "utf-8");
+                jsonMap.put("content", PageUtils.handlerHtml(content));
             } else {
                 jsonMap.put("content", "");
             }

@@ -395,7 +395,9 @@ public class WeeklyReportExportServiceImpl implements WeeklyReportExportService 
     }
 
     private void addToPicsMap(String svgString, int height, int width, String mapKey){
-        if (StringUtils.isEmpty(svgString)) return;
+        if (StringUtils.isEmpty(svgString)){
+            textMap.put(mapKey,"");
+        }
         WordPicture wordPicture = new WordPicture();
         ByteArrayInputStream inputStream = null;
         try {
@@ -441,8 +443,8 @@ public class WeeklyReportExportServiceImpl implements WeeklyReportExportService 
         textList.add(findDiseaseHistoryDataList());
         textList.add(findContinentDiseaseHistoryData());
         textList.add(findDetailTableData());
-        String inputUrl = "F://TestFile/reportTemplet.docx";
-//        String inputUrl = "/root/app/reportTemplet.docx";
+//        String inputUrl = "F://TestFile/reportTemplet.docx";
+        String inputUrl = "/root/app/reportTemplet.docx";
         if (textMap.get("${totalCases}")==null||"0".equals(textMap.get("${totalCases}"))){
             inputUrl = "/root/app/no_data_reportTemplet.docx";
         }
